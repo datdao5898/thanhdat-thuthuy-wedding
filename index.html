@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#f8f1eb">
+  <meta name="description" content="Thiệp mời hôn lễ của Thu Thủy và Thành Đạt">
+  <title>Thiệp mời hôn lễ | Thu Thủy &amp; Thành Đạt</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Inter:wght@300;400;500;600&family=Playfair+Display:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="hero" id="home">
+    <nav class="nav container" aria-label="Điều hướng chính">
+      <a class="nav__monogram" href="#home" aria-label="Về đầu trang">T<span>&amp;</span>T</a>
+      <div class="nav__links">
+        <a href="#invitation">Lời mời</a>
+        <a href="#event">Hôn lễ</a>
+        <a href="#gallery">Album</a>
+        <a href="#gift">Gửi quà</a>
+      </div>
+    </nav>
+
+    <div class="hero__overlay"></div>
+    <div class="hero__ornament hero__ornament--left" aria-hidden="true"></div>
+    <div class="hero__ornament hero__ornament--right" aria-hidden="true"></div>
+
+    <div class="hero__content container">
+      <p class="eyebrow">Save the date</p>
+      <p class="hero__pretitle">Trân trọng báo tin lễ thành hôn của</p>
+      <h1>
+        <span>Thu Thủy</span>
+        <span class="hero__ampersand">&amp;</span>
+        <span>Thành Đạt</span>
+      </h1>
+      <div class="hero__date" aria-label="Ngày cưới">
+        <span>20 tháng 9, 2026</span>
+      </div>
+      <blockquote class="hero__quote">
+        “Nên bây giờ còn có ba điều này: đức tin, sự trông cậy, tình yêu thương;
+        nhưng điều trọng hơn trong ba điều đó là tình yêu thương.”
+        <cite>1 Cô-rinh-tô 13:13</cite>
+      </blockquote>
+      <a class="button button--primary" href="#invitation">Mở thiệp mời</a>
+    </div>
+
+    <a class="scroll-hint" href="#invitation" aria-label="Cuộn xuống xem lời mời">
+      <span></span>
+    </a>
+  </header>
+
+  <main>
+    <section class="invitation section" id="invitation">
+      <div class="container container--narrow reveal">
+        <p class="eyebrow">Our wedding day</p>
+        <h2>Ngày mình về chung đôi</h2>
+        <div class="flourish" aria-hidden="true"><span>♥</span></div>
+        <p class="invitation__greeting" id="guestGreeting">
+          Thân mời bạn đến dự hôn lễ của chúng tôi
+        </p>
+        <p class="invitation__copy">
+          Chúng tôi đã tìm thấy nhau giữa cuộc đời rộng lớn. Sẽ thật trọn vẹn và
+          ý nghĩa khi có bạn hiện diện, cùng sẻ chia niềm vui trong ngày đặc biệt này.
+        </p>
+        <div class="couple-signature">
+          <span>Thu Thủy</span>
+          <small>&amp;</small>
+          <span>Thành Đạt</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="event section" id="event">
+      <div class="container">
+        <div class="section-heading reveal">
+          <p class="eyebrow">Wedding details</p>
+          <h2>Thông tin hôn lễ</h2>
+          <p>Hẹn gặp bạn trong ngày vui của chúng tôi</p>
+        </div>
+
+        <div class="event__grid">
+          <article class="event-card reveal">
+            <div class="event-card__icon" aria-hidden="true">
+              <svg viewBox="0 0 48 48"><path d="M14 8v7M34 8v7M8 19h32M11 12h26a3 3 0 0 1 3 3v24H8V15a3 3 0 0 1 3-3Z"/><path d="M16 26h5v5h-5zM27 26h5v5h-5z"/></svg>
+            </div>
+            <p class="event-card__label">Lễ cưới</p>
+            <h3>20 tháng 9, 2026</h3>
+            <p>Buổi lễ chính thức<br>trong không khí ấm cúng</p>
+          </article>
+
+          <article class="event-card event-card--featured reveal">
+            <div class="event-card__icon" aria-hidden="true">
+              <svg viewBox="0 0 48 48"><path d="M11 39h26M16 39V19h16v20M19 19v-6h10v6M21 13V9h6v4M13 25h3M32 25h3"/><path d="M21 25h6v6h-6z"/></svg>
+            </div>
+            <p class="event-card__label">Tiệc cưới</p>
+            <h3>[Giờ]</h3>
+            <p>Đón khách và dùng tiệc<br>cùng gia đình hai bên</p>
+          </article>
+
+          <article class="event-card reveal">
+            <div class="event-card__icon" aria-hidden="true">
+              <svg viewBox="0 0 48 48"><path d="M24 42s13-12.3 13-24A13 13 0 1 0 11 18c0 11.7 13 24 13 24Z"/><circle cx="24" cy="18" r="4.5"/></svg>
+            </div>
+            <p class="event-card__label">Địa điểm</p>
+            <h3>[Tên nhà hàng / địa điểm]</h3>
+            <p>[Địa chỉ đầy đủ]</p>
+          </article>
+        </div>
+
+        <!-- Thay href bên dưới bằng link Google Maps thật -->
+        <div class="event__action reveal">
+          <a class="button button--outline" href="https://maps.google.com" target="_blank" rel="noopener noreferrer">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 10c0 5-8 12-8 12S4 15 4 10a8 8 0 1 1 16 0Z"/><circle cx="12" cy="10" r="2.5"/></svg>
+            Mở Google Maps
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <section class="gallery section" id="gallery">
+      <div class="container">
+        <div class="section-heading reveal">
+          <p class="eyebrow">Our memories</p>
+          <h2>Khoảnh khắc của chúng mình</h2>
+          <p>Mỗi bức ảnh là một mảnh ký ức dịu dàng</p>
+        </div>
+
+        <div class="slider reveal" aria-roledescription="carousel" aria-label="Album ảnh cưới">
+          <div class="slider__viewport">
+            <div class="slider__track" id="sliderTrack">
+              <button class="slide" type="button" aria-label="Xem ảnh cưới 1">
+                <img src="images/wedding-1.jpg" alt="Ảnh cưới của cô dâu và chú rể 1">
+              </button>
+              <button class="slide" type="button" aria-label="Xem ảnh cưới 2">
+                <img src="images/wedding-2.jpg" alt="Ảnh cưới của cô dâu và chú rể 2">
+              </button>
+              <button class="slide" type="button" aria-label="Xem ảnh cưới 3">
+                <img src="images/wedding-3.jpg" alt="Ảnh cưới của cô dâu và chú rể 3">
+              </button>
+              <button class="slide" type="button" aria-label="Xem ảnh cưới 4">
+                <img src="images/wedding-4.jpg" alt="Ảnh cưới của cô dâu và chú rể 4">
+              </button>
+            </div>
+          </div>
+
+          <button class="slider__button slider__button--prev" id="prevSlide" type="button" aria-label="Ảnh trước">
+            <svg viewBox="0 0 24 24"><path d="m15 18-6-6 6-6"/></svg>
+          </button>
+          <button class="slider__button slider__button--next" id="nextSlide" type="button" aria-label="Ảnh tiếp theo">
+            <svg viewBox="0 0 24 24"><path d="m9 18 6-6-6-6"/></svg>
+          </button>
+          <div class="slider__dots" id="sliderDots" aria-label="Chọn ảnh"></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="gift section" id="gift">
+      <div class="container">
+        <div class="section-heading reveal">
+          <p class="eyebrow">Wedding gift</p>
+          <h2>Gửi quà mừng</h2>
+          <p>Tình cảm và lời chúc của bạn là món quà quý giá nhất với chúng tôi</p>
+        </div>
+
+        <div class="gift__layout reveal">
+          <form class="gift-form" id="giftForm" novalidate>
+            <div class="form-field">
+              <label for="senderName">Tên người gửi</label>
+              <input id="senderName" name="senderName" type="text" autocomplete="name" placeholder="Nhập tên của bạn">
+            </div>
+
+            <div class="form-field">
+              <label for="wishMessage">Lời chúc</label>
+              <textarea id="wishMessage" name="wishMessage" rows="4" placeholder="Gửi đôi lời chúc đến cô dâu và chú rể..."></textarea>
+            </div>
+
+            <fieldset class="recipient-picker">
+              <legend>Chọn người nhận quà</legend>
+              <div class="recipient-picker__options">
+                <label>
+                  <input type="radio" name="recipient" value="bride" checked>
+                  <span>Cô dâu</span>
+                </label>
+                <label>
+                  <input type="radio" name="recipient" value="groom">
+                  <span>Chú rể</span>
+                </label>
+              </div>
+            </fieldset>
+
+            <button class="button button--primary button--full" type="submit">
+              Tôi đã gửi quà / Gửi lời chúc
+            </button>
+            <p class="form-note">Thông tin chỉ được xử lý trên thiết bị của bạn và không gửi lên máy chủ.</p>
+          </form>
+
+          <aside class="bank-card" id="bankCard" aria-live="polite">
+            <div class="bank-card__heading">
+              <span class="bank-card__badge" id="recipientBadge">Cô dâu</span>
+              <p>Quét mã QR để gửi quà mừng</p>
+            </div>
+            <div class="bank-card__qr">
+              <img id="bankQr" src="images/qr-bride.png" alt="Mã QR ngân hàng của cô dâu">
+            </div>
+            <dl class="bank-card__details">
+              <div>
+                <dt>Chủ tài khoản</dt>
+                <dd id="accountName">THU THỦY</dd>
+              </div>
+              <div>
+                <dt>Số tài khoản</dt>
+                <dd>
+                  <span id="accountNumber">0000 0000 0000</span>
+                  <button class="copy-button" id="copyAccount" type="button" aria-label="Sao chép số tài khoản">Sao chép</button>
+                </dd>
+              </div>
+              <div>
+                <dt>Ngân hàng</dt>
+                <dd id="bankName">[TÊN NGÂN HÀNG]</dd>
+              </div>
+            </dl>
+          </aside>
+        </div>
+      </div>
+    </section>
+
+    <section class="closing section">
+      <div class="container container--narrow reveal">
+        <p class="closing__script">Thank you</p>
+        <h2>Hẹn gặp bạn trong ngày vui</h2>
+        <p>
+          Sự hiện diện của bạn là niềm vinh hạnh và góp phần làm cho ngày cưới
+          của chúng tôi thêm trọn vẹn.
+        </p>
+        <div class="couple-signature couple-signature--light">
+          <span>Thu Thủy</span>
+          <small>&amp;</small>
+          <span>Thành Đạt</span>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <p>Made with love for our wedding day</p>
+  </footer>
+
+  <!-- Lightbox ảnh cưới -->
+  <div class="modal lightbox" id="lightbox" aria-hidden="true" role="dialog" aria-modal="true" aria-label="Xem ảnh cưới">
+    <button class="modal__backdrop" type="button" data-close-modal aria-label="Đóng ảnh"></button>
+    <div class="lightbox__content">
+      <button class="modal__close" type="button" data-close-modal aria-label="Đóng">
+        <svg viewBox="0 0 24 24"><path d="m6 6 12 12M18 6 6 18"/></svg>
+      </button>
+      <img id="lightboxImage" src="" alt="">
+    </div>
+  </div>
+
+  <!-- Modal cảm ơn -->
+  <div class="modal thank-modal" id="thankModal" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="thankTitle">
+    <button class="modal__backdrop" type="button" data-close-modal aria-label="Đóng lời cảm ơn"></button>
+    <div class="thank-modal__content">
+      <button class="modal__close modal__close--dark" type="button" data-close-modal aria-label="Đóng">
+        <svg viewBox="0 0 24 24"><path d="m6 6 12 12M18 6 6 18"/></svg>
+      </button>
+      <div class="thank-modal__heart" aria-hidden="true">♥</div>
+      <p class="eyebrow">Thank you</p>
+      <h2 id="thankTitle">Cảm ơn bạn!</h2>
+      <p id="thankMessage"></p>
+      <button class="button button--primary" type="button" data-close-modal>Đóng</button>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
