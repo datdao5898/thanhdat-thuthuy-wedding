@@ -1,5 +1,5 @@
 document.addEventListener("DOMContentLoaded", () => {
-  // ===== Dữ liệu dễ chỉnh sửa =====
+  // ===== Du lieu de chinh sua =====
   const bankAccounts = {
     bride: {
       label: "Cô dâu",
@@ -17,8 +17,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   };
 
-  // Ảnh dự phòng giúp giao diện vẫn đẹp khi chưa có ảnh trong thư mục images.
-  // Khi bạn thêm ảnh thật đúng tên file, trình duyệt sẽ tự ưu tiên ảnh của bạn.
+  // Anh du phong giup giao dien van dep khi chua co anh trong thu muc images.
   const fallbackWeddingImages = [
     "https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=1600&q=85",
     "https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=1600&q=85",
@@ -45,17 +44,34 @@ document.addEventListener("DOMContentLoaded", () => {
     return `data:image/svg+xml;charset=UTF-8,${encodeURIComponent(svg)}`;
   };
 
-  // ===== Cá nhân hóa lời mời từ ?name=... =====
+  // ===== Smooth scroll =====
+  const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  if (window.Lenis && !prefersReducedMotion) {
+    const lenis = new Lenis({
+      duration: 1.05,
+      easing: (time) => Math.min(1, 1.001 - Math.pow(2, -10 * time)),
+      smoothWheel: true
+    });
+
+    const raf = (time) => {
+      lenis.raf(time);
+      requestAnimationFrame(raf);
+    };
+
+    requestAnimationFrame(raf);
+  }
+
+  // ===== Ca nhan hoa loi moi tu ?name=... =====
   const params = new URLSearchParams(window.location.search);
   const guestName = (params.get("name") || "").trim();
   const guestGreeting = document.getElementById("guestGreeting");
 
-  if (guestName) {
+  if (guestName && guestGreeting) {
     guestGreeting.textContent = `Thân mời anh/chị ${guestName} đến dự hôn lễ của chúng tôi`;
     document.title = `Thiệp mời ${guestName} | Lễ thành hôn`;
   }
 
-  // ===== Ảnh dự phòng =====
+  // ===== Anh du phong =====
   const galleryImages = [...document.querySelectorAll(".slide img")];
   galleryImages.forEach((image, index) => {
     image.addEventListener("error", () => {
@@ -65,7 +81,6 @@ document.addEventListener("DOMContentLoaded", () => {
     }, { once: true });
   });
 
-  // Hero và ảnh nền cuối trang dùng biến CSS khi ảnh local chưa tồn tại.
   const preloadHero = new Image();
   preloadHero.onerror = () => {
     document.querySelector(".hero").style.backgroundImage =
@@ -81,50 +96,91 @@ document.addEventListener("DOMContentLoaded", () => {
   preloadClosing.src = "images/wedding-4.jpg";
 
   // ===== Slider / carousel =====
-  const sliderTrack = document.getElementById("sliderTrack");
+  const sliderElement = document.getElementById("weddingSlider");
+  const sliderTrack = sliderElement?.querySelector(".splide__list");
   const slides = [...document.querySelectorAll(".slide")];
-  const dotsContainer = document.getElementById("sliderDots");
-  const previousButton = document.getElementById("prevSlide");
-  const nextButton = document.getElementById("nextSlide");
+  let splideGallery = null;
   let currentSlide = 0;
-  let touchStartX = 0;
+  let goToSlide = () => {};
 
-  const goToSlide = (index) => {
-    currentSlide = (index + slides.length) % slides.length;
-    sliderTrack.style.transform = `translateX(-${currentSlide * 100}%)`;
-
-    [...dotsContainer.children].forEach((dot, dotIndex) => {
-      const isActive = dotIndex === currentSlide;
-      dot.classList.toggle("is-active", isActive);
-      dot.setAttribute("aria-current", isActive ? "true" : "false");
+  if (window.Splide && sliderElement) {
+    splideGallery = new Splide(sliderElement, {
+      type: "loop",
+      speed: 760,
+      easing: "cubic-bezier(0.22, 0.61, 0.36, 1)",
+      gap: "1rem",
+      arrows: true,
+      pagination: true,
+      drag: true,
+      keyboard: "global",
+      lazyLoad: "nearby",
+      classes: {
+        arrows: "splide__arrows slider__arrows",
+        arrow: "splide__arrow slider__arrow",
+        prev: "splide__arrow--prev slider__arrow--prev",
+        next: "splide__arrow--next slider__arrow--next",
+        pagination: "splide__pagination slider__pagination",
+        page: "splide__pagination__page slider__pagination-page"
+      }
     });
-  };
 
-  slides.forEach((_, index) => {
-    const dot = document.createElement("button");
-    dot.className = "slider__dot";
-    dot.type = "button";
-    dot.setAttribute("aria-label", `Đi đến ảnh ${index + 1}`);
-    dot.addEventListener("click", () => goToSlide(index));
-    dotsContainer.appendChild(dot);
-  });
+    splideGallery.mount();
+    goToSlide = (index) => splideGallery.go(index);
+  } else if (sliderElement && sliderTrack) {
+    sliderElement.classList.add("slider--fallback");
+    const dotsContainer = document.createElement("div");
+    const previousButton = document.createElement("button");
+    const nextButton = document.createElement("button");
+    let touchStartX = 0;
 
-  previousButton.addEventListener("click", () => goToSlide(currentSlide - 1));
-  nextButton.addEventListener("click", () => goToSlide(currentSlide + 1));
-  goToSlide(0);
+    previousButton.className = "splide__arrow splide__arrow--prev";
+    nextButton.className = "splide__arrow splide__arrow--next";
+    previousButton.type = "button";
+    nextButton.type = "button";
+    previousButton.setAttribute("aria-label", "Previous image");
+    nextButton.setAttribute("aria-label", "Next image");
+    previousButton.innerHTML = '<svg viewBox="0 0 24 24"><path d="m15 18-6-6 6-6"/></svg>';
+    nextButton.innerHTML = '<svg viewBox="0 0 24 24"><path d="m9 18 6-6-6-6"/></svg>';
+    dotsContainer.className = "splide__pagination";
+    sliderElement.append(previousButton, nextButton, dotsContainer);
 
-  sliderTrack.addEventListener("touchstart", (event) => {
-    touchStartX = event.changedTouches[0].clientX;
-  }, { passive: true });
+    goToSlide = (index) => {
+      currentSlide = (index + slides.length) % slides.length;
+      sliderTrack.style.transform = `translateX(-${currentSlide * 100}%)`;
 
-  sliderTrack.addEventListener("touchend", (event) => {
-    const distance = event.changedTouches[0].clientX - touchStartX;
-    if (Math.abs(distance) > 45) {
-      goToSlide(currentSlide + (distance < 0 ? 1 : -1));
-    }
-  }, { passive: true });
+      [...dotsContainer.children].forEach((dot, dotIndex) => {
+        const isActive = dotIndex === currentSlide;
+        dot.classList.toggle("is-active", isActive);
+        dot.setAttribute("aria-current", isActive ? "true" : "false");
+      });
+    };
 
-  // ===== Modal dùng chung =====
+    slides.forEach((_, index) => {
+      const dot = document.createElement("button");
+      dot.className = "splide__pagination__page";
+      dot.type = "button";
+      dot.setAttribute("aria-label", `Go to image ${index + 1}`);
+      dot.addEventListener("click", () => goToSlide(index));
+      dotsContainer.appendChild(dot);
+    });
+
+    previousButton.addEventListener("click", () => goToSlide(currentSlide - 1));
+    nextButton.addEventListener("click", () => goToSlide(currentSlide + 1));
+    sliderTrack.addEventListener("touchstart", (event) => {
+      touchStartX = event.changedTouches[0].clientX;
+    }, { passive: true });
+
+    sliderTrack.addEventListener("touchend", (event) => {
+      const distance = event.changedTouches[0].clientX - touchStartX;
+      if (Math.abs(distance) > 45) {
+        goToSlide(currentSlide + (distance < 0 ? 1 : -1));
+      }
+    }, { passive: true });
+
+    goToSlide(0);
+  }
+
+  // ===== Modal dung chung =====
   let lastFocusedElement = null;
 
   const openModal = (modal) => {
@@ -153,15 +209,23 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     if (event.key === "ArrowLeft" && !document.querySelector(".modal.is-open")) {
-      goToSlide(currentSlide - 1);
+      if (splideGallery) {
+        splideGallery.go("<");
+      } else {
+        goToSlide(currentSlide - 1);
+      }
     }
 
     if (event.key === "ArrowRight" && !document.querySelector(".modal.is-open")) {
-      goToSlide(currentSlide + 1);
+      if (splideGallery) {
+        splideGallery.go(">");
+      } else {
+        goToSlide(currentSlide + 1);
+      }
     }
   });
 
-  // ===== Lightbox ảnh =====
+  // ===== Lightbox anh =====
   const lightbox = document.getElementById("lightbox");
   const lightboxImage = document.getElementById("lightboxImage");
 
@@ -174,7 +238,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 
-  // ===== Chọn tài khoản nhận quà =====
+  // ===== Chon tai khoan nhan qua =====
   const bankQr = document.getElementById("bankQr");
   const recipientBadge = document.getElementById("recipientBadge");
   const accountName = document.getElementById("accountName");
@@ -218,7 +282,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   showBankAccount("bride");
 
-  // ===== Form và lời cảm ơn =====
+  // ===== Form va loi cam on =====
   const giftForm = document.getElementById("giftForm");
   const thankModal = document.getElementById("thankModal");
   const thankTitle = document.getElementById("thankTitle");
@@ -243,7 +307,7 @@ document.addEventListener("DOMContentLoaded", () => {
     openModal(thankModal);
   });
 
-  // ===== Animation nhẹ khi cuộn =====
+  // ===== Animation nhe khi cuon =====
   const revealItems = document.querySelectorAll(".reveal");
   if ("IntersectionObserver" in window) {
     const observer = new IntersectionObserver((entries, currentObserver) => {

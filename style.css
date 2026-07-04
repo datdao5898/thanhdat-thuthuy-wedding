@@ -567,7 +567,7 @@ h2 {
 .slider {
   margin-inline: auto;
   max-width: 960px;
-  padding-inline: 42px;
+  padding-inline: 46px;
   position: relative;
 }
 
@@ -577,9 +577,13 @@ h2 {
   overflow: hidden;
 }
 
-.slider__track {
+.slider .splide__list {
   display: flex;
-  transition: transform 0.55s cubic-bezier(0.22, 0.61, 0.36, 1);
+}
+
+.splide__slide {
+  background: #dfccc4;
+  flex: 0 0 100%;
 }
 
 .slide {
@@ -587,10 +591,11 @@ h2 {
   background: #dfccc4;
   border: 0;
   cursor: zoom-in;
-  flex: 0 0 100%;
+  display: block;
   height: clamp(360px, 58vw, 610px);
   overflow: hidden;
   padding: 0;
+  width: 100%;
 }
 
 .slide img {
@@ -604,7 +609,7 @@ h2 {
   transform: scale(1.025);
 }
 
-.slider__button {
+.slider .splide__arrow {
   align-items: center;
   background: var(--white);
   border: 0;
@@ -622,12 +627,13 @@ h2 {
   z-index: 2;
 }
 
-.slider__button:hover {
+.slider .splide__arrow:hover {
   background: var(--rose-dark);
   color: var(--white);
+  opacity: 1;
 }
 
-.slider__button svg {
+.slider .splide__arrow svg {
   fill: none;
   height: 22px;
   stroke: currentColor;
@@ -637,35 +643,42 @@ h2 {
   width: 22px;
 }
 
-.slider__button--prev {
+.slider .splide__arrow--prev {
   left: 17px;
 }
 
-.slider__button--next {
+.slider .splide__arrow--next {
   right: 17px;
 }
 
-.slider__dots {
-  display: flex;
+.slider .splide__pagination {
+  bottom: auto;
   gap: 9px;
-  justify-content: center;
   margin-top: 24px;
+  padding: 0;
+  position: static;
 }
 
-.slider__dot {
+.slider .splide__pagination__page {
   background: #cfb6ac;
   border: 0;
   border-radius: 50%;
   cursor: pointer;
   height: 7px;
+  margin: 0;
+  opacity: 1;
   padding: 0;
   transition: background-color 0.2s ease, transform 0.2s ease;
   width: 7px;
 }
 
-.slider__dot.is-active {
+.slider .splide__pagination__page.is-active {
   background: var(--rose-dark);
   transform: scale(1.45);
+}
+
+.slider.slider--fallback .splide__list {
+  transition: transform 0.55s cubic-bezier(0.22, 0.61, 0.36, 1);
 }
 
 /* ===== Form quà mừng ===== */
@@ -1161,17 +1174,17 @@ h2 {
     min-height: 390px;
   }
 
-  .slider__button {
+  .slider .splide__arrow {
     background: rgba(255, 255, 255, 0.9);
     height: 42px;
     width: 42px;
   }
 
-  .slider__button--prev {
+  .slider .splide__arrow--prev {
     left: 10px;
   }
 
-  .slider__button--next {
+  .slider .splide__arrow--next {
     right: 10px;
   }
 
