@@ -13,7 +13,12 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@splidejs/splide@4.1.4/dist/css/splide.min.css">
   <link rel="stylesheet" href="style.css">
 </head>
-<body class="intro-locked">
+<body class="envelope-opened">
+  <script>
+    if ((new URLSearchParams(window.location.search).get("name") || "").trim()) {
+      document.body.className = "intro-locked";
+    }
+  </script>
   <div class="envelope-intro" id="envelopeIntro" aria-label="Thiệp mời đóng">
     <button class="envelope" id="openEnvelope" type="button" aria-label="Click để mở thiệp mời">
       <span class="envelope__body" aria-hidden="true"></span>
@@ -29,6 +34,7 @@
       <span class="envelope__seal" aria-hidden="true">
         <span>囍</span>
       </span>
+      <span class="envelope__recipient" id="envelopeRecipient"></span>
       <span class="envelope__hint">click envelope to open</span>
     </button>
   </div>

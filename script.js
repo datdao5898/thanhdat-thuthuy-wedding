@@ -44,13 +44,38 @@ document.addEventListener("DOMContentLoaded", () => {
     return `data:image/svg+xml;charset=UTF-8,${encodeURIComponent(svg)}`;
   };
 
+  // ===== Ca nhan hoa theo ?name=... =====
+  const params = new URLSearchParams(window.location.search);
+  const guestName = (params.get("name") || "").trim();
+  const hasGuestName = Boolean(guestName);
+  const guestGreeting = document.getElementById("guestGreeting");
+
+  if (hasGuestName && guestGreeting) {
+    guestGreeting.textContent = `Thân mời anh/chị ${guestName} đến dự hôn lễ của chúng tôi`;
+    document.title = `Thiệp mời ${guestName} | Lễ thành hôn`;
+  }
+
   // ===== Envelope opening intro =====
   const envelopeIntro = document.getElementById("envelopeIntro");
   const openEnvelopeButton = document.getElementById("openEnvelope");
+  const envelopeRecipient = document.getElementById("envelopeRecipient");
   const siteShell = document.getElementById("siteShell");
 
+  if (!hasGuestName) {
+    document.body.classList.add("envelope-opened");
+    document.body.classList.remove("intro-locked", "envelope-opening");
+    envelopeIntro?.setAttribute("aria-hidden", "true");
+  } else {
+    document.body.classList.add("intro-locked");
+    document.body.classList.remove("envelope-opened");
+    envelopeIntro?.removeAttribute("aria-hidden");
+    if (envelopeRecipient) {
+      envelopeRecipient.textContent = `Kính mời: ${guestName}`;
+    }
+  }
+
   const openInvitation = () => {
-    if (!envelopeIntro || envelopeIntro.classList.contains("is-opening")) return;
+    if (!hasGuestName || !envelopeIntro || envelopeIntro.classList.contains("is-opening")) return;
 
     envelopeIntro.classList.add("is-opening");
     document.body.classList.add("envelope-opening");
@@ -82,16 +107,6 @@ document.addEventListener("DOMContentLoaded", () => {
     };
 
     requestAnimationFrame(raf);
-  }
-
-  // ===== Ca nhan hoa loi moi tu ?name=... =====
-  const params = new URLSearchParams(window.location.search);
-  const guestName = (params.get("name") || "").trim();
-  const guestGreeting = document.getElementById("guestGreeting");
-
-  if (guestName && guestGreeting) {
-    guestGreeting.textContent = `Thân mời anh/chị ${guestName} đến dự hôn lễ của chúng tôi`;
-    document.title = `Thiệp mời ${guestName} | Lễ thành hôn`;
   }
 
   // ===== Anh du phong =====

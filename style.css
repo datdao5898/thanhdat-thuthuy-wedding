@@ -407,6 +407,25 @@ body.envelope-opened .envelope-intro {
   position: relative;
 }
 
+.envelope__recipient {
+  bottom: 18%;
+  color: rgba(65, 48, 30, 0.72);
+  font-family: var(--serif);
+  font-size: clamp(0.72rem, 2.8vw, 0.95rem);
+  font-weight: 600;
+  left: 50%;
+  letter-spacing: 0.06em;
+  max-width: 72%;
+  overflow: hidden;
+  position: absolute;
+  text-overflow: ellipsis;
+  text-transform: uppercase;
+  transform: translateX(-50%);
+  transition: opacity 0.25s ease;
+  white-space: nowrap;
+  z-index: 10;
+}
+
 .envelope-intro.is-opening .envelope__seal {
   opacity: 0;
   transform: translate(-50%, -50%) scale(0.62) rotate(20deg);
@@ -433,6 +452,10 @@ body.envelope-opened .envelope-intro {
 }
 
 .envelope-intro.is-opening .envelope__hint {
+  opacity: 0;
+}
+
+.envelope-intro.is-opening .envelope__recipient {
   opacity: 0;
 }
 
