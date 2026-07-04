@@ -68,27 +68,40 @@ button {
 }
 
 .site-shell {
+  margin-inline: auto;
+  max-width: 520px;
   opacity: 1;
-  transform-origin: top center;
+  transform-origin: center center;
 }
 
 body:not(.envelope-opened) .site-shell {
-  filter: blur(8px);
+  filter: blur(10px);
+  height: 100svh;
+  left: 50%;
   opacity: 0;
+  overflow: hidden;
   pointer-events: none;
-  transform: scale(1.18);
+  position: fixed;
+  top: 50%;
+  transform: translate(-50%, -50%) scale(1.22);
+  width: min(100vw, 520px);
+  z-index: 150;
 }
 
 body.envelope-opening .site-shell {
-  animation: shellZoomOut 1.35s 0.72s cubic-bezier(0.2, 0.76, 0.26, 1) both;
+  animation: shellZoomOut 1.55s 0.88s cubic-bezier(0.16, 0.84, 0.22, 1) both;
   pointer-events: none;
 }
 
 body.envelope-opened .site-shell {
   filter: none;
+  height: auto;
   opacity: 1;
+  overflow: visible;
   pointer-events: auto;
+  position: static;
   transform: none;
+  width: auto;
 }
 
 .envelope-intro {
@@ -106,7 +119,7 @@ body.envelope-opened .site-shell {
 }
 
 .envelope-intro.is-opening {
-  animation: introFade 0.8s 1.75s ease forwards;
+  animation: introFade 0.72s 2.05s ease forwards;
   pointer-events: none;
 }
 
@@ -185,7 +198,7 @@ body.envelope-opened .envelope-intro {
 
 .envelope-intro.is-opening .envelope__flap--front {
   filter: brightness(1.12);
-  transform: rotateX(174deg);
+  transform: rotateX(178deg);
 }
 
 .envelope__inner-card {
@@ -234,7 +247,7 @@ body.envelope-opened .envelope-intro {
 }
 
 .envelope-intro.is-opening .envelope__inner-card {
-  animation: cardPullOut 1.8s 0.25s cubic-bezier(0.2, 0.78, 0.28, 1) forwards;
+  animation: cardPullOut 2.05s 0.18s cubic-bezier(0.16, 0.84, 0.22, 1) forwards;
 }
 
 .envelope__lace {
@@ -328,9 +341,18 @@ body.envelope-opened .envelope-intro {
     opacity: 1;
     transform: translateY(34%) scale(0.82);
   }
-  48% {
+  42% {
     border-radius: 18px;
-    transform: translateY(-44%) scale(1.02);
+    opacity: 1;
+    transform: translateY(-46%) scale(1.02);
+  }
+  72% {
+    border-radius: 14px;
+    left: 50%;
+    opacity: 0.96;
+    top: 50%;
+    transform: translate(-50%, -50%) scale(1.04);
+    width: min(84vw, 440px);
   }
   100% {
     border-radius: 0;
@@ -338,21 +360,26 @@ body.envelope-opened .envelope-intro {
     left: 50%;
     opacity: 0;
     top: 50%;
-    transform: translate(-50%, -50%) scale(1.22);
+    transform: translate(-50%, -50%) scale(1.08);
     width: min(100vw, 520px);
   }
 }
 
 @keyframes shellZoomOut {
   from {
-    filter: blur(8px);
+    filter: blur(10px);
     opacity: 0;
-    transform: scale(1.18);
+    transform: translate(-50%, -50%) scale(1.22);
+  }
+  45% {
+    filter: blur(4px);
+    opacity: 0.68;
+    transform: translate(-50%, -50%) scale(1.1);
   }
   to {
     filter: blur(0);
     opacity: 1;
-    transform: scale(1);
+    transform: translate(-50%, -50%) scale(1);
   }
 }
 
@@ -1287,6 +1314,11 @@ h2 {
     padding-block: 28px;
   }
 
+  body.intro-locked,
+  body.envelope-opening {
+    padding-block: 0;
+  }
+
   body::before {
     color: rgba(255, 255, 255, 0.5);
     content: "Thu Thủy & Thành Đạt";
@@ -1298,6 +1330,11 @@ h2 {
     position: fixed;
     top: 12vh;
     transform: rotate(-8deg);
+    transition: opacity 0.35s ease;
+  }
+
+  body:not(.envelope-opened)::before {
+    opacity: 0;
   }
 
   .story-panel,
