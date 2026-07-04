@@ -174,21 +174,13 @@
 
     <section class="gift story-section" id="gift">
       <div class="section-heading reveal">
-        <p class="eyebrow">response & gift</p>
-        <h2>Lời chúc & quà mừng</h2>
-        <p>Gửi đôi lời chúc, xác nhận tham dự và chọn mã QR nếu bạn muốn gửi quà mừng.</p>
+        <p class="eyebrow">wedding gift</p>
+        <h2>Gửi quà mừng</h2>
+        <p>Tình cảm và lời chúc của bạn là món quà quý giá nhất với chúng tôi.</p>
       </div>
 
       <div class="gift__layout reveal">
         <form class="gift-form" id="giftForm" novalidate>
-          <div class="gift-form__intro">
-            <span>01</span>
-            <div>
-              <p>Phản hồi tham dự</p>
-              <small>Lời chúc của bạn sẽ xuất hiện trong sổ lời chúc bên dưới.</small>
-            </div>
-          </div>
-
           <div class="form-field">
             <label for="senderName">Tên người gửi</label>
             <input id="senderName" name="senderName" type="text" autocomplete="name" placeholder="Nhập tên của bạn">
@@ -199,39 +191,7 @@
             <textarea id="wishMessage" name="wishMessage" rows="4" placeholder="Gửi đôi lời chúc đến cô dâu và chú rể..."></textarea>
           </div>
 
-          <fieldset class="recipient-picker attendance-picker">
-            <legend>Xác nhận tham dự</legend>
-            <div class="recipient-picker__options attendance-picker__options">
-              <label>
-                <input type="radio" name="attendance" value="attending" checked>
-                <span>Sẽ tham dự</span>
-              </label>
-              <label>
-                <input type="radio" name="attendance" value="maybe">
-                <span>Chưa chắc</span>
-              </label>
-              <label>
-                <input type="radio" name="attendance" value="declined">
-                <span>Không thể</span>
-              </label>
-            </div>
-          </fieldset>
-
-          <button class="button button--dark button--full" type="submit">
-            Gửi lời chúc / Xác nhận
-          </button>
-        </form>
-
-        <aside class="bank-card" id="bankCard" aria-live="polite">
-          <div class="gift-form__intro bank-card__intro">
-            <span>02</span>
-            <div>
-              <p>Gửi quà mừng</p>
-              <small>Chọn cô dâu hoặc chú rể để hiện đúng mã QR.</small>
-            </div>
-          </div>
-
-          <fieldset class="recipient-picker bank-card__recipient-picker">
+          <fieldset class="recipient-picker">
             <legend>Chọn người nhận quà</legend>
             <div class="recipient-picker__options">
               <label>
@@ -245,6 +205,12 @@
             </div>
           </fieldset>
 
+          <button class="button button--dark button--full" type="submit">
+            Tôi đã gửi quà / Gửi lời chúc
+          </button>
+        </form>
+
+        <aside class="bank-card" id="bankCard" aria-live="polite">
           <span class="bank-card__badge" id="recipientBadge">Cô dâu</span>
           <p>Quét mã QR để gửi quà mừng</p>
           <div class="bank-card__qr">

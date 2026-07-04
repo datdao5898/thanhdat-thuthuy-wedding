@@ -1136,47 +1136,6 @@ h2 {
   padding: 24px;
 }
 
-.gift-form__intro {
-  align-items: flex-start;
-  background: rgba(255, 255, 255, 0.58);
-  border: 1px solid rgba(185, 147, 83, 0.18);
-  border-radius: 18px;
-  display: flex;
-  gap: 12px;
-  margin-bottom: 22px;
-  padding: 14px;
-  text-align: left;
-}
-
-.gift-form__intro span {
-  align-items: center;
-  background: var(--dark);
-  border-radius: 999px;
-  color: var(--paper);
-  display: inline-flex;
-  flex: 0 0 34px;
-  font-size: 0.72rem;
-  font-weight: 700;
-  height: 34px;
-  justify-content: center;
-  letter-spacing: 0.08em;
-}
-
-.gift-form__intro p {
-  color: var(--ink);
-  font-family: var(--serif);
-  font-size: 1.08rem;
-  line-height: 1.25;
-}
-
-.gift-form__intro small {
-  color: var(--muted);
-  display: block;
-  font-size: 0.74rem;
-  line-height: 1.45;
-  margin-top: 3px;
-}
-
 .form-field {
   margin-bottom: 18px;
 }
@@ -1222,10 +1181,6 @@ h2 {
   grid-template-columns: 1fr 1fr;
 }
 
-.attendance-picker__options {
-  grid-template-columns: repeat(3, 1fr);
-}
-
 .recipient-picker label {
   cursor: pointer;
 }
@@ -1257,15 +1212,6 @@ h2 {
 
 .bank-card {
   text-align: center;
-}
-
-.bank-card__intro {
-  margin-bottom: 18px;
-}
-
-.bank-card__recipient-picker {
-  margin-bottom: 18px;
-  text-align: left;
 }
 
 .bank-card__badge {
@@ -1620,10 +1566,6 @@ h2 {
     padding-block: 28px;
   }
 
-  .site-shell {
-    max-width: 760px;
-  }
-
   body.intro-locked,
   body.envelope-opening {
     padding-block: 0;
@@ -1636,30 +1578,8 @@ h2 {
     box-shadow: none;
   }
 
-  .story-panel,
-  .paper-section,
-  .story-section {
-    max-width: 760px;
-  }
-
   .hero {
     border-radius: 34px 34px 0 0;
-  }
-
-  .gift__layout {
-    align-items: start;
-    gap: 20px;
-    grid-template-columns: minmax(0, 1.08fr) minmax(260px, 0.92fr);
-    max-width: 720px;
-  }
-
-  .bank-card {
-    position: sticky;
-    top: 24px;
-  }
-
-  .wishes-board {
-    max-width: 620px;
   }
 
   .footer {
@@ -1682,10 +1602,6 @@ h2 {
 
   .hero__verse {
     font-size: 0.7rem;
-  }
-
-  .attendance-picker__options {
-    grid-template-columns: 1fr;
   }
 
   .slide {

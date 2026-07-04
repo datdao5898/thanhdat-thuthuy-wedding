@@ -512,25 +512,23 @@ document.addEventListener("DOMContentLoaded", () => {
     const senderName = document.getElementById("senderName").value.trim();
     const wishMessage = document.getElementById("wishMessage").value.trim();
     const selectedRecipient = document.querySelector('input[name="recipient"]:checked')?.value || "bride";
-    const selectedAttendance = document.querySelector('input[name="attendance"]:checked')?.value || "attending";
 
     saveWish(normalizeWish({
       name: senderName || "Khách mời",
       message: wishMessage,
       createdAt: new Date().toISOString(),
-      recipient: selectedRecipient,
-      attendance: selectedAttendance
+      recipient: selectedRecipient
     }));
 
     if (senderName) {
       thankTitle.textContent = `Cảm ơn ${senderName}!`;
       thankMessage.textContent =
-        `Cảm ơn anh/chị ${senderName} rất nhiều vì lời chúc tốt đẹp. ` +
+        `Cảm ơn anh/chị ${senderName} rất nhiều vì món quà và lời chúc tốt đẹp. ` +
         "Sự hiện diện và tình cảm của anh/chị là niềm vui lớn với chúng tôi.";
     } else {
       thankTitle.textContent = "Cảm ơn bạn!";
       thankMessage.textContent =
-        "Cảm ơn anh/chị rất nhiều vì lời chúc tốt đẹp. " +
+        "Cảm ơn anh/chị rất nhiều vì món quà và lời chúc tốt đẹp. " +
         "Sự hiện diện và tình cảm của anh/chị là niềm vui lớn với chúng tôi.";
     }
 

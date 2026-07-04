@@ -164,7 +164,8 @@ function normalizeRecipient_(value) {
 function normalizeAttendance_(value) {
   if (value === "declined") return "Không thể tham dự";
   if (value === "maybe") return "Chưa chắc";
-  return "Sẽ tham dự";
+  if (value === "attending") return "Sẽ tham dự";
+  return "";
 }
 
 function json_(payload) {
