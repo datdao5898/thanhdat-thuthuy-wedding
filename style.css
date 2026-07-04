@@ -72,11 +72,10 @@ button {
   max-width: 520px;
   opacity: 1;
   transform-origin: center center;
-  will-change: transform, opacity, filter;
+  will-change: transform, opacity;
 }
 
 body:not(.envelope-opened) .site-shell {
-  filter: blur(4px);
   height: 100svh;
   left: 50%;
   opacity: 0;
@@ -95,7 +94,6 @@ body.envelope-opening .site-shell {
 }
 
 body.envelope-opened .site-shell {
-  filter: none;
   height: auto;
   opacity: 1;
   overflow: visible;
@@ -500,17 +498,14 @@ body.envelope-opened .envelope-intro {
 
 @keyframes shellZoomOut {
   from {
-    filter: blur(5px);
     opacity: 0;
     transform: translate(-50%, -50%) scale(0.62);
   }
   45% {
-    filter: blur(2px);
     opacity: 0.68;
     transform: translate(-50%, -50%) scale(0.84);
   }
   to {
-    filter: blur(0);
     opacity: 1;
     transform: translate(-50%, -50%) scale(1);
   }
