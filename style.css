@@ -1450,29 +1450,11 @@ h2 {
     padding-block: 0;
   }
 
-  body::before {
-    color: rgba(255, 255, 255, 0.5);
-    content: "Thu Thủy & Thành Đạt";
-    font-family: var(--script);
-    font-size: clamp(3rem, 7vw, 6rem);
-    left: 6vw;
-    line-height: 0.85;
-    max-width: 340px;
-    position: fixed;
-    top: 12vh;
-    transform: rotate(-8deg);
-    transition: opacity 0.35s ease;
-  }
-
-  body:not(.envelope-opened)::before {
-    opacity: 0;
-  }
-
   .story-panel,
   .paper-section,
   .story-section,
   .footer {
-    box-shadow: 0 20px 90px rgba(0, 0, 0, 0.32);
+    box-shadow: none;
   }
 
   .hero {
