@@ -525,12 +525,12 @@ document.addEventListener("DOMContentLoaded", () => {
     if (senderName) {
       thankTitle.textContent = `Cảm ơn ${senderName}!`;
       thankMessage.textContent =
-        `Cảm ơn anh/chị ${senderName} rất nhiều vì món quà và lời chúc tốt đẹp. ` +
+        `Cảm ơn anh/chị ${senderName} rất nhiều vì lời chúc tốt đẹp. ` +
         "Sự hiện diện và tình cảm của anh/chị là niềm vui lớn với chúng tôi.";
     } else {
       thankTitle.textContent = "Cảm ơn bạn!";
       thankMessage.textContent =
-        "Cảm ơn anh/chị rất nhiều vì món quà và lời chúc tốt đẹp. " +
+        "Cảm ơn anh/chị rất nhiều vì lời chúc tốt đẹp. " +
         "Sự hiện diện và tình cảm của anh/chị là niềm vui lớn với chúng tôi.";
     }
 
