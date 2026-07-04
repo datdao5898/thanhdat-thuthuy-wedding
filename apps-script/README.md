@@ -29,7 +29,7 @@ When `wishes.gs` changes, update `Code.gs` in Apps Script and deploy a new versi
 The script creates a tab named `LoiChuc` with these columns:
 
 ```txt
-Created At | Name | Message | Recipient | Source
+Created At | Name | Message | Recipient | Attendance | Source
 ```
 
 The newest wishes are shown first on the landing page.

@@ -205,10 +205,27 @@
             </div>
           </fieldset>
 
+          <fieldset class="recipient-picker attendance-picker">
+            <legend>Xác nhận tham dự</legend>
+            <div class="recipient-picker__options attendance-picker__options">
+              <label>
+                <input type="radio" name="attendance" value="attending" checked>
+                <span>Sẽ tham dự</span>
+              </label>
+              <label>
+                <input type="radio" name="attendance" value="maybe">
+                <span>Chưa chắc</span>
+              </label>
+              <label>
+                <input type="radio" name="attendance" value="declined">
+                <span>Không thể</span>
+              </label>
+            </div>
+          </fieldset>
+
           <button class="button button--dark button--full" type="submit">
             Tôi đã gửi quà / Gửi lời chúc
           </button>
-          <p class="form-note">Lời chúc sẽ được lưu vào Google Sheet qua Apps Script và hiển thị công khai trong sổ lời chúc.</p>
         </form>
 
         <aside class="bank-card" id="bankCard" aria-live="polite">

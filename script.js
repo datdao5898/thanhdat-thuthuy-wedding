@@ -356,7 +356,8 @@ document.addEventListener("DOMContentLoaded", () => {
     name: (wish?.name || "Khách mời").trim(),
     message: (wish?.message || "").trim(),
     createdAt: wish?.createdAt || new Date().toISOString(),
-    recipient: wish?.recipient || ""
+    recipient: wish?.recipient || "",
+    attendance: wish?.attendance || ""
   });
 
   const buildWishEndpoint = (url, action) => {
@@ -391,7 +392,7 @@ document.addEventListener("DOMContentLoaded", () => {
     wishesList.innerHTML = "";
     const displayWishes = wishes.length ? wishes : sampleWishes;
 
-    displayWishes.slice(0, 12).forEach((wish) => {
+    displayWishes.slice(0, 50).forEach((wish) => {
       const card = document.createElement("article");
       card.className = "wish-card";
 
@@ -423,7 +424,7 @@ document.addEventListener("DOMContentLoaded", () => {
     if (cachedWishes.length) {
       currentWishes = cachedWishes;
       renderWishes(currentWishes);
-      if (wishesStatus) wishesStatus.textContent = "Đang hiển thị nhanh từ bộ nhớ, sổ lời chúc sẽ tự cập nhật.";
+      if (wishesStatus) wishesStatus.textContent = "";
     }
 
     try {
@@ -434,7 +435,7 @@ document.addEventListener("DOMContentLoaded", () => {
       currentWishes = (sharedWishes || []).map(normalizeWish).filter((wish) => wish.message);
       renderWishes(currentWishes);
       cacheWishes(currentWishes);
-      if (wishesStatus) wishesStatus.textContent = "Lời chúc đang được lưu và hiển thị từ Google Sheet.";
+      if (wishesStatus) wishesStatus.textContent = "";
     } catch {
       if (cachedWishes.length) {
         if (wishesStatus) wishesStatus.textContent = "Chưa cập nhật được Google Sheet, đang hiển thị lời chúc đã lưu gần nhất.";
@@ -478,7 +479,7 @@ document.addEventListener("DOMContentLoaded", () => {
           currentWishes = savedWishes.map(normalizeWish).filter((item) => item.message);
           renderWishes(currentWishes);
           cacheWishes(currentWishes);
-          if (wishesStatus) wishesStatus.textContent = "Đã lưu lời chúc vào Google Sheet.";
+          if (wishesStatus) wishesStatus.textContent = "";
         } else {
           await loadWishes();
         }
@@ -511,12 +512,14 @@ document.addEventListener("DOMContentLoaded", () => {
     const senderName = document.getElementById("senderName").value.trim();
     const wishMessage = document.getElementById("wishMessage").value.trim();
     const selectedRecipient = document.querySelector('input[name="recipient"]:checked')?.value || "bride";
+    const selectedAttendance = document.querySelector('input[name="attendance"]:checked')?.value || "attending";
 
     saveWish(normalizeWish({
       name: senderName || "Khách mời",
       message: wishMessage,
       createdAt: new Date().toISOString(),
-      recipient: selectedRecipient
+      recipient: selectedRecipient,
+      attendance: selectedAttendance
     }));
 
     if (senderName) {

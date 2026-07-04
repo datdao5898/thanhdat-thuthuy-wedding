@@ -1181,6 +1181,10 @@ h2 {
   grid-template-columns: 1fr 1fr;
 }
 
+.attendance-picker__options {
+  grid-template-columns: repeat(3, 1fr);
+}
+
 .recipient-picker label {
   cursor: pointer;
 }
@@ -1208,14 +1212,6 @@ h2 {
   background: var(--dark);
   border-color: var(--dark);
   color: var(--paper);
-}
-
-.form-note {
-  color: var(--muted);
-  font-size: 0.7rem;
-  line-height: 1.45;
-  margin-top: 12px;
-  text-align: center;
 }
 
 .bank-card {
@@ -1308,6 +1304,25 @@ h2 {
 .wishes-list {
   display: grid;
   gap: 14px;
+  max-height: min(640px, 72vh);
+  overflow-y: auto;
+  padding-right: 6px;
+  scrollbar-color: rgba(182, 38, 34, 0.38) rgba(255, 255, 255, 0.46);
+  scrollbar-width: thin;
+}
+
+.wishes-list::-webkit-scrollbar {
+  width: 7px;
+}
+
+.wishes-list::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.46);
+  border-radius: 999px;
+}
+
+.wishes-list::-webkit-scrollbar-thumb {
+  background: rgba(182, 38, 34, 0.38);
+  border-radius: 999px;
 }
 
 .wish-card {
@@ -1359,8 +1374,11 @@ h2 {
   color: var(--muted);
   font-size: 0.72rem;
   line-height: 1.5;
-  margin-top: 18px;
   text-align: center;
+}
+
+.wishes-status:not(:empty) {
+  margin-top: 18px;
 }
 
 /* ===== Closing ===== */
@@ -1588,6 +1606,10 @@ h2 {
 
   .hero__verse {
     font-size: 0.7rem;
+  }
+
+  .attendance-picker__options {
+    grid-template-columns: 1fr;
   }
 
   .slide {

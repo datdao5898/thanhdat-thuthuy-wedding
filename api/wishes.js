@@ -7,7 +7,7 @@ const PRIVATE_KEY = (process.env.GOOGLE_PRIVATE_KEY || "").replace(/\\n/g, "\n")
 const TOKEN_URL = "https://oauth2.googleapis.com/token";
 const SHEETS_API = "https://sheets.googleapis.com/v4/spreadsheets";
 const SCOPES = "https://www.googleapis.com/auth/spreadsheets";
-const HEADERS = ["Created At", "Name", "Message", "Recipient", "Source"];
+const HEADERS = ["Created At", "Name", "Message", "Recipient", "Attendance", "Source"];
 
 let cachedToken = {
   value: "",
@@ -127,7 +127,7 @@ const ensureSheet = async () => {
     });
   }
 
-  const headerRange = `${quoteSheetName(SHEET_NAME)}!A1:E1`;
+  const headerRange = `${quoteSheetName(SHEET_NAME)}!A1:F1`;
   const currentHeader = await googleRequest(`/values/${encodeURIComponent(headerRange)}`).catch(() => null);
   const hasHeader = Array.isArray(currentHeader?.values?.[0]) && currentHeader.values[0].join("|") === HEADERS.join("|");
 
@@ -151,16 +151,27 @@ const normalizeRecipient = (value) => {
   return "Cô dâu";
 };
 
-const rowToWish = (row) => ({
-  createdAt: row[0] || new Date().toISOString(),
-  name: row[1] || "Khách mời",
-  message: row[2] || "",
-  recipient: row[3] || ""
-});
+const normalizeAttendance = (value) => {
+  if (value === "declined") return "Không thể tham dự";
+  if (value === "maybe") return "Chưa chắc";
+  return "Sẽ tham dự";
+};
+
+const rowToWish = (row) => {
+  const legacySource = row[4] === "wedding-landing-page";
+
+  return {
+    createdAt: row[0] || new Date().toISOString(),
+    name: row[1] || "Khách mời",
+    message: row[2] || "",
+    recipient: row[3] || "",
+    attendance: legacySource ? "" : row[4] || ""
+  };
+};
 
 const readWishes = async () => {
   await ensureSheet();
-  const range = `${quoteSheetName(SHEET_NAME)}!A2:E`;
+  const range = `${quoteSheetName(SHEET_NAME)}!A2:F`;
   const data = await googleRequest(`/values/${encodeURIComponent(range)}?majorDimension=ROWS`);
   const rows = Array.isArray(data.values) ? data.values : [];
 
@@ -173,7 +184,7 @@ const readWishes = async () => {
 
 const appendWish = async (wish) => {
   await ensureSheet();
-  const range = `${quoteSheetName(SHEET_NAME)}!A:E`;
+  const range = `${quoteSheetName(SHEET_NAME)}!A:F`;
 
   await googleRequest(`/values/${encodeURIComponent(range)}:append?valueInputOption=USER_ENTERED&insertDataOption=INSERT_ROWS`, {
     method: "POST",
@@ -183,6 +194,7 @@ const appendWish = async (wish) => {
         wish.name,
         wish.message,
         wish.recipient,
+        wish.attendance,
         "wedding-landing-page"
       ]]
     })
@@ -231,7 +243,8 @@ module.exports = async function handler(req, res) {
         createdAt: body.createdAt || new Date().toISOString(),
         name: normalizeText(body.name, "Khách mời", 80),
         message,
-        recipient: normalizeRecipient(body.recipient)
+        recipient: normalizeRecipient(body.recipient),
+        attendance: normalizeAttendance(body.attendance)
       };
 
       await appendWish(wish);

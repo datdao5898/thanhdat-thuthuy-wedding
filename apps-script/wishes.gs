@@ -1,6 +1,7 @@
 const SHEET_ID = "18YsBG6xZqaX2qS4_bRT212362QT1cyvLOqnyBwBcNAk";
 const SHEET_NAME = "LoiChuc";
-const HEADERS = ["Created At", "Name", "Message", "Recipient", "Source"];
+const HEADERS = ["Created At", "Name", "Message", "Recipient", "Attendance", "Source"];
+const LEGACY_HEADERS = ["Created At", "Name", "Message", "Recipient", "Source"];
 const WISHES_CACHE_KEY = "tdtt_wedding_wishes";
 const WISHES_CACHE_SECONDS = 60;
 
@@ -30,7 +31,8 @@ function doPost(event) {
       createdAt: body.createdAt || new Date().toISOString(),
       name: normalizeText_(body.name, "Khách mời", 80),
       message,
-      recipient: normalizeRecipient_(body.recipient)
+      recipient: normalizeRecipient_(body.recipient),
+      attendance: normalizeAttendance_(body.attendance)
     };
 
     appendWish_(wish);
@@ -67,6 +69,14 @@ function getSheet_() {
 
   const currentHeader = sheet.getRange(1, 1, 1, HEADERS.length).getValues()[0];
   const hasHeader = currentHeader.join("|") === HEADERS.join("|");
+  const hasLegacyHeader = currentHeader.slice(0, LEGACY_HEADERS.length).join("|") === LEGACY_HEADERS.join("|");
+
+  if (hasLegacyHeader) {
+    sheet.insertColumnBefore(5);
+    sheet.getRange(1, 1, 1, HEADERS.length).setValues([HEADERS]);
+    sheet.setFrozenRows(1);
+    return sheet;
+  }
 
   if (!hasHeader) {
     sheet.getRange(1, 1, 1, HEADERS.length).setValues([HEADERS]);
@@ -83,6 +93,7 @@ function appendWish_(wish) {
     wish.name,
     wish.message,
     wish.recipient,
+    wish.attendance,
     "wedding-landing-page"
   ]);
 }
@@ -125,12 +136,14 @@ function cacheWishes_(wishes) {
 
 function rowToWish_(row) {
   const createdAt = row[0] instanceof Date ? row[0].toISOString() : String(row[0] || new Date().toISOString());
+  const legacySource = row[4] === "wedding-landing-page";
 
   return {
     createdAt,
     name: String(row[1] || "Khách mời"),
     message: String(row[2] || ""),
-    recipient: String(row[3] || "")
+    recipient: String(row[3] || ""),
+    attendance: legacySource ? "" : String(row[4] || "")
   };
 }
 
@@ -146,6 +159,12 @@ function normalizeMessage_(value) {
 function normalizeRecipient_(value) {
   if (value === "groom" || value === "Chú rể") return "Chú rể";
   return "Cô dâu";
+}
+
+function normalizeAttendance_(value) {
+  if (value === "declined") return "Không thể tham dự";
+  if (value === "maybe") return "Chưa chắc";
+  return "Sẽ tham dự";
 }
 
 function json_(payload) {
