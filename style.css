@@ -121,7 +121,7 @@ body.envelope-opened .site-shell {
 }
 
 .envelope-intro.is-opening {
-  animation: introFade 0.58s 2.72s ease forwards;
+  animation: introFade 0.48s 2.5s ease forwards;
   pointer-events: none;
 }
 
@@ -442,29 +442,40 @@ body.envelope-opened .envelope-intro {
     border-radius: 16px;
     opacity: 0;
     transform: translate3d(-50%, 74%, 0) scale(0.78);
+    z-index: 5;
   }
   12% {
     opacity: 1;
     transform: translate3d(-50%, 42%, 0) scale(0.84);
+    z-index: 5;
   }
-  42% {
+  34% {
+    opacity: 1;
+    transform: translate3d(-50%, -22%, 0) scale(0.94);
+    z-index: 5;
+  }
+  43% {
     border-radius: 16px;
     opacity: 1;
     transform: translate3d(-50%, -48%, 0) scale(1);
+    z-index: 8;
   }
   64% {
     border-radius: 14px;
     opacity: 1;
     transform: translate3d(-50%, -64%, 0) scale(1.08);
+    z-index: 8;
   }
   82% {
     opacity: 1;
     transform: translate3d(-50%, -68%, 0) scale(1.22);
+    z-index: 8;
   }
   100% {
     border-radius: 12px;
     opacity: 0;
     transform: translate3d(-50%, -70%, 0) scale(1.62);
+    z-index: 8;
   }
 }
 
