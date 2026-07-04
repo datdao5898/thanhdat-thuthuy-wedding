@@ -1,3 +1,14 @@
+/* ===== Fonts ===== */
+@font-face {
+  font-family: "1FTV VIP Britisht";
+  font-display: swap;
+  src:
+    local("1FTV VIP Britisht"),
+    url("fonts/1FTV-VIP-Britisht.woff2") format("woff2"),
+    url("fonts/1FTV-VIP-Britisht.woff") format("woff"),
+    url("fonts/1FTV-VIP-Britisht.ttf") format("truetype");
+}
+
 /* ===== Design tokens ===== */
 :root {
   --paper: #fbfaf7;
@@ -10,10 +21,11 @@
   --gold: #b99353;
   --line: rgba(34, 29, 26, 0.12);
   --shadow: 0 22px 80px rgba(31, 24, 20, 0.18);
-  --serif: "Playfair Display", Georgia, serif;
+  --display: "1FTV VIP Britisht", "Playfair Display", Georgia, serif;
+  --serif: var(--display);
   --sans: "Inter", Arial, sans-serif;
-  --script: "Caveat", "Great Vibes", cursive;
-  --romantic: "Great Vibes", "Caveat", cursive;
+  --script: var(--display);
+  --romantic: var(--display);
 }
 
 * {
