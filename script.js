@@ -44,6 +44,29 @@ document.addEventListener("DOMContentLoaded", () => {
     return `data:image/svg+xml;charset=UTF-8,${encodeURIComponent(svg)}`;
   };
 
+  // ===== Envelope opening intro =====
+  const envelopeIntro = document.getElementById("envelopeIntro");
+  const openEnvelopeButton = document.getElementById("openEnvelope");
+  const siteShell = document.getElementById("siteShell");
+
+  const openInvitation = () => {
+    if (!envelopeIntro || envelopeIntro.classList.contains("is-opening")) return;
+
+    envelopeIntro.classList.add("is-opening");
+    document.body.classList.add("envelope-opening");
+
+    const openDelay = window.matchMedia("(prefers-reduced-motion: reduce)").matches ? 80 : 2300;
+    window.setTimeout(() => {
+      document.body.classList.add("envelope-opened");
+      document.body.classList.remove("intro-locked", "envelope-opening");
+      envelopeIntro.setAttribute("aria-hidden", "true");
+      siteShell?.focus?.();
+      window.scrollTo({ top: 0, behavior: "auto" });
+    }, openDelay);
+  };
+
+  openEnvelopeButton?.addEventListener("click", openInvitation);
+
   // ===== Smooth scroll =====
   const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   if (window.Lenis && !prefersReducedMotion) {
