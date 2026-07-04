@@ -238,23 +238,24 @@ body.envelope-opened .envelope-intro {
     url("images/wedding-1.jpg") center / cover no-repeat,
     var(--paper);
   border: 1px solid rgba(185, 147, 83, 0.32);
-  border-radius: 18px;
+  border-radius: 16px;
   box-shadow: 0 18px 56px rgba(0, 0, 0, 0.34);
   color: var(--dark);
   display: flex;
   flex-direction: column;
-  gap: 8px;
-  height: 74%;
+  gap: 10px;
+  height: 56%;
   justify-content: center;
   left: 50%;
+  opacity: 0;
   overflow: hidden;
-  padding: 28px;
+  padding: 26px;
   position: absolute;
   text-align: center;
-  top: 18%;
-  transform: translate3d(-50%, 34%, 0) scale(0.82);
+  top: 46%;
+  transform: translate3d(-50%, 78%, 0) scale(0.78);
   transform-origin: center;
-  width: 80%;
+  width: 66%;
   will-change: transform, opacity;
   z-index: 3;
 }
@@ -262,14 +263,15 @@ body.envelope-opened .envelope-intro {
 .envelope-card__date {
   color: var(--red);
   font-family: var(--script);
-  font-size: clamp(1.5rem, 8vw, 2.5rem);
+  font-size: clamp(1.25rem, 5vw, 2rem);
   line-height: 1;
 }
 
 .envelope-card__names {
   font-family: var(--serif);
-  font-size: clamp(1.2rem, 6vw, 2rem);
+  font-size: clamp(1rem, 4.5vw, 1.55rem);
   font-weight: 600;
+  line-height: 1.1;
 }
 
 .envelope-card__title {
@@ -401,24 +403,28 @@ body.envelope-opened .envelope-intro {
 
 @keyframes cardPullOut {
   0% {
-    border-radius: 18px;
-    opacity: 1;
-    transform: translate3d(-50%, 34%, 0) scale(0.82);
+    border-radius: 16px;
+    opacity: 0;
+    transform: translate3d(-50%, 78%, 0) scale(0.78);
+  }
+  18% {
+    opacity: 0;
+    transform: translate3d(-50%, 54%, 0) scale(0.84);
   }
   42% {
-    border-radius: 18px;
+    border-radius: 16px;
     opacity: 1;
-    transform: translate3d(-50%, -48%, 0) scale(1.02);
+    transform: translate3d(-50%, -50%, 0) scale(1.02);
   }
   72% {
     border-radius: 14px;
     opacity: 0.96;
-    transform: translate3d(-50%, -52%, 0) scale(1.06);
+    transform: translate3d(-50%, -54%, 0) scale(1.06);
   }
   100% {
     border-radius: 12px;
     opacity: 0;
-    transform: translate3d(-50%, -56%, 0) scale(1.12);
+    transform: translate3d(-50%, -58%, 0) scale(1.12);
   }
 }
 
