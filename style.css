@@ -90,7 +90,7 @@ body:not(.envelope-opened) .site-shell {
 }
 
 body.envelope-opening .site-shell {
-  animation: shellZoomOut 0.95s 2.15s cubic-bezier(0.16, 0.84, 0.22, 1) both;
+  animation: shellZoomOut 0.95s 2s cubic-bezier(0.16, 0.84, 0.22, 1) both;
   pointer-events: none;
 }
 
@@ -121,7 +121,7 @@ body.envelope-opened .site-shell {
 }
 
 .envelope-intro.is-opening {
-  animation: introFade 0.48s 2.5s ease forwards;
+  animation: introFade 0.58s 2.08s ease forwards;
   pointer-events: none;
 }
 
@@ -283,7 +283,7 @@ body.envelope-opened .envelope-intro {
   position: absolute;
   text-align: center;
   top: 44%;
-  transform: translate3d(-50%, 74%, 0) scale(0.78);
+  transform: translate3d(-50%, 20%, 0) scale(0.78);
   transform-origin: center;
   width: 66%;
   will-change: transform, opacity;
@@ -441,12 +441,17 @@ body.envelope-opened .envelope-intro {
   0% {
     border-radius: 16px;
     opacity: 0;
-    transform: translate3d(-50%, 74%, 0) scale(0.78);
+    transform: translate3d(-50%, 20%, 0) scale(0.78);
     z-index: 5;
   }
-  12% {
+  18% {
+    opacity: 0;
+    transform: translate3d(-50%, 12%, 0) scale(0.82);
+    z-index: 5;
+  }
+  28% {
     opacity: 1;
-    transform: translate3d(-50%, 42%, 0) scale(0.84);
+    transform: translate3d(-50%, -8%, 0) scale(0.88);
     z-index: 5;
   }
   34% {
