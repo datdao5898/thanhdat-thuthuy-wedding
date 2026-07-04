@@ -25,10 +25,10 @@ document.addEventListener("DOMContentLoaded", () => {
     "https://images.unsplash.com/photo-1606800052052-a08af7148866?auto=format&fit=crop&w=1600&q=85"
   ];
 
-  // File JSON nay la "db" tinh de hien thi loi chuc cho tat ca moi nguoi.
-  // Neu sau nay co endpoint ghi du lieu, gan window.WEDDING_WISHES_WRITE_URL.
-  const WISHES_DB_URL = window.WEDDING_WISHES_DB_URL || "data/wishes.json";
-  const WISHES_WRITE_URL = window.WEDDING_WISHES_WRITE_URL || "";
+  // API serverless doc/ghi Google Sheet. File JSON chi dung lam fallback khi chay preview tinh.
+  const WISHES_DB_URL = window.WEDDING_WISHES_DB_URL || "api/wishes";
+  const WISHES_WRITE_URL = window.WEDDING_WISHES_WRITE_URL || "api/wishes";
+  const WISHES_FALLBACK_DB_URL = "data/wishes.json";
   const sampleWishes = [
     {
       name: "Một người bạn",
@@ -351,7 +351,8 @@ document.addEventListener("DOMContentLoaded", () => {
   const normalizeWish = (wish) => ({
     name: (wish?.name || "Khách mời").trim(),
     message: (wish?.message || "").trim(),
-    createdAt: wish?.createdAt || new Date().toISOString()
+    createdAt: wish?.createdAt || new Date().toISOString(),
+    recipient: wish?.recipient || ""
   });
 
   const renderWishes = (wishes) => {
@@ -395,11 +396,21 @@ document.addEventListener("DOMContentLoaded", () => {
       const sharedWishes = Array.isArray(data) ? data : data.wishes;
       currentWishes = (sharedWishes || []).map(normalizeWish).filter((wish) => wish.message);
       renderWishes(currentWishes);
-      if (wishesStatus) wishesStatus.textContent = "Lời chúc đang được hiển thị từ data/wishes.json.";
+      if (wishesStatus) wishesStatus.textContent = "Lời chúc đang được lưu và hiển thị từ Google Sheet.";
     } catch {
-      currentWishes = sampleWishes.map(normalizeWish);
-      renderWishes(currentWishes);
-      if (wishesStatus) wishesStatus.textContent = "Chưa tải được data/wishes.json, đang hiển thị lời chúc mẫu.";
+      try {
+        const fallbackResponse = await fetch(WISHES_FALLBACK_DB_URL, { cache: "no-store" });
+        if (!fallbackResponse.ok) throw new Error("Cannot load fallback wishes db");
+        const fallbackData = await fallbackResponse.json();
+        const fallbackWishes = Array.isArray(fallbackData) ? fallbackData : fallbackData.wishes;
+        currentWishes = (fallbackWishes || []).map(normalizeWish).filter((wish) => wish.message);
+        renderWishes(currentWishes);
+        if (wishesStatus) wishesStatus.textContent = "Chưa kết nối được Google Sheet, đang hiển thị dữ liệu dự phòng.";
+      } catch {
+        currentWishes = sampleWishes.map(normalizeWish);
+        renderWishes(currentWishes);
+        if (wishesStatus) wishesStatus.textContent = "Chưa tải được sổ lời chúc, đang hiển thị lời chúc mẫu.";
+      }
     }
   };
 
@@ -408,15 +419,25 @@ document.addEventListener("DOMContentLoaded", () => {
 
     if (WISHES_WRITE_URL) {
       try {
-        await fetch(WISHES_WRITE_URL, {
+        const response = await fetch(WISHES_WRITE_URL, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(wish)
         });
-        await loadWishes();
+
+        if (!response.ok) throw new Error("Cannot save wish");
+        const data = await response.json().catch(() => null);
+        const savedWishes = Array.isArray(data?.wishes) ? data.wishes : [];
+        if (savedWishes.length) {
+          currentWishes = savedWishes.map(normalizeWish).filter((item) => item.message);
+          renderWishes(currentWishes);
+          if (wishesStatus) wishesStatus.textContent = "Đã lưu lời chúc vào Google Sheet.";
+        } else {
+          await loadWishes();
+        }
         return;
       } catch {
-        if (wishesStatus) wishesStatus.textContent = "Chưa ghi được lời chúc lên endpoint, đang hiển thị tạm trên phiên này.";
+        if (wishesStatus) wishesStatus.textContent = "Chưa ghi được lời chúc lên Google Sheet, đang hiển thị tạm trên phiên này.";
       }
     }
 
@@ -424,8 +445,8 @@ document.addEventListener("DOMContentLoaded", () => {
     renderWishes(currentWishes);
     if (wishesStatus) {
       wishesStatus.textContent = WISHES_WRITE_URL
-        ? "Chưa ghi được vào JSON DB, lời chúc đang hiển thị tạm trên phiên này."
-        : "Đã hiển thị lời chúc trên phiên này. Để mọi người cùng thấy lâu dài, thêm lời chúc vào data/wishes.json.";
+        ? "Chưa ghi được vào Google Sheet, lời chúc đang hiển thị tạm trên phiên này."
+        : "Đã hiển thị lời chúc trên phiên này.";
     }
   };
 
@@ -441,11 +462,13 @@ document.addEventListener("DOMContentLoaded", () => {
     event.preventDefault();
     const senderName = document.getElementById("senderName").value.trim();
     const wishMessage = document.getElementById("wishMessage").value.trim();
+    const selectedRecipient = document.querySelector('input[name="recipient"]:checked')?.value || "bride";
 
     saveWish(normalizeWish({
       name: senderName || "Khách mời",
       message: wishMessage,
-      createdAt: new Date().toISOString()
+      createdAt: new Date().toISOString(),
+      recipient: selectedRecipient
     }));
 
     if (senderName) {
