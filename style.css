@@ -460,24 +460,42 @@ body.envelope-opened .envelope-intro {
   43% {
     border-radius: 16px;
     opacity: 1;
-    transform: translate3d(-50%, -48%, 0) scale(1);
-    z-index: 8;
+    transform: translate3d(-50%, -50%, 0) scale(1);
+    z-index: 5;
   }
-  64% {
+  58% {
+    border-radius: 15px;
+    opacity: 1;
+    transform: translate3d(-50%, -88%, 0) scale(1.06);
+    z-index: 5;
+  }
+  66% {
     border-radius: 14px;
     opacity: 1;
-    transform: translate3d(-50%, -64%, 0) scale(1.08);
+    transform: translate3d(-50%, -128%, 0) scale(1.08);
+    z-index: 5;
+  }
+  67% {
+    border-radius: 14px;
+    opacity: 1;
+    transform: translate3d(-50%, -128%, 0) scale(1.08);
     z-index: 8;
   }
-  82% {
+  78% {
+    border-radius: 14px;
     opacity: 1;
-    transform: translate3d(-50%, -68%, 0) scale(1.22);
+    transform: translate3d(-50%, -116%, 0) scale(1.22);
+    z-index: 8;
+  }
+  88% {
+    opacity: 1;
+    transform: translate3d(-50%, -98%, 0) scale(1.36);
     z-index: 8;
   }
   100% {
     border-radius: 12px;
     opacity: 0;
-    transform: translate3d(-50%, -70%, 0) scale(1.62);
+    transform: translate3d(-50%, -74%, 0) scale(1.62);
     z-index: 8;
   }
 }
