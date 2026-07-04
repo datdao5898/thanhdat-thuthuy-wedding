@@ -25,6 +25,23 @@ document.addEventListener("DOMContentLoaded", () => {
     "https://images.unsplash.com/photo-1606800052052-a08af7148866?auto=format&fit=crop&w=1600&q=85"
   ];
 
+  // De loi chuc hien thi chung cho moi khach, gan URL API tra ve JSON tai day.
+  // API goi GET de lay danh sach va POST de them loi chuc moi.
+  const WISHES_API_URL = window.WEDDING_WISHES_API_URL || "";
+  const WISHES_STORAGE_KEY = "tdtt-wedding-wishes-v1";
+  const sampleWishes = [
+    {
+      name: "Một người bạn",
+      message: "Chúc Thu Thủy và Thành Đạt luôn nắm tay nhau đi qua mọi mùa yêu thương.",
+      createdAt: "2026-09-20"
+    },
+    {
+      name: "Gia đình",
+      message: "Mong hai con có một hành trình hôn nhân bình an, vui vẻ và đầy ắp tiếng cười.",
+      createdAt: "2026-09-20"
+    }
+  ];
+
   const createQrPlaceholder = (label) => {
     const svg = `
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 240">
@@ -320,6 +337,120 @@ document.addEventListener("DOMContentLoaded", () => {
 
   showBankAccount("bride");
 
+  // ===== So loi chuc =====
+  const wishesList = document.getElementById("wishesList");
+  const wishesStatus = document.getElementById("wishesStatus");
+
+  const formatWishDate = (value) => {
+    const date = value ? new Date(value) : new Date();
+    if (Number.isNaN(date.getTime())) return "";
+    return date.toLocaleDateString("vi-VN", { day: "2-digit", month: "2-digit", year: "numeric" });
+  };
+
+  const normalizeWish = (wish) => ({
+    name: (wish?.name || "Khách mời").trim(),
+    message: (wish?.message || "").trim(),
+    createdAt: wish?.createdAt || new Date().toISOString()
+  });
+
+  const getLocalWishes = () => {
+    try {
+      const parsed = JSON.parse(localStorage.getItem(WISHES_STORAGE_KEY) || "[]");
+      return Array.isArray(parsed) ? parsed.map(normalizeWish).filter((wish) => wish.message) : [];
+    } catch {
+      return [];
+    }
+  };
+
+  const setLocalWishes = (wishes) => {
+    localStorage.setItem(WISHES_STORAGE_KEY, JSON.stringify(wishes));
+  };
+
+  const renderWishes = (wishes) => {
+    if (!wishesList) return;
+
+    wishesList.innerHTML = "";
+    const displayWishes = wishes.length ? wishes : sampleWishes;
+
+    displayWishes.slice(0, 12).forEach((wish) => {
+      const card = document.createElement("article");
+      card.className = "wish-card";
+
+      const message = document.createElement("p");
+      message.className = "wish-card__message";
+      message.textContent = wish.message;
+
+      const meta = document.createElement("div");
+      meta.className = "wish-card__meta";
+
+      const name = document.createElement("span");
+      name.className = "wish-card__name";
+      name.textContent = wish.name;
+
+      const date = document.createElement("time");
+      date.dateTime = wish.createdAt;
+      date.textContent = formatWishDate(wish.createdAt);
+
+      meta.append(name, date);
+      card.append(message, meta);
+      wishesList.appendChild(card);
+    });
+  };
+
+  const loadWishes = async () => {
+    if (!wishesList) return;
+
+    if (!WISHES_API_URL) {
+      const localWishes = getLocalWishes();
+      renderWishes(localWishes);
+      if (wishesStatus) {
+        wishesStatus.textContent = localWishes.length
+          ? "Lời chúc đang được lưu tạm trên thiết bị này."
+          : "Đang hiển thị lời chúc mẫu. Cần cấu hình nơi lưu chung để mọi khách cùng thấy lời chúc mới.";
+      }
+      return;
+    }
+
+    try {
+      const response = await fetch(WISHES_API_URL);
+      const data = await response.json();
+      const sharedWishes = Array.isArray(data) ? data : data.wishes;
+      renderWishes((sharedWishes || []).map(normalizeWish).filter((wish) => wish.message));
+      if (wishesStatus) wishesStatus.textContent = "Lời chúc được cập nhật từ sổ chung.";
+    } catch {
+      renderWishes(getLocalWishes());
+      if (wishesStatus) wishesStatus.textContent = "Chưa tải được sổ lời chúc chung, đang hiển thị dữ liệu tạm.";
+    }
+  };
+
+  const saveWish = async (wish) => {
+    if (!wish.message) return;
+
+    if (!WISHES_API_URL) {
+      const nextWishes = [wish, ...getLocalWishes()].slice(0, 30);
+      setLocalWishes(nextWishes);
+      renderWishes(nextWishes);
+      if (wishesStatus) wishesStatus.textContent = "Đã thêm lời chúc vào sổ tạm trên thiết bị này.";
+      return;
+    }
+
+    try {
+      await fetch(WISHES_API_URL, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(wish)
+      });
+      await loadWishes();
+    } catch {
+      const nextWishes = [wish, ...getLocalWishes()].slice(0, 30);
+      setLocalWishes(nextWishes);
+      renderWishes(nextWishes);
+      if (wishesStatus) wishesStatus.textContent = "Chưa gửi được lên sổ chung, đã lưu tạm trên thiết bị này.";
+    }
+  };
+
+  loadWishes();
+
   // ===== Form va loi cam on =====
   const giftForm = document.getElementById("giftForm");
   const thankModal = document.getElementById("thankModal");
@@ -329,6 +460,13 @@ document.addEventListener("DOMContentLoaded", () => {
   giftForm.addEventListener("submit", (event) => {
     event.preventDefault();
     const senderName = document.getElementById("senderName").value.trim();
+    const wishMessage = document.getElementById("wishMessage").value.trim();
+
+    saveWish(normalizeWish({
+      name: senderName || "Khách mời",
+      message: wishMessage,
+      createdAt: new Date().toISOString()
+    }));
 
     if (senderName) {
       thankTitle.textContent = `Cảm ơn ${senderName}!`;

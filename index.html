@@ -205,7 +205,7 @@
           <button class="button button--dark button--full" type="submit">
             Tôi đã gửi quà / Gửi lời chúc
           </button>
-          <p class="form-note">Thông tin chỉ xử lý trên thiết bị của bạn, không gửi lên máy chủ.</p>
+          <p class="form-note">Lời chúc sẽ được hiển thị trong sổ lời chúc. Khi chưa cấu hình nơi lưu chung, dữ liệu chỉ lưu trên thiết bị hiện tại.</p>
         </form>
 
         <aside class="bank-card" id="bankCard" aria-live="polite">
@@ -232,6 +232,19 @@
             </div>
           </dl>
         </aside>
+      </div>
+    </section>
+
+    <section class="wishes paper-section" id="wishes">
+      <div class="section-heading reveal">
+        <p class="eyebrow">guest wishes</p>
+        <h2>Sổ lời chúc</h2>
+        <p>Những lời thương mến gửi đến Thu Thủy và Thành Đạt.</p>
+      </div>
+
+      <div class="wishes-board reveal">
+        <div class="wishes-list" id="wishesList" aria-live="polite"></div>
+        <p class="wishes-status" id="wishesStatus"></p>
       </div>
     </section>
 

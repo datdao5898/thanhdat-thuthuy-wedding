@@ -1271,6 +1271,76 @@ h2 {
   text-decoration: underline;
 }
 
+/* ===== Wishes ===== */
+.wishes {
+  background:
+    radial-gradient(circle at 10% 8%, rgba(185, 147, 83, 0.12), transparent 18rem),
+    linear-gradient(180deg, #fbfaf7, #f2eee8);
+}
+
+.wishes-board {
+  margin-inline: auto;
+  max-width: 430px;
+}
+
+.wishes-list {
+  display: grid;
+  gap: 14px;
+}
+
+.wish-card {
+  background: rgba(255, 255, 255, 0.74);
+  border: 1px solid rgba(185, 147, 83, 0.22);
+  border-radius: 22px;
+  box-shadow: 0 14px 38px rgba(31, 24, 20, 0.08);
+  padding: 20px;
+  position: relative;
+}
+
+.wish-card::before {
+  color: rgba(182, 38, 34, 0.16);
+  content: "“";
+  font-family: var(--serif);
+  font-size: 4rem;
+  left: 14px;
+  line-height: 1;
+  position: absolute;
+  top: -8px;
+}
+
+.wish-card__message {
+  color: var(--ink);
+  font-family: var(--serif);
+  font-size: 1.06rem;
+  line-height: 1.55;
+  position: relative;
+}
+
+.wish-card__meta {
+  align-items: center;
+  color: var(--muted);
+  display: flex;
+  font-size: 0.68rem;
+  gap: 8px;
+  justify-content: space-between;
+  letter-spacing: 0.08em;
+  margin-top: 14px;
+  text-transform: uppercase;
+}
+
+.wish-card__name {
+  color: var(--red);
+  font-weight: 700;
+}
+
+.wishes-status {
+  color: var(--muted);
+  font-size: 0.72rem;
+  line-height: 1.5;
+  margin-top: 18px;
+  text-align: center;
+}
+
 /* ===== Closing ===== */
 .closing {
   align-items: center;
