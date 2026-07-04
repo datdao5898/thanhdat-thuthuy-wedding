@@ -90,7 +90,7 @@ body:not(.envelope-opened) .site-shell {
 }
 
 body.envelope-opening .site-shell {
-  animation: shellZoomOut 1.08s 1.55s cubic-bezier(0.16, 0.84, 0.22, 1) both;
+  animation: shellZoomOut 0.95s 1.95s cubic-bezier(0.16, 0.84, 0.22, 1) both;
   pointer-events: none;
 }
 
@@ -121,7 +121,7 @@ body.envelope-opened .site-shell {
 }
 
 .envelope-intro.is-opening {
-  animation: introFade 0.64s 2.15s ease forwards;
+  animation: introFade 0.58s 2.52s ease forwards;
   pointer-events: none;
 }
 
@@ -225,7 +225,7 @@ body.envelope-opened .envelope-intro {
   top: 24%;
   transform-origin: top center;
   transition: filter 0.65s ease;
-  z-index: 5;
+  z-index: 6;
 }
 
 .envelope-intro.is-opening .envelope__flap--back {
@@ -258,12 +258,12 @@ body.envelope-opened .envelope-intro {
   padding: 26px;
   position: absolute;
   text-align: center;
-  top: 50%;
-  transform: translate3d(-50%, 78%, 0) scale(0.78);
+  top: 44%;
+  transform: translate3d(-50%, 92%, 0) scale(0.78);
   transform-origin: center;
   width: 66%;
   will-change: transform, opacity;
-  z-index: 4;
+  z-index: 5;
 }
 
 .envelope-card__date {
@@ -286,7 +286,7 @@ body.envelope-opened .envelope-intro {
 }
 
 .envelope-intro.is-opening .envelope__inner-card {
-  animation: cardPullOut 2.2s 0.34s cubic-bezier(0.16, 0.84, 0.22, 1) forwards;
+  animation: cardPullOut 2.18s 0.45s cubic-bezier(0.16, 0.84, 0.22, 1) forwards;
 }
 
 .envelope__lace {
@@ -334,6 +334,7 @@ body.envelope-opened .envelope-intro {
     0 6px 18px rgba(92, 65, 38, 0.12);
   top: 12%;
   transform: translateX(-50%) rotate(-7deg);
+  transition: opacity 0.35s ease, transform 0.45s ease;
   z-index: 8;
 }
 
@@ -388,6 +389,11 @@ body.envelope-opened .envelope-intro {
   transform: translate(-50%, -50%) scale(0.62) rotate(20deg);
 }
 
+.envelope-intro.is-opening .envelope__monogram {
+  opacity: 0;
+  transform: translateX(-50%) translateY(-10px) rotate(-7deg);
+}
+
 .envelope__hint {
   bottom: 12%;
   color: rgba(65, 48, 30, 0.66);
@@ -411,39 +417,43 @@ body.envelope-opened .envelope-intro {
   0% {
     border-radius: 16px;
     opacity: 0;
-    transform: translate3d(-50%, 78%, 0) scale(0.78);
+    transform: translate3d(-50%, 92%, 0) scale(0.78);
   }
   20% {
-    opacity: 0;
-    transform: translate3d(-50%, 42%, 0) scale(0.84);
+    opacity: 1;
+    transform: translate3d(-50%, 36%, 0) scale(0.86);
   }
   46% {
     border-radius: 16px;
     opacity: 1;
-    transform: translate3d(-50%, -44%, 0) scale(1);
+    transform: translate3d(-50%, -42%, 0) scale(1);
   }
   68% {
     border-radius: 14px;
     opacity: 1;
-    transform: translate3d(-50%, -52%, 0) scale(1.04);
+    transform: translate3d(-50%, -58%, 0) scale(1.08);
+  }
+  84% {
+    opacity: 1;
+    transform: translate3d(-50%, -64%, 0) scale(1.22);
   }
   100% {
     border-radius: 12px;
     opacity: 0;
-    transform: translate3d(-50%, -56%, 0) scale(1.7);
+    transform: translate3d(-50%, -68%, 0) scale(1.62);
   }
 }
 
 @keyframes shellZoomOut {
   from {
-    filter: blur(4px);
+    filter: blur(5px);
     opacity: 0;
-    transform: translate(-50%, -50%) scale(0.76);
+    transform: translate(-50%, -50%) scale(0.62);
   }
   45% {
     filter: blur(2px);
     opacity: 0.68;
-    transform: translate(-50%, -50%) scale(0.9);
+    transform: translate(-50%, -50%) scale(0.84);
   }
   to {
     filter: blur(0);
