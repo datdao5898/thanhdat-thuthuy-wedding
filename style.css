@@ -283,6 +283,7 @@ body.envelope-opened .envelope-intro {
   top: 44%;
   transform: translate3d(-50%, 20%, 0) scale(0.78);
   transform-origin: center;
+  backface-visibility: hidden;
   width: 66%;
   will-change: transform, opacity;
   z-index: 5;
@@ -308,7 +309,7 @@ body.envelope-opened .envelope-intro {
 }
 
 .envelope-intro.is-opening .envelope__inner-card {
-  animation: cardPullOut 2.28s 0.46s cubic-bezier(0.2, 0.72, 0.2, 1) forwards;
+  animation: cardPullOut 2.18s 0.48s linear forwards;
 }
 
 .envelope__lace {
@@ -440,47 +441,24 @@ body.envelope-opened .envelope-intro {
     border-radius: 16px;
     opacity: 0;
     transform: translate3d(-50%, 20%, 0) scale(0.78);
-    z-index: 5;
   }
-  18% {
+  22% {
     opacity: 0;
-    transform: translate3d(-50%, 10%, 0) scale(0.82);
-    z-index: 5;
+    transform: translate3d(-50%, 6%, 0) scale(0.82);
   }
-  30% {
+  36% {
     opacity: 1;
-    transform: translate3d(-50%, -10%, 0) scale(0.88);
-    z-index: 5;
+    transform: translate3d(-50%, -18%, 0) scale(0.9);
   }
-  44% {
-    border-radius: 16px;
-    opacity: 1;
-    transform: translate3d(-50%, -48%, 0) scale(1);
-    z-index: 5;
-  }
-  60% {
-    border-radius: 15px;
-    opacity: 1;
-    transform: translate3d(-50%, -82%, 0) scale(1.08);
-    z-index: 5;
-  }
-  76% {
+  82% {
     border-radius: 14px;
     opacity: 1;
-    transform: translate3d(-50%, -104%, 0) scale(1.14);
-    z-index: 5;
-  }
-  88% {
-    border-radius: 14px;
-    opacity: 0.52;
-    transform: translate3d(-50%, -116%, 0) scale(1.28);
-    z-index: 5;
+    transform: translate3d(-50%, -106%, 0) scale(1.18);
   }
   100% {
     border-radius: 12px;
     opacity: 0;
-    transform: translate3d(-50%, -126%, 0) scale(1.44);
-    z-index: 5;
+    transform: translate3d(-50%, -126%, 0) scale(1.38);
   }
 }
 
