@@ -76,7 +76,7 @@ button {
 }
 
 body:not(.envelope-opened) .site-shell {
-  filter: blur(10px);
+  filter: blur(4px);
   height: 100svh;
   left: 50%;
   opacity: 0;
@@ -84,13 +84,13 @@ body:not(.envelope-opened) .site-shell {
   pointer-events: none;
   position: fixed;
   top: 50%;
-  transform: translate(-50%, -50%) scale(1.22);
+  transform: translate(-50%, -50%) scale(0.76);
   width: min(100vw, 520px);
   z-index: 150;
 }
 
 body.envelope-opening .site-shell {
-  animation: shellZoomOut 1.45s 0.66s cubic-bezier(0.16, 0.84, 0.22, 1) both;
+  animation: shellZoomOut 1.08s 1.55s cubic-bezier(0.16, 0.84, 0.22, 1) both;
   pointer-events: none;
 }
 
@@ -121,7 +121,7 @@ body.envelope-opened .site-shell {
 }
 
 .envelope-intro.is-opening {
-  animation: introFade 0.72s 1.95s ease forwards;
+  animation: introFade 0.64s 2.15s ease forwards;
   pointer-events: none;
 }
 
@@ -224,7 +224,7 @@ body.envelope-opened .envelope-intro {
   height: 72%;
   top: 24%;
   transform-origin: top center;
-  transition: transform 0.9s cubic-bezier(0.2, 0.78, 0.24, 1), opacity 0.65s ease, filter 0.65s ease;
+  transition: filter 0.65s ease;
   z-index: 5;
 }
 
@@ -234,9 +234,7 @@ body.envelope-opened .envelope-intro {
 }
 
 .envelope-intro.is-opening .envelope__flap--front {
-  filter: brightness(1.08);
-  opacity: 0;
-  transform: translateY(-30%) scaleY(0.84);
+  filter: brightness(1.04);
 }
 
 .envelope__inner-card {
@@ -265,7 +263,7 @@ body.envelope-opened .envelope-intro {
   transform-origin: center;
   width: 66%;
   will-change: transform, opacity;
-  z-index: 3;
+  z-index: 4;
 }
 
 .envelope-card__date {
@@ -288,7 +286,7 @@ body.envelope-opened .envelope-intro {
 }
 
 .envelope-intro.is-opening .envelope__inner-card {
-  animation: cardPullOut 2.05s 0.18s cubic-bezier(0.16, 0.84, 0.22, 1) forwards;
+  animation: cardPullOut 2.2s 0.34s cubic-bezier(0.16, 0.84, 0.22, 1) forwards;
 }
 
 .envelope__lace {
@@ -415,37 +413,37 @@ body.envelope-opened .envelope-intro {
     opacity: 0;
     transform: translate3d(-50%, 78%, 0) scale(0.78);
   }
-  18% {
+  20% {
     opacity: 0;
-    transform: translate3d(-50%, 54%, 0) scale(0.84);
+    transform: translate3d(-50%, 42%, 0) scale(0.84);
   }
-  42% {
+  46% {
     border-radius: 16px;
     opacity: 1;
-    transform: translate3d(-50%, -46%, 0) scale(1.02);
+    transform: translate3d(-50%, -44%, 0) scale(1);
   }
-  72% {
+  68% {
     border-radius: 14px;
-    opacity: 0.96;
-    transform: translate3d(-50%, -48%, 0) scale(1.06);
+    opacity: 1;
+    transform: translate3d(-50%, -52%, 0) scale(1.04);
   }
   100% {
     border-radius: 12px;
     opacity: 0;
-    transform: translate3d(-50%, -50%, 0) scale(1.12);
+    transform: translate3d(-50%, -56%, 0) scale(1.7);
   }
 }
 
 @keyframes shellZoomOut {
   from {
-    filter: blur(10px);
+    filter: blur(4px);
     opacity: 0;
-    transform: translate(-50%, -50%) scale(1.22);
+    transform: translate(-50%, -50%) scale(0.76);
   }
   45% {
-    filter: blur(4px);
+    filter: blur(2px);
     opacity: 0.68;
-    transform: translate(-50%, -50%) scale(1.1);
+    transform: translate(-50%, -50%) scale(0.9);
   }
   to {
     filter: blur(0);
