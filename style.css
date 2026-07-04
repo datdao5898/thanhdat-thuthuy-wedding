@@ -72,6 +72,7 @@ button {
   max-width: 520px;
   opacity: 1;
   transform-origin: center center;
+  will-change: transform, opacity, filter;
 }
 
 body:not(.envelope-opened) .site-shell {
@@ -89,7 +90,7 @@ body:not(.envelope-opened) .site-shell {
 }
 
 body.envelope-opening .site-shell {
-  animation: shellZoomOut 1.55s 0.88s cubic-bezier(0.16, 0.84, 0.22, 1) both;
+  animation: shellZoomOut 1.45s 0.66s cubic-bezier(0.16, 0.84, 0.22, 1) both;
   pointer-events: none;
 }
 
@@ -119,7 +120,7 @@ body.envelope-opened .site-shell {
 }
 
 .envelope-intro.is-opening {
-  animation: introFade 0.72s 2.05s ease forwards;
+  animation: introFade 0.72s 1.95s ease forwards;
   pointer-events: none;
 }
 
@@ -216,15 +217,16 @@ body.envelope-opened .envelope-intro {
   gap: 8px;
   height: 74%;
   justify-content: center;
-  left: 10%;
+  left: 50%;
   overflow: hidden;
   padding: 28px;
   position: absolute;
   text-align: center;
   top: 18%;
-  transform: translateY(34%) scale(0.82);
+  transform: translate3d(-50%, 34%, 0) scale(0.82);
   transform-origin: center;
   width: 80%;
+  will-change: transform, opacity;
   z-index: 3;
 }
 
@@ -339,29 +341,22 @@ body.envelope-opened .envelope-intro {
   0% {
     border-radius: 18px;
     opacity: 1;
-    transform: translateY(34%) scale(0.82);
+    transform: translate3d(-50%, 34%, 0) scale(0.82);
   }
   42% {
     border-radius: 18px;
     opacity: 1;
-    transform: translateY(-46%) scale(1.02);
+    transform: translate3d(-50%, -48%, 0) scale(1.02);
   }
   72% {
     border-radius: 14px;
-    left: 50%;
     opacity: 0.96;
-    top: 50%;
-    transform: translate(-50%, -50%) scale(1.04);
-    width: min(84vw, 440px);
+    transform: translate3d(-50%, -52%, 0) scale(1.06);
   }
   100% {
-    border-radius: 0;
-    height: 100svh;
-    left: 50%;
+    border-radius: 12px;
     opacity: 0;
-    top: 50%;
-    transform: translate(-50%, -50%) scale(1.08);
-    width: min(100vw, 520px);
+    transform: translate3d(-50%, -56%, 0) scale(1.12);
   }
 }
 
