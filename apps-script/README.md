@@ -22,6 +22,8 @@ window.WEDDING_WISHES_APP_SCRIPT_URL = "https://script.google.com/macros/s/xxxxx
 
 After this, the landing page will read and write wishes through Google Apps Script.
 
+When `wishes.gs` changes, update `Code.gs` in Apps Script and deploy a new version so the Web App URL uses the latest code.
+
 ## Sheet schema
 
 The script creates a tab named `LoiChuc` with these columns:

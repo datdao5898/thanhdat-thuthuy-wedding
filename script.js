@@ -32,6 +32,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const WISHES_DB_URL = window.WEDDING_WISHES_DB_URL || WISHES_APP_SCRIPT_URL || WISHES_API_URL;
   const WISHES_WRITE_URL = window.WEDDING_WISHES_WRITE_URL || WISHES_APP_SCRIPT_URL || WISHES_API_URL;
   const WISHES_FALLBACK_DB_URL = "data/wishes.json";
+  const WISHES_CACHE_KEY = "tdtt-wedding-wishes";
   const sampleWishes = [
     {
       name: "Một người bạn",
@@ -367,6 +368,23 @@ document.addEventListener("DOMContentLoaded", () => {
 
   const isAppsScriptEndpoint = (url) => /script\.google(?:usercontent)?\.com/.test(url);
 
+  const getCachedWishes = () => {
+    try {
+      const cached = JSON.parse(localStorage.getItem(WISHES_CACHE_KEY) || "[]");
+      return Array.isArray(cached) ? cached.map(normalizeWish).filter((wish) => wish.message) : [];
+    } catch {
+      return [];
+    }
+  };
+
+  const cacheWishes = (wishes) => {
+    try {
+      localStorage.setItem(WISHES_CACHE_KEY, JSON.stringify(wishes.slice(0, 50)));
+    } catch {
+      // Cache is only a speed boost; the page still works without it.
+    }
+  };
+
   const renderWishes = (wishes) => {
     if (!wishesList) return;
 
@@ -401,6 +419,13 @@ document.addEventListener("DOMContentLoaded", () => {
   const loadWishes = async () => {
     if (!wishesList) return;
 
+    const cachedWishes = getCachedWishes();
+    if (cachedWishes.length) {
+      currentWishes = cachedWishes;
+      renderWishes(currentWishes);
+      if (wishesStatus) wishesStatus.textContent = "Đang hiển thị nhanh từ bộ nhớ, sổ lời chúc sẽ tự cập nhật.";
+    }
+
     try {
       const response = await fetch(buildWishEndpoint(WISHES_DB_URL, "list"), { cache: "no-store" });
       if (!response.ok) throw new Error("Cannot load wishes db");
@@ -408,8 +433,14 @@ document.addEventListener("DOMContentLoaded", () => {
       const sharedWishes = Array.isArray(data) ? data : data.wishes;
       currentWishes = (sharedWishes || []).map(normalizeWish).filter((wish) => wish.message);
       renderWishes(currentWishes);
+      cacheWishes(currentWishes);
       if (wishesStatus) wishesStatus.textContent = "Lời chúc đang được lưu và hiển thị từ Google Sheet.";
     } catch {
+      if (cachedWishes.length) {
+        if (wishesStatus) wishesStatus.textContent = "Chưa cập nhật được Google Sheet, đang hiển thị lời chúc đã lưu gần nhất.";
+        return;
+      }
+
       try {
         const fallbackResponse = await fetch(WISHES_FALLBACK_DB_URL, { cache: "no-store" });
         if (!fallbackResponse.ok) throw new Error("Cannot load fallback wishes db");
@@ -417,6 +448,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const fallbackWishes = Array.isArray(fallbackData) ? fallbackData : fallbackData.wishes;
         currentWishes = (fallbackWishes || []).map(normalizeWish).filter((wish) => wish.message);
         renderWishes(currentWishes);
+        cacheWishes(currentWishes);
         if (wishesStatus) wishesStatus.textContent = "Chưa kết nối được Google Sheet, đang hiển thị dữ liệu dự phòng.";
       } catch {
         currentWishes = sampleWishes.map(normalizeWish);
@@ -445,6 +477,7 @@ document.addEventListener("DOMContentLoaded", () => {
         if (savedWishes.length) {
           currentWishes = savedWishes.map(normalizeWish).filter((item) => item.message);
           renderWishes(currentWishes);
+          cacheWishes(currentWishes);
           if (wishesStatus) wishesStatus.textContent = "Đã lưu lời chúc vào Google Sheet.";
         } else {
           await loadWishes();
@@ -457,6 +490,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     currentWishes = [wish, ...currentWishes].slice(0, 30);
     renderWishes(currentWishes);
+    cacheWishes(currentWishes);
     if (wishesStatus) {
       wishesStatus.textContent = WISHES_WRITE_URL
         ? "Chưa ghi được vào Google Sheet, lời chúc đang hiển thị tạm trên phiên này."

@@ -1,11 +1,13 @@
 const SHEET_ID = "18YsBG6xZqaX2qS4_bRT212362QT1cyvLOqnyBwBcNAk";
 const SHEET_NAME = "LoiChuc";
 const HEADERS = ["Created At", "Name", "Message", "Recipient", "Source"];
+const WISHES_CACHE_KEY = "tdtt_wedding_wishes";
+const WISHES_CACHE_SECONDS = 60;
 
 function doGet() {
   return json_({
     ok: true,
-    wishes: readWishes_()
+    wishes: readCachedWishes_()
   });
 }
 
@@ -32,11 +34,13 @@ function doPost(event) {
     };
 
     appendWish_(wish);
+    const wishes = readWishes_();
+    cacheWishes_(wishes);
 
     return json_({
       ok: true,
       wish,
-      wishes: readWishes_()
+      wishes
     });
   } catch (error) {
     return json_({
@@ -98,6 +102,25 @@ function readWishes_() {
     })
     .reverse()
     .slice(0, 50);
+}
+
+function readCachedWishes_() {
+  const cache = CacheService.getScriptCache();
+  const cached = cache.get(WISHES_CACHE_KEY);
+
+  if (cached) {
+    return JSON.parse(cached);
+  }
+
+  const wishes = readWishes_();
+  cacheWishes_(wishes);
+  return wishes;
+}
+
+function cacheWishes_(wishes) {
+  CacheService
+    .getScriptCache()
+    .put(WISHES_CACHE_KEY, JSON.stringify(wishes), WISHES_CACHE_SECONDS);
 }
 
 function rowToWish_(row) {

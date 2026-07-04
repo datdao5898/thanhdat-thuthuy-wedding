@@ -624,6 +624,17 @@ h2 {
   background: #2b211c;
 }
 
+.button--ghost {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 255, 255, 0.45);
+  color: var(--paper);
+  backdrop-filter: blur(10px);
+}
+
+.button--ghost:hover {
+  background: rgba(255, 255, 255, 0.16);
+}
+
 .button--full {
   width: 100%;
 }
@@ -801,6 +812,17 @@ h2 {
   letter-spacing: 0.18em;
   margin-top: 8px;
   text-transform: uppercase;
+}
+
+.hero__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  justify-content: center;
+}
+
+.hero__actions .button {
+  min-width: 150px;
 }
 
 .scroll-hint {
