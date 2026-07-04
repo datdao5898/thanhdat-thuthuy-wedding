@@ -1313,6 +1313,20 @@ h2 {
   text-transform: uppercase;
 }
 
+.footer__credit {
+  letter-spacing: 0.12em;
+  margin-top: 8px;
+}
+
+.footer__credit a {
+  color: rgba(245, 221, 174, 0.9);
+  text-decoration: none;
+}
+
+.footer__credit a:hover {
+  color: var(--paper);
+}
+
 /* ===== Modal ===== */
 .modal {
   align-items: center;
