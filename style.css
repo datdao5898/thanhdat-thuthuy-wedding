@@ -89,7 +89,7 @@ body:not(.envelope-opened) .site-shell {
 }
 
 body.envelope-opening .site-shell {
-  animation: shellZoomOut 0.95s 2s cubic-bezier(0.16, 0.84, 0.22, 1) both;
+  animation: shellZoomOut 0.86s 2.28s cubic-bezier(0.16, 0.84, 0.22, 1) both;
   pointer-events: none;
 }
 
@@ -119,7 +119,7 @@ body.envelope-opened .site-shell {
 }
 
 .envelope-intro.is-opening {
-  animation: introFade 0.58s 2.08s ease forwards;
+  animation: introFade 0.5s 1.98s ease forwards;
   pointer-events: none;
 }
 
@@ -308,7 +308,7 @@ body.envelope-opened .envelope-intro {
 }
 
 .envelope-intro.is-opening .envelope__inner-card {
-  animation: cardPullOut 2.32s 0.5s cubic-bezier(0.16, 0.84, 0.22, 1) forwards;
+  animation: cardPullOut 2.28s 0.46s cubic-bezier(0.2, 0.72, 0.2, 1) forwards;
 }
 
 .envelope__lace {
@@ -444,59 +444,43 @@ body.envelope-opened .envelope-intro {
   }
   18% {
     opacity: 0;
-    transform: translate3d(-50%, 12%, 0) scale(0.82);
+    transform: translate3d(-50%, 10%, 0) scale(0.82);
     z-index: 5;
   }
-  28% {
+  30% {
     opacity: 1;
-    transform: translate3d(-50%, -8%, 0) scale(0.88);
+    transform: translate3d(-50%, -10%, 0) scale(0.88);
     z-index: 5;
   }
-  34% {
-    opacity: 1;
-    transform: translate3d(-50%, -22%, 0) scale(0.94);
-    z-index: 5;
-  }
-  43% {
+  44% {
     border-radius: 16px;
     opacity: 1;
-    transform: translate3d(-50%, -50%, 0) scale(1);
+    transform: translate3d(-50%, -48%, 0) scale(1);
     z-index: 5;
   }
-  58% {
+  60% {
     border-radius: 15px;
     opacity: 1;
-    transform: translate3d(-50%, -88%, 0) scale(1.06);
+    transform: translate3d(-50%, -82%, 0) scale(1.08);
     z-index: 5;
   }
-  66% {
+  76% {
     border-radius: 14px;
     opacity: 1;
-    transform: translate3d(-50%, -128%, 0) scale(1.08);
+    transform: translate3d(-50%, -104%, 0) scale(1.14);
     z-index: 5;
-  }
-  67% {
-    border-radius: 14px;
-    opacity: 1;
-    transform: translate3d(-50%, -128%, 0) scale(1.08);
-    z-index: 8;
-  }
-  78% {
-    border-radius: 14px;
-    opacity: 1;
-    transform: translate3d(-50%, -116%, 0) scale(1.22);
-    z-index: 8;
   }
   88% {
-    opacity: 1;
-    transform: translate3d(-50%, -98%, 0) scale(1.36);
-    z-index: 8;
+    border-radius: 14px;
+    opacity: 0.52;
+    transform: translate3d(-50%, -116%, 0) scale(1.28);
+    z-index: 5;
   }
   100% {
     border-radius: 12px;
     opacity: 0;
-    transform: translate3d(-50%, -74%, 0) scale(1.62);
-    z-index: 8;
+    transform: translate3d(-50%, -126%, 0) scale(1.44);
+    z-index: 5;
   }
 }
 
