@@ -25,9 +25,12 @@ document.addEventListener("DOMContentLoaded", () => {
     "https://images.unsplash.com/photo-1606800052052-a08af7148866?auto=format&fit=crop&w=1600&q=85"
   ];
 
-  // API serverless doc/ghi Google Sheet. File JSON chi dung lam fallback khi chay preview tinh.
-  const WISHES_DB_URL = window.WEDDING_WISHES_DB_URL || "api/wishes";
-  const WISHES_WRITE_URL = window.WEDDING_WISHES_WRITE_URL || "api/wishes";
+  // Uu tien Google Apps Script neu da dan URL trong config.js.
+  // API serverless va file JSON chi dung lam fallback khi chay preview tinh.
+  const WISHES_APP_SCRIPT_URL = window.WEDDING_WISHES_APP_SCRIPT_URL || "";
+  const WISHES_API_URL = window.WEDDING_WISHES_API_URL || "api/wishes";
+  const WISHES_DB_URL = window.WEDDING_WISHES_DB_URL || WISHES_APP_SCRIPT_URL || WISHES_API_URL;
+  const WISHES_WRITE_URL = window.WEDDING_WISHES_WRITE_URL || WISHES_APP_SCRIPT_URL || WISHES_API_URL;
   const WISHES_FALLBACK_DB_URL = "data/wishes.json";
   const sampleWishes = [
     {
@@ -355,6 +358,15 @@ document.addEventListener("DOMContentLoaded", () => {
     recipient: wish?.recipient || ""
   });
 
+  const buildWishEndpoint = (url, action) => {
+    const endpoint = new URL(url, window.location.href);
+    if (action) endpoint.searchParams.set("action", action);
+    if (url === WISHES_APP_SCRIPT_URL) endpoint.searchParams.set("_", Date.now().toString());
+    return endpoint.toString();
+  };
+
+  const isAppsScriptEndpoint = (url) => /script\.google(?:usercontent)?\.com/.test(url);
+
   const renderWishes = (wishes) => {
     if (!wishesList) return;
 
@@ -390,7 +402,7 @@ document.addEventListener("DOMContentLoaded", () => {
     if (!wishesList) return;
 
     try {
-      const response = await fetch(WISHES_DB_URL, { cache: "no-store" });
+      const response = await fetch(buildWishEndpoint(WISHES_DB_URL, "list"), { cache: "no-store" });
       if (!response.ok) throw new Error("Cannot load wishes db");
       const data = await response.json();
       const sharedWishes = Array.isArray(data) ? data : data.wishes;
@@ -419,14 +431,16 @@ document.addEventListener("DOMContentLoaded", () => {
 
     if (WISHES_WRITE_URL) {
       try {
-        const response = await fetch(WISHES_WRITE_URL, {
+        const isAppsScript = isAppsScriptEndpoint(WISHES_WRITE_URL);
+        const response = await fetch(buildWishEndpoint(WISHES_WRITE_URL, "create"), {
           method: "POST",
-          headers: { "Content-Type": "application/json" },
+          headers: { "Content-Type": isAppsScript ? "text/plain;charset=utf-8" : "application/json" },
           body: JSON.stringify(wish)
         });
 
         if (!response.ok) throw new Error("Cannot save wish");
         const data = await response.json().catch(() => null);
+        if (data?.ok === false) throw new Error(data.error || "Cannot save wish");
         const savedWishes = Array.isArray(data?.wishes) ? data.wishes : [];
         if (savedWishes.length) {
           currentWishes = savedWishes.map(normalizeWish).filter((item) => item.message);
