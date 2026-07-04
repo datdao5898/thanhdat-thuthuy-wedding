@@ -25,10 +25,10 @@ document.addEventListener("DOMContentLoaded", () => {
     "https://images.unsplash.com/photo-1606800052052-a08af7148866?auto=format&fit=crop&w=1600&q=85"
   ];
 
-  // De loi chuc hien thi chung cho moi khach, gan URL API tra ve JSON tai day.
-  // API goi GET de lay danh sach va POST de them loi chuc moi.
-  const WISHES_API_URL = window.WEDDING_WISHES_API_URL || "";
-  const WISHES_STORAGE_KEY = "tdtt-wedding-wishes-v1";
+  // File JSON nay la "db" tinh de hien thi loi chuc cho tat ca moi nguoi.
+  // Neu sau nay co endpoint ghi du lieu, gan window.WEDDING_WISHES_WRITE_URL.
+  const WISHES_DB_URL = window.WEDDING_WISHES_DB_URL || "data/wishes.json";
+  const WISHES_WRITE_URL = window.WEDDING_WISHES_WRITE_URL || "";
   const sampleWishes = [
     {
       name: "Một người bạn",
@@ -340,6 +340,7 @@ document.addEventListener("DOMContentLoaded", () => {
   // ===== So loi chuc =====
   const wishesList = document.getElementById("wishesList");
   const wishesStatus = document.getElementById("wishesStatus");
+  let currentWishes = [];
 
   const formatWishDate = (value) => {
     const date = value ? new Date(value) : new Date();
@@ -352,19 +353,6 @@ document.addEventListener("DOMContentLoaded", () => {
     message: (wish?.message || "").trim(),
     createdAt: wish?.createdAt || new Date().toISOString()
   });
-
-  const getLocalWishes = () => {
-    try {
-      const parsed = JSON.parse(localStorage.getItem(WISHES_STORAGE_KEY) || "[]");
-      return Array.isArray(parsed) ? parsed.map(normalizeWish).filter((wish) => wish.message) : [];
-    } catch {
-      return [];
-    }
-  };
-
-  const setLocalWishes = (wishes) => {
-    localStorage.setItem(WISHES_STORAGE_KEY, JSON.stringify(wishes));
-  };
 
   const renderWishes = (wishes) => {
     if (!wishesList) return;
@@ -400,52 +388,44 @@ document.addEventListener("DOMContentLoaded", () => {
   const loadWishes = async () => {
     if (!wishesList) return;
 
-    if (!WISHES_API_URL) {
-      const localWishes = getLocalWishes();
-      renderWishes(localWishes);
-      if (wishesStatus) {
-        wishesStatus.textContent = localWishes.length
-          ? "Lời chúc đang được lưu tạm trên thiết bị này."
-          : "Đang hiển thị lời chúc mẫu. Cần cấu hình nơi lưu chung để mọi khách cùng thấy lời chúc mới.";
-      }
-      return;
-    }
-
     try {
-      const response = await fetch(WISHES_API_URL);
+      const response = await fetch(WISHES_DB_URL, { cache: "no-store" });
+      if (!response.ok) throw new Error("Cannot load wishes db");
       const data = await response.json();
       const sharedWishes = Array.isArray(data) ? data : data.wishes;
-      renderWishes((sharedWishes || []).map(normalizeWish).filter((wish) => wish.message));
-      if (wishesStatus) wishesStatus.textContent = "Lời chúc được cập nhật từ sổ chung.";
+      currentWishes = (sharedWishes || []).map(normalizeWish).filter((wish) => wish.message);
+      renderWishes(currentWishes);
+      if (wishesStatus) wishesStatus.textContent = "Lời chúc đang được hiển thị từ data/wishes.json.";
     } catch {
-      renderWishes(getLocalWishes());
-      if (wishesStatus) wishesStatus.textContent = "Chưa tải được sổ lời chúc chung, đang hiển thị dữ liệu tạm.";
+      currentWishes = sampleWishes.map(normalizeWish);
+      renderWishes(currentWishes);
+      if (wishesStatus) wishesStatus.textContent = "Chưa tải được data/wishes.json, đang hiển thị lời chúc mẫu.";
     }
   };
 
   const saveWish = async (wish) => {
     if (!wish.message) return;
 
-    if (!WISHES_API_URL) {
-      const nextWishes = [wish, ...getLocalWishes()].slice(0, 30);
-      setLocalWishes(nextWishes);
-      renderWishes(nextWishes);
-      if (wishesStatus) wishesStatus.textContent = "Đã thêm lời chúc vào sổ tạm trên thiết bị này.";
-      return;
+    if (WISHES_WRITE_URL) {
+      try {
+        await fetch(WISHES_WRITE_URL, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(wish)
+        });
+        await loadWishes();
+        return;
+      } catch {
+        if (wishesStatus) wishesStatus.textContent = "Chưa ghi được lời chúc lên endpoint, đang hiển thị tạm trên phiên này.";
+      }
     }
 
-    try {
-      await fetch(WISHES_API_URL, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(wish)
-      });
-      await loadWishes();
-    } catch {
-      const nextWishes = [wish, ...getLocalWishes()].slice(0, 30);
-      setLocalWishes(nextWishes);
-      renderWishes(nextWishes);
-      if (wishesStatus) wishesStatus.textContent = "Chưa gửi được lên sổ chung, đã lưu tạm trên thiết bị này.";
+    currentWishes = [wish, ...currentWishes].slice(0, 30);
+    renderWishes(currentWishes);
+    if (wishesStatus) {
+      wishesStatus.textContent = WISHES_WRITE_URL
+        ? "Chưa ghi được vào JSON DB, lời chúc đang hiển thị tạm trên phiên này."
+        : "Đã hiển thị lời chúc trên phiên này. Để mọi người cùng thấy lâu dài, thêm lời chúc vào data/wishes.json.";
     }
   };
 
