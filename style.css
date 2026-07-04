@@ -209,7 +209,9 @@ body.envelope-opened .envelope-intro {
   clip-path: polygon(0 0, 50% 58%, 100% 0);
   height: 70%;
   top: 0;
-  z-index: 2;
+  transform-origin: top center;
+  transition: transform 0.95s cubic-bezier(0.2, 0.78, 0.24, 1), opacity 0.7s ease;
+  z-index: 4;
 }
 
 .envelope__flap--front {
@@ -222,13 +224,19 @@ body.envelope-opened .envelope-intro {
   height: 72%;
   top: 24%;
   transform-origin: top center;
-  transition: transform 1s cubic-bezier(0.18, 0.83, 0.24, 1), filter 1s ease;
+  transition: transform 0.9s cubic-bezier(0.2, 0.78, 0.24, 1), opacity 0.65s ease, filter 0.65s ease;
   z-index: 5;
 }
 
+.envelope-intro.is-opening .envelope__flap--back {
+  opacity: 0.9;
+  transform: translateY(-42%) scaleY(0.72);
+}
+
 .envelope-intro.is-opening .envelope__flap--front {
-  filter: brightness(1.12);
-  transform: rotateX(178deg);
+  filter: brightness(1.08);
+  opacity: 0;
+  transform: translateY(-30%) scaleY(0.84);
 }
 
 .envelope__inner-card {
@@ -244,7 +252,7 @@ body.envelope-opened .envelope-intro {
   display: flex;
   flex-direction: column;
   gap: 10px;
-  height: 56%;
+  height: 52%;
   justify-content: center;
   left: 50%;
   opacity: 0;
@@ -252,7 +260,7 @@ body.envelope-opened .envelope-intro {
   padding: 26px;
   position: absolute;
   text-align: center;
-  top: 46%;
+  top: 50%;
   transform: translate3d(-50%, 78%, 0) scale(0.78);
   transform-origin: center;
   width: 66%;
@@ -308,8 +316,8 @@ body.envelope-opened .envelope-intro {
 }
 
 .envelope__lace--top {
+  opacity: 0;
   top: 34.5%;
-  transform: rotate(18deg);
 }
 
 .envelope__lace--bottom {
@@ -414,17 +422,17 @@ body.envelope-opened .envelope-intro {
   42% {
     border-radius: 16px;
     opacity: 1;
-    transform: translate3d(-50%, -50%, 0) scale(1.02);
+    transform: translate3d(-50%, -46%, 0) scale(1.02);
   }
   72% {
     border-radius: 14px;
     opacity: 0.96;
-    transform: translate3d(-50%, -54%, 0) scale(1.06);
+    transform: translate3d(-50%, -48%, 0) scale(1.06);
   }
   100% {
     border-radius: 12px;
     opacity: 0;
-    transform: translate3d(-50%, -58%, 0) scale(1.12);
+    transform: translate3d(-50%, -50%, 0) scale(1.12);
   }
 }
 
