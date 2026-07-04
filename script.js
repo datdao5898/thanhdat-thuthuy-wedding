@@ -55,7 +55,7 @@ document.addEventListener("DOMContentLoaded", () => {
     envelopeIntro.classList.add("is-opening");
     document.body.classList.add("envelope-opening");
 
-    const openDelay = window.matchMedia("(prefers-reduced-motion: reduce)").matches ? 80 : 3200;
+    const openDelay = window.matchMedia("(prefers-reduced-motion: reduce)").matches ? 80 : 3450;
     window.setTimeout(() => {
       document.body.classList.add("envelope-opened");
       document.body.classList.remove("intro-locked", "envelope-opening");
