@@ -119,9 +119,12 @@ body.envelope-opened .site-shell {
 .envelope-intro {
   align-items: center;
   background:
-    radial-gradient(circle at 50% 46%, rgba(238, 215, 172, 0.16), transparent 17rem),
-    radial-gradient(circle at 12% 18%, rgba(122, 98, 70, 0.25), transparent 18rem),
-    linear-gradient(135deg, #15120f, #070605 62%, #1b1612);
+    radial-gradient(circle at 50% 46%, rgba(238, 184, 115, 0.24), transparent 20rem),
+    radial-gradient(ellipse at 50% 50%, rgba(142, 32, 55, 0.38), transparent 36rem),
+    radial-gradient(circle at 10% 16%, rgba(126, 20, 45, 0.42), transparent 24rem),
+    radial-gradient(circle at 90% 84%, rgba(103, 23, 39, 0.3), transparent 27rem),
+    repeating-linear-gradient(112deg, rgba(255, 255, 255, 0.012) 0 1px, transparent 1px 6px),
+    linear-gradient(135deg, #3a0d1b, #14060b 60%, #310a17);
   display: flex;
   inset: 0;
   justify-content: center;
@@ -145,6 +148,10 @@ body.envelope-opened .envelope-intro {
   background: transparent;
   border: 0;
   border-radius: 8px;
+  box-shadow:
+    0 0 0 1px rgba(238, 196, 123, 0.4),
+    0 0 0 3px rgba(62, 4, 19, 0.28),
+    0 30px 72px rgba(0, 0, 0, 0.4);
   cursor: pointer;
   max-width: 640px;
   overflow: hidden;
@@ -156,11 +163,12 @@ body.envelope-opened .envelope-intro {
 
 .envelope::before {
   background:
-    linear-gradient(190deg, rgba(255, 255, 255, 0.28), transparent 38%),
-    linear-gradient(165deg, #efe4cc, #b8a07a);
+    linear-gradient(190deg, rgba(255, 224, 201, 0.13), transparent 38%),
+    repeating-linear-gradient(96deg, rgba(255, 255, 255, 0.018) 0 1px, rgba(0, 0, 0, 0.028) 1px 4px),
+    linear-gradient(165deg, #8c2138, #440919 64%, #6c1429);
   box-shadow:
-    inset 0 0 0 1px rgba(255, 250, 230, 0.26),
-    0 -16px 42px rgba(0, 0, 0, 0.16);
+    inset 0 0 0 1px rgba(239, 195, 119, 0.3),
+    0 -16px 42px rgba(0, 0, 0, 0.28);
   clip-path: polygon(0 100%, 50% 0, 100% 100%);
   content: "";
   height: 56%;
@@ -188,41 +196,42 @@ body.envelope-opened .envelope-intro {
 }
 
 .envelope:focus-visible {
-  outline: 2px solid rgba(245, 232, 204, 0.85);
+  outline: 2px solid rgba(236, 197, 127, 0.9);
   outline-offset: 12px;
 }
 
 .envelope__body {
   background:
-    linear-gradient(145deg, rgba(255, 255, 255, 0.28), transparent 30%),
-    radial-gradient(circle at 50% 0%, rgba(255, 248, 225, 0.28), transparent 18rem),
-    linear-gradient(135deg, #e6dac3, #bda987 58%, #d9caae);
-  border: 1px solid rgba(255, 245, 218, 0.76);
+    linear-gradient(145deg, rgba(255, 220, 203, 0.13), transparent 30%),
+    radial-gradient(ellipse at 48% 0%, rgba(203, 89, 108, 0.25), transparent 62%),
+    repeating-linear-gradient(96deg, rgba(255, 255, 255, 0.018) 0 1px, rgba(0, 0, 0, 0.025) 1px 4px),
+    linear-gradient(135deg, #831a32, #400717 58%, #681329);
+  border: 1px solid rgba(229, 181, 98, 0.68);
   box-shadow:
-    inset 0 0 0 1px rgba(102, 78, 48, 0.12),
-    inset 0 0 0 10px rgba(255, 255, 255, 0.14),
-    inset 0 0 0 12px rgba(116, 88, 53, 0.12),
-    inset 0 -28px 62px rgba(87, 61, 35, 0.14),
-    0 34px 90px rgba(0, 0, 0, 0.54);
+    inset 0 0 0 1px rgba(255, 223, 159, 0.14),
+    inset 0 0 0 10px rgba(73, 4, 21, 0.24),
+    inset 0 0 0 12px rgba(228, 178, 95, 0.24),
+    inset 0 -30px 66px rgba(20, 0, 7, 0.34),
+    0 34px 90px rgba(0, 0, 0, 0.58);
   inset: 0;
   position: absolute;
 }
 
 .envelope__body::after {
   background:
-    linear-gradient(90deg, rgba(255, 255, 255, 0.2), transparent 28%, rgba(79, 57, 34, 0.06) 58%, transparent),
-    repeating-linear-gradient(98deg, rgba(255, 255, 255, 0.06) 0 1px, transparent 1px 5px);
-  background-size: 100% 100%, 12px 12px;
+    linear-gradient(102deg, rgba(255, 255, 255, 0.1), transparent 24%, rgba(19, 0, 7, 0.16) 55%, transparent 78%),
+    repeating-linear-gradient(98deg, rgba(255, 229, 220, 0.035) 0 1px, transparent 1px 5px);
+  background-size: 100% 100%, 11px 11px;
   content: "";
   inset: 0;
   mix-blend-mode: soft-light;
-  opacity: 0.55;
+  opacity: 0.68;
   position: absolute;
 }
 
 .envelope__body::before {
-  border: 1px solid rgba(95, 70, 42, 0.2);
-  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.22);
+  border: 1px solid rgba(237, 193, 116, 0.48);
+  box-shadow: 0 0 0 1px rgba(61, 4, 19, 0.62);
   content: "";
   inset: 12px;
   opacity: 0.72;
@@ -239,9 +248,13 @@ body.envelope-opened .envelope-intro {
 
 .envelope__flap--back {
   background:
-    linear-gradient(160deg, rgba(255, 255, 255, 0.34), transparent 36%),
-    linear-gradient(160deg, #eadfc8, #b9a17d);
+    linear-gradient(160deg, rgba(255, 224, 207, 0.15), transparent 36%),
+    repeating-linear-gradient(96deg, rgba(255, 255, 255, 0.018) 0 1px, rgba(0, 0, 0, 0.026) 1px 4px),
+    linear-gradient(160deg, #92213a, #480819 72%);
   clip-path: polygon(0 0, 50% 58%, 100% 0);
+  filter:
+    drop-shadow(0 1px 0 rgba(241, 199, 124, 0.5))
+    drop-shadow(0 2px 1px rgba(37, 1, 12, 0.32));
   height: 70%;
   top: 0;
   transform-origin: top center;
@@ -251,11 +264,15 @@ body.envelope-opened .envelope-intro {
 
 .envelope__flap--front {
   background:
-    linear-gradient(18deg, transparent 49.45%, rgba(100, 75, 46, 0.32) 50%, transparent 50.55%),
-    linear-gradient(-18deg, transparent 49.45%, rgba(100, 75, 46, 0.32) 50%, transparent 50.55%),
-    linear-gradient(180deg, rgba(255, 255, 255, 0.24), transparent 28%),
-    linear-gradient(180deg, #d5c29d, #a88e63);
+    linear-gradient(18deg, transparent 49.45%, rgba(228, 180, 96, 0.42) 50%, transparent 50.55%),
+    linear-gradient(-18deg, transparent 49.45%, rgba(228, 180, 96, 0.42) 50%, transparent 50.55%),
+    linear-gradient(180deg, rgba(255, 215, 199, 0.1), transparent 28%),
+    repeating-linear-gradient(96deg, rgba(255, 255, 255, 0.016) 0 1px, rgba(0, 0, 0, 0.024) 1px 4px),
+    linear-gradient(180deg, #77162d, #3d0617);
   clip-path: polygon(0 0, 50% 62%, 100% 0, 100% 100%, 0 100%);
+  filter:
+    drop-shadow(0 -1px 0 rgba(241, 199, 124, 0.46))
+    drop-shadow(0 -2px 1px rgba(37, 1, 12, 0.28));
   height: 72%;
   top: 24%;
   transform-origin: top center;
@@ -269,7 +286,10 @@ body.envelope-opened .envelope-intro {
 }
 
 .envelope-intro.is-opening .envelope__flap--front {
-  filter: brightness(1.04);
+  filter:
+    brightness(1.04)
+    drop-shadow(0 -1px 0 rgba(241, 199, 124, 0.46))
+    drop-shadow(0 -2px 1px rgba(37, 1, 12, 0.28));
 }
 
 .envelope__inner-card {
@@ -327,7 +347,7 @@ body.envelope-opened .envelope-intro {
 
 .envelope__lace {
   background:
-    linear-gradient(90deg, transparent, rgba(98, 74, 45, 0.34), rgba(255, 250, 230, 0.55), rgba(98, 74, 45, 0.34), transparent);
+    linear-gradient(90deg, transparent, rgba(165, 108, 40, 0.36), rgba(247, 209, 139, 0.82), rgba(165, 108, 40, 0.36), transparent);
   filter: none;
   height: 1px;
   left: 8%;
@@ -339,7 +359,7 @@ body.envelope-opened .envelope-intro {
 
 .envelope__lace::after {
   background:
-    repeating-linear-gradient(90deg, transparent 0 10px, rgba(255, 255, 255, 0.5) 10px 11px, transparent 11px 20px);
+    repeating-linear-gradient(90deg, transparent 0 10px, rgba(244, 203, 128, 0.62) 10px 11px, transparent 11px 20px);
   content: "";
   height: 8px;
   left: 0;
@@ -359,15 +379,16 @@ body.envelope-opened .envelope-intro {
 }
 
 .envelope__monogram {
-  color: rgba(64, 45, 28, 0.82);
+  color: #e4ba72;
   font-family: var(--romantic);
   font-size: clamp(2.2rem, 10vw, 3.7rem);
   left: 50%;
   line-height: 1;
   position: absolute;
   text-shadow:
-    0 1px 0 rgba(255, 255, 255, 0.42),
-    0 6px 18px rgba(92, 65, 38, 0.12);
+    0 1px 0 rgba(255, 241, 207, 0.5),
+    0 2px 0 rgba(101, 55, 15, 0.72),
+    0 7px 20px rgba(20, 0, 7, 0.44);
   top: 12%;
   transform: translateX(-50%) rotate(-7deg);
   transition: opacity 0.35s ease, transform 0.45s ease;
@@ -383,17 +404,17 @@ body.envelope-opened .envelope-intro {
 .envelope__seal {
   align-items: center;
   background:
-    radial-gradient(circle at 34% 26%, rgba(255, 231, 206, 0.38), transparent 18%),
-    radial-gradient(circle at 66% 74%, rgba(39, 10, 8, 0.34), transparent 24%),
-    radial-gradient(circle, #8f332d 0 48%, #6a251f 55%, #3d1614 100%);
-  border: 2px solid rgba(232, 184, 137, 0.38);
+    radial-gradient(circle at 34% 25%, rgba(255, 248, 213, 0.7), transparent 17%),
+    radial-gradient(circle at 68% 76%, rgba(72, 34, 4, 0.32), transparent 26%),
+    radial-gradient(circle, #e6ba6b 0 45%, #ad7227 58%, #683b10 100%);
+  border: 2px solid rgba(255, 224, 157, 0.72);
   border-radius: 50%;
   box-shadow:
-    inset 0 0 0 5px rgba(63, 14, 11, 0.18),
-    inset 0 -9px 13px rgba(0, 0, 0, 0.3),
-    0 12px 32px rgba(0, 0, 0, 0.48),
-    0 0 0 7px rgba(101, 38, 30, 0.16);
-  color: rgba(249, 223, 180, 0.86);
+    inset 0 0 0 5px rgba(86, 45, 7, 0.16),
+    inset 0 -9px 13px rgba(71, 34, 4, 0.28),
+    0 12px 32px rgba(0, 0, 0, 0.5),
+    0 0 0 7px rgba(230, 177, 84, 0.14);
+  color: #6d1026;
   display: flex;
   font-family: var(--serif);
   font-size: clamp(1.5rem, 8vw, 2.4rem);
@@ -409,7 +430,7 @@ body.envelope-opened .envelope-intro {
 }
 
 .envelope__seal::before {
-  border: 1px solid rgba(250, 222, 173, 0.34);
+  border: 1px solid rgba(255, 239, 194, 0.56);
   border-radius: 50%;
   content: "";
   inset: 12px;
@@ -422,7 +443,7 @@ body.envelope-opened .envelope-intro {
 
 .envelope__recipient {
   bottom: 18%;
-  color: rgba(65, 48, 30, 0.72);
+  color: rgba(253, 224, 171, 0.94);
   font-family: var(--serif);
   font-size: clamp(0.72rem, 2.8vw, 0.95rem);
   font-weight: 600;
@@ -433,6 +454,7 @@ body.envelope-opened .envelope-intro {
   position: absolute;
   text-overflow: ellipsis;
   text-transform: uppercase;
+  text-shadow: 0 2px 10px rgba(20, 0, 7, 0.72);
   transform: translateX(-50%);
   transition: opacity 0.25s ease;
   white-space: nowrap;
@@ -451,7 +473,7 @@ body.envelope-opened .envelope-intro {
 
 .envelope__hint {
   bottom: 12%;
-  color: rgba(65, 48, 30, 0.66);
+  color: rgba(232, 191, 120, 0.78);
   font-size: 0.58rem;
   font-weight: 600;
   left: 50%;
@@ -520,6 +542,17 @@ body.envelope-opened .envelope-intro {
   45% {
     opacity: 0.68;
     transform: translate(-50%, -50%) scale(0.84);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+}
+
+@keyframes shellRevealDesktop {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(1);
   }
   to {
     opacity: 1;
@@ -1956,6 +1989,17 @@ h2 {
   body.intro-locked,
   body.envelope-opening {
     padding: 0;
+  }
+
+  body:not(.envelope-opened) .site-shell {
+    height: calc(100svh - 40px);
+    max-width: none;
+    transform: translate(-50%, -50%) scale(1);
+    width: calc(100vw - 40px);
+  }
+
+  body.envelope-opening .site-shell {
+    animation: shellRevealDesktop 0.76s 2.08s cubic-bezier(0.16, 0.84, 0.22, 1) both;
   }
 
   .site-shell,

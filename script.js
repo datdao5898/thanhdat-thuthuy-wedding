@@ -176,7 +176,7 @@ document.addEventListener("DOMContentLoaded", () => {
   preloadClosing.src = "images/wedding-4.jpg";
 
   // ===== Countdown den ngay cuoi =====
-  const countdownTarget = new Date("2026-09-20T11:00:00+07:00").getTime();
+  const countdownTarget = new Date("2026-09-20T08:45:00+07:00").getTime();
   const countdownFields = {
     days: document.getElementById("countdownDays"),
     hours: document.getElementById("countdownHours"),

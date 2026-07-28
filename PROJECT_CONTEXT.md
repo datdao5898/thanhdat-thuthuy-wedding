@@ -4,7 +4,7 @@
 
 ## 1. Tổng quan
 
-Đây là website thiệp mời cưới một trang (single-page landing page) cho **Thu Thủy và Thành Đạt**, ngày cưới hiển thị là **20/09/2026**.
+Đây là website thiệp mời cưới một trang (single-page landing page) cho **Thu Thủy và Thành Đạt**. Hôn lễ được cử hành lúc **08:45, Chủ nhật ngày 20/09/2026** tại **Hội Thánh Tin Lành Thạnh Mỹ**.
 
 Dự án dùng HTML, CSS và JavaScript thuần; không có `package.json`, framework, trình biên dịch hoặc bước build. Có thể mở `index.html` để xem giao diện, nhưng phần sổ lời chúc cần chạy qua HTTP(S) để `fetch` hoạt động ổn định.
 
@@ -62,7 +62,7 @@ Nếu các CDN không tải được, slider vẫn có carousel tối giản b�
 
 | Nhu cầu | Nơi sửa chính | Ghi chú |
 | --- | --- | --- |
-| Tên cặp đôi, ngày cưới, văn bản, giờ/địa điểm, link Maps | `index.html` | Còn placeholder `[Giờ]`, `[Tên nhà hàng / địa điểm]`, `[Địa chỉ đầy đủ]` và `https://maps.google.com`. |
+| Tên cặp đôi, ngày cưới, văn bản, giờ/địa điểm, link Maps | `index.html` | Hôn lễ: `08:45, 20/09/2026` tại `Hội Thánh Tin Lành Thạnh Mỹ`; bản đồ dùng tọa độ `11.754594317329847, 108.52743919838332`. |
 | Tên chủ tài khoản, số tài khoản, tên ngân hàng, đường dẫn QR | đầu `script.js` trong `bankAccounts` | Hiện số tài khoản và tên ngân hàng là placeholder. |
 | Ảnh cưới | `images/wedding-1.jpg` đến `images/wedding-4.jpg` | Đang có ảnh demo cục bộ, dùng cho hero, collage, wedding information và gallery. Các ảnh tự dự phòng chéo nếu một tệp bị thiếu. |
 | Ảnh tuổi thơ | `images/childhood-groom.jpg`, `images/childhood-bride.jpg` | Đang có ảnh demo cục bộ; nếu tệp bị thiếu sẽ dùng một ảnh cưới demo thay thế. |
@@ -74,7 +74,7 @@ Nếu các CDN không tải được, slider vẫn có carousel tối giản b�
 ### Cá nhân hóa khách mời và phong bì
 
 - Không có `name` trong query string: thiệp hiển thị ngay.
-- Có `name`: `script.js` đổi lời chào và tiêu đề tab, hiển thị phong bì, rồi mở sau hoạt ảnh khoảng 3,25 giây khi khách bấm.
+- Có `name`: `script.js` đổi lời chào và tiêu đề tab, hiển thị phong bì theo đúng cấu trúc/hoạt ảnh cũ nhưng dùng chất liệu nhung đỏ đô, chữ và con dấu ánh kim, rồi mở sau hoạt ảnh khoảng 3,25 giây khi khách bấm. Trên desktop, trang chính được hé lộ ở kích thước gần full màn hình với viền 20px, không thu hẹp thành khung mobile.
 - Với người bật giảm chuyển động, thời gian mở giảm còn khoảng 80 ms.
 
 Ví dụ URL: `https://ten-mien-cua-ban/?name=Nguyen%20Van%20A`.
@@ -84,7 +84,7 @@ Ví dụ URL: `https://ten-mien-cua-ban/?name=Nguyen%20Van%20A`.
 - Splide chạy vòng lặp, hỗ trợ phím mũi tên, kéo và pagination.
 - Bấm ảnh mở lightbox; Escape hoặc nút đóng sẽ đóng modal.
 - `script.js` thay ảnh gallery, hero, closing, tuổi thơ và các section ảnh mới bị lỗi bằng ảnh demo cục bộ; trang không phụ thuộc Unsplash khi hiển thị.
-- Countdown dùng mốc `2026-09-20T11:00:00+07:00`; cần đổi trong `script.js` nếu giờ tổ chức thay đổi.
+- Countdown dùng mốc `2026-09-20T08:45:00+07:00`; cần đổi trong `script.js` nếu giờ tổ chức thay đổi.
 
 ### Mừng cưới và lời cảm ơn
 
@@ -155,7 +155,7 @@ Chỉ dùng phương án này khi host thực sự chạy được route `api/wi
 
 1. Thay bộ ảnh demo trong `images/` bằng ảnh thật của cặp đôi khi đã có ảnh chính thức; giữ nguyên tên tệp để không cần sửa code.
 2. Thay số tài khoản, tên ngân hàng và hai QR demo trong `bankAccounts` ở `script.js`.
-3. Điền giờ, tên/địa chỉ địa điểm và URL Google Maps thật trong `index.html`.
+3. Bổ sung địa chỉ dạng văn bản chi tiết của Hội Thánh nếu cần; giờ, tên địa điểm và tọa độ Google Maps đã được cập nhật.
 4. Mở Google Sheet và kiểm tra Web App URL trong `config.js` còn deploy, có quyền `Anyone`, đọc/ghi được.
 5. Kiểm tra UTF-8 trong trình soạn thảo trước khi chỉnh sửa tiếng Việt. Các lần đọc bằng terminal hiện hiển thị nhiều chuỗi tiếng Việt bị mojibake (ví dụ `Thiá»‡p`); cần xác nhận encoding file đang là UTF-8 và sửa nếu nội dung thực sự hiển thị lỗi trên trình duyệt.
 6. Test trên điện thoại, đặc biệt: mở phong bì từ URL có `name`, bấm QR, copy số tài khoản, gửi lời chúc, đóng modal và slider.
