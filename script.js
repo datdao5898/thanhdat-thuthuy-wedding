@@ -17,12 +17,12 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   };
 
-  // Anh du phong giup giao dien van dep khi chua co anh trong thu muc images.
+  // Ảnh demo cục bộ dự phòng, giúp giao diện không phụ thuộc kết nối mạng.
   const fallbackWeddingImages = [
-    "https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=1600&q=85",
-    "https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=1600&q=85",
-    "https://images.unsplash.com/photo-1519225421980-715cb0215aed?auto=format&fit=crop&w=1600&q=85",
-    "https://images.unsplash.com/photo-1606800052052-a08af7148866?auto=format&fit=crop&w=1600&q=85"
+    "images/wedding-2.jpg",
+    "images/wedding-3.jpg",
+    "images/wedding-4.jpg",
+    "images/wedding-1.jpg"
   ];
 
   // Uu tien Google Apps Script neu da dan URL trong config.js.
@@ -46,7 +46,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   ];
 
-  const createQrPlaceholder = (label) => {
+  const createQrDemo = (label) => {
     const svg = `
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 240">
         <rect width="240" height="240" fill="#fff"/>
@@ -59,7 +59,7 @@ document.addEventListener("DOMContentLoaded", () => {
         </g>
         <rect x="50" y="104" width="140" height="36" rx="18" fill="#fff"/>
         <text x="120" y="121" text-anchor="middle" dominant-baseline="middle" fill="#9f6668" font-family="Arial, sans-serif" font-size="11" font-weight="700">${label}</text>
-        <text x="120" y="218" text-anchor="middle" fill="#9f6668" font-family="Arial, sans-serif" font-size="9">QR PLACEHOLDER</text>
+        <text x="120" y="218" text-anchor="middle" fill="#9f6668" font-family="Arial, sans-serif" font-size="9">QR DEMO</text>
       </svg>
     `;
     return `data:image/svg+xml;charset=UTF-8,${encodeURIComponent(svg)}`;
@@ -140,6 +140,27 @@ document.addEventListener("DOMContentLoaded", () => {
     }, { once: true });
   });
 
+  const useWeddingFallback = (image) => {
+    const fallbackIndex = Number(image.dataset.weddingFallback || 0);
+    const fallbackImage = fallbackWeddingImages[fallbackIndex] || fallbackWeddingImages[0];
+    if (image.src !== fallbackImage) image.src = fallbackImage;
+  };
+
+  document.querySelectorAll("[data-wedding-fallback]").forEach((image) => {
+    image.addEventListener("error", () => useWeddingFallback(image), { once: true });
+    if (image.complete && image.naturalWidth === 0) useWeddingFallback(image);
+  });
+
+  document.querySelectorAll(".childhood-person__portrait img").forEach((image, index) => {
+    const useChildhoodDemo = () => {
+      image.parentElement?.classList.remove("is-missing");
+      image.src = fallbackWeddingImages[index] || fallbackWeddingImages[0];
+    };
+
+    image.addEventListener("error", useChildhoodDemo, { once: true });
+    if (image.complete && image.naturalWidth === 0) useChildhoodDemo();
+  });
+
   const preloadHero = new Image();
   preloadHero.onerror = () => {
     document.querySelector(".hero").style.backgroundImage =
@@ -153,6 +174,32 @@ document.addEventListener("DOMContentLoaded", () => {
       `linear-gradient(rgba(83, 57, 58, 0.83), rgba(83, 57, 58, 0.88)), url("${fallbackWeddingImages[3]}")`;
   };
   preloadClosing.src = "images/wedding-4.jpg";
+
+  // ===== Countdown den ngay cuoi =====
+  const countdownTarget = new Date("2026-09-20T11:00:00+07:00").getTime();
+  const countdownFields = {
+    days: document.getElementById("countdownDays"),
+    hours: document.getElementById("countdownHours"),
+    minutes: document.getElementById("countdownMinutes"),
+    seconds: document.getElementById("countdownSeconds")
+  };
+
+  const updateCountdown = () => {
+    const remaining = Math.max(0, countdownTarget - Date.now());
+    const days = Math.floor(remaining / 86400000);
+    const hours = Math.floor((remaining % 86400000) / 3600000);
+    const minutes = Math.floor((remaining % 3600000) / 60000);
+    const seconds = Math.floor((remaining % 60000) / 1000);
+    const pad = (value) => String(value).padStart(2, "0");
+
+    if (countdownFields.days) countdownFields.days.textContent = pad(days);
+    if (countdownFields.hours) countdownFields.hours.textContent = pad(hours);
+    if (countdownFields.minutes) countdownFields.minutes.textContent = pad(minutes);
+    if (countdownFields.seconds) countdownFields.seconds.textContent = pad(seconds);
+  };
+
+  updateCountdown();
+  window.setInterval(updateCountdown, 1000);
 
   // ===== Slider / carousel =====
   const sliderElement = document.getElementById("weddingSlider");
@@ -316,7 +363,7 @@ document.addEventListener("DOMContentLoaded", () => {
     bankQr.alt = `Mã QR ngân hàng của ${account.label.toLowerCase()}`;
     bankQr.onerror = () => {
       bankQr.onerror = null;
-      bankQr.src = createQrPlaceholder(account.label);
+      bankQr.src = createQrDemo(account.label);
     };
     bankQr.src = account.qrImage;
   };
@@ -523,12 +570,12 @@ document.addEventListener("DOMContentLoaded", () => {
     if (senderName) {
       thankTitle.textContent = `Cảm ơn ${senderName}!`;
       thankMessage.textContent =
-        `Cảm ơn anh/chị ${senderName} rất nhiều vì món quà và lời chúc tốt đẹp. ` +
+        `Cảm ơn anh/chị ${senderName} rất nhiều vì lời chúc tốt đẹp. ` +
         "Sự hiện diện và tình cảm của anh/chị là niềm vui lớn với chúng tôi.";
     } else {
       thankTitle.textContent = "Cảm ơn bạn!";
       thankMessage.textContent =
-        "Cảm ơn anh/chị rất nhiều vì món quà và lời chúc tốt đẹp. " +
+        "Cảm ơn anh/chị rất nhiều vì lời chúc tốt đẹp. " +
         "Sự hiện diện và tình cảm của anh/chị là niềm vui lớn với chúng tôi.";
     }
 

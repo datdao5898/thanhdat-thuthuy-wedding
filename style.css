@@ -47,6 +47,17 @@ img {
   max-width: 100%;
 }
 
+.sr-only {
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  padding: 0;
+  position: absolute;
+  width: 1px;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+}
+
 a {
   color: inherit;
   text-decoration: none;
@@ -101,6 +112,7 @@ body.envelope-opened .site-shell {
   pointer-events: auto;
   position: static;
   transform: none;
+  will-change: auto;
   width: auto;
 }
 
@@ -709,28 +721,6 @@ h2 {
   text-transform: uppercase;
 }
 
-.hero__line {
-  background: transparent;
-  height: 1.5px;
-  left: -9%;
-  opacity: 0.95;
-  position: absolute;
-  top: 38%;
-  transform: rotate(-7deg);
-  transform-origin: left center;
-  width: 118%;
-  z-index: 2;
-}
-
-.hero__line::after {
-  animation: drawLine 1.45s 0.35s both ease-out;
-  background: var(--red);
-  content: "";
-  inset: 0;
-  position: absolute;
-  transform-origin: left center;
-}
-
 .hero__content {
   max-width: 460px;
   position: relative;
@@ -846,11 +836,6 @@ h2 {
   width: 1px;
 }
 
-@keyframes drawLine {
-  from { transform: scaleX(0); }
-  to { transform: scaleX(1); }
-}
-
 @keyframes scrollPulse {
   0%, 100% { opacity: 0.3; transform: translateY(0); }
   50% { opacity: 1; transform: translateY(7px); }
@@ -945,69 +930,435 @@ h2 {
   color: rgba(255, 255, 255, 0.86);
 }
 
-/* ===== Event ===== */
-.event::before,
-.gift::before {
-  background: rgba(182, 38, 34, 0.7);
-  content: "";
-  height: 1px;
-  left: 12%;
-  position: absolute;
-  top: 36px;
-  transform: rotate(-3deg);
-  width: 76%;
+/* ===== Childhood ===== */
+.childhood {
+  padding: 72px 0 54px;
 }
 
-.event__timeline {
-  display: grid;
-  gap: 14px;
-  margin-inline: auto;
-  max-width: 430px;
+.childhood__inner {
+  width: 100%;
 }
 
-.event-card {
-  background: rgba(255, 255, 255, 0.54);
-  border: 1px solid var(--line);
-  border-radius: 22px;
-  padding: 22px 22px 20px;
-  position: relative;
+.fixed-photo-section {
+  background: var(--paper-soft) url("images/wedding-2.jpg") center / cover no-repeat fixed;
+  height: clamp(480px, 48vw, 700px);
+  overflow: hidden;
+  width: 100%;
 }
 
-.event-card__number {
-  color: rgba(34, 29, 26, 0.28);
+.childhood__copy {
+  margin: 0 auto 38px;
+  max-width: 620px;
+  padding-inline: 24px;
+  text-align: center;
+}
+
+.childhood__copy h2 {
+  margin: 8px 0 12px;
+}
+
+.childhood__copy > p:last-child {
+  color: var(--muted);
   font-family: var(--serif);
-  font-size: 2.15rem;
-  line-height: 1;
-  position: absolute;
-  right: 22px;
-  top: 18px;
+  font-size: 1.1rem;
 }
 
-.event-card p {
+.childhood__people {
+  align-items: center;
+  display: flex;
+  gap: clamp(18px, 6vw, 54px);
+  justify-content: center;
+  padding: 0 24px 8px;
+}
+
+.childhood-person {
+  text-align: center;
+}
+
+.childhood-person__portrait {
+  background:
+    radial-gradient(circle at 30% 24%, rgba(255, 255, 255, 0.86), transparent 34%),
+    linear-gradient(145deg, #ead7cc, #b99353);
+  border: 8px solid rgba(255, 255, 255, 0.92);
+  border-radius: 48% 52% 46% 54% / 54% 46% 54% 46%;
+  box-shadow: 0 18px 42px rgba(31, 24, 20, 0.14);
+  height: clamp(124px, 34vw, 188px);
+  overflow: hidden;
+  position: relative;
+  width: clamp(124px, 34vw, 188px);
+}
+
+.childhood-person__portrait img {
+  height: 100%;
+  object-fit: cover;
+  position: relative;
+  width: 100%;
+  z-index: 2;
+}
+
+.childhood-person__portrait > span {
+  color: rgba(83, 57, 58, 0.78);
+  font-family: var(--serif);
+  font-size: 2.6rem;
+  font-weight: 700;
+  inset: 0;
+  place-items: center;
+  position: absolute;
+  display: none;
+}
+
+.childhood-person__portrait.is-missing > span {
+  display: grid;
+}
+
+.childhood-person__portrait.is-missing img {
+  display: none;
+}
+
+.childhood-person figcaption {
+  display: grid;
+  gap: 3px;
+  margin-top: 16px;
+}
+
+.childhood-person figcaption small {
+  color: var(--muted);
+  font-family: var(--serif);
+  font-size: 1rem;
+}
+
+.childhood-person figcaption strong {
+  font-family: var(--serif);
+  font-size: 1.16rem;
+}
+
+.childhood__heart {
   color: var(--red);
-  font-size: 0.72rem;
-  font-weight: 600;
+  font-size: 1.5rem;
+  transform: translateY(-22px);
+}
+
+/* ===== Asymmetric love story ===== */
+.love-story__inner {
+  display: grid;
+  gap: 50px;
+  margin-inline: auto;
+  max-width: 1100px;
+}
+
+.love-collage {
+  height: 560px;
+  margin-inline: auto;
+  max-width: 500px;
+  position: relative;
+  width: 100%;
+}
+
+.love-collage__photo {
+  background: #d7c8bc;
+  box-shadow: var(--shadow);
+  overflow: hidden;
+  position: absolute;
+}
+
+.love-collage__photo img {
+  height: 100%;
+  object-fit: cover;
+  width: 100%;
+}
+
+.love-collage__photo--tall {
+  border-radius: 120px 18px 18px 18px;
+  height: 78%;
+  left: 0;
+  top: 0;
+  width: 60%;
+}
+
+.love-collage__photo--small {
+  border-radius: 18px 18px 110px 18px;
+  bottom: 0;
+  height: 62%;
+  right: 0;
+  width: 58%;
+}
+
+.love-collage__mark {
+  color: var(--red);
+  font-family: var(--serif);
+  font-size: 1.5rem;
   letter-spacing: 0.18em;
+  position: absolute;
+  right: 3%;
+  top: 4%;
+}
+
+.love-collage__date {
+  bottom: 2%;
+  color: var(--ink);
+  font-family: var(--serif);
+  font-size: clamp(2rem, 9vw, 3.6rem);
+  left: 2%;
+  letter-spacing: 0.08em;
+  position: absolute;
+}
+
+.love-story__copy {
+  margin-inline: auto;
+  max-width: 560px;
+}
+
+.love-story__copy h2 {
+  margin: 8px 0 20px;
+}
+
+.love-story__copy > p {
+  color: var(--muted);
+}
+
+.love-story__copy blockquote {
+  color: var(--ink);
+  font-family: var(--serif);
+  font-size: 1.3rem;
+  line-height: 1.55;
+  margin-top: 28px;
+}
+
+/* ===== Countdown ===== */
+.countdown {
+  text-align: center;
+}
+
+.countdown__inner {
+  margin-inline: auto;
+  max-width: 780px;
+}
+
+.countdown__inner h2 {
+  margin: 8px 0 16px;
+}
+
+.countdown__lead {
+  color: var(--muted);
+  margin: 0 auto 38px;
+  max-width: 620px;
+}
+
+.countdown__grid {
+  display: grid;
+  gap: 10px;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.countdown__grid > div {
+  padding: 16px 4px;
+}
+
+.countdown__grid strong {
+  color: var(--red);
+  display: block;
+  font-family: var(--serif);
+  font-size: clamp(2rem, 8vw, 4rem);
+  font-weight: 500;
+  line-height: 1;
+}
+
+.countdown__grid span {
+  color: var(--muted);
+  display: block;
+  font-size: 0.68rem;
+  letter-spacing: 0.16em;
+  margin-top: 10px;
   text-transform: uppercase;
 }
 
-.event-card h3 {
+.countdown__script {
+  color: var(--ink);
+  font-family: var(--script);
+  font-size: clamp(1.7rem, 7vw, 3.3rem);
+  line-height: 1.2;
+  margin-top: 42px;
+  transform: rotate(-2deg);
+}
+
+/* ===== Wedding information ===== */
+.wedding-info {
+  margin-inline: auto;
+  max-width: 1100px;
+}
+
+.wedding-info__layout {
+  display: grid;
+  gap: 28px;
+}
+
+.wedding-info__photo {
+  background: #d7c8bc;
+  border-radius: 48% 48% 24px 24px;
+  box-shadow: var(--shadow);
+  height: min(72vh, 640px);
+  min-height: 520px;
+  overflow: hidden;
+  position: relative;
+}
+
+.wedding-info__photo::after {
+  background: linear-gradient(transparent 64%, rgba(20, 15, 13, 0.76));
+  content: "";
+  inset: 0;
+  position: absolute;
+}
+
+.wedding-info__photo img {
+  height: 100%;
+  object-fit: cover;
+  width: 100%;
+}
+
+.wedding-info__photo figcaption {
+  bottom: 28px;
+  color: var(--paper);
+  display: flex;
+  flex-direction: column;
+  left: 28px;
+  position: absolute;
+  z-index: 2;
+}
+
+.wedding-info__photo figcaption strong {
   font-family: var(--serif);
-  font-size: 1.35rem;
-  line-height: 1.25;
-  margin: 8px 70px 8px 0;
+  font-size: 4rem;
+  font-weight: 500;
+  line-height: 1;
 }
 
-.event-card small {
-  color: var(--muted);
-  display: block;
-  font-size: 0.86rem;
-  line-height: 1.55;
+.wedding-info__photo figcaption span {
+  font-size: 0.78rem;
+  letter-spacing: 0.28em;
 }
 
-.event__action {
-  margin-top: 28px;
+.calendar-card {
+  background: rgba(255, 255, 255, 0.72);
+  border: 1px solid var(--line);
+  border-radius: 28px;
+  box-shadow: 0 18px 50px rgba(31, 24, 20, 0.08);
+  padding: 26px 20px;
+}
+
+.calendar-card__month {
+  align-items: end;
+  border-bottom: 1px solid var(--line);
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 18px;
+  padding-bottom: 14px;
+}
+
+.calendar-card__month span {
+  color: var(--red);
+  font-family: var(--script);
+  font-size: 1.7rem;
+}
+
+.calendar-card__month strong {
+  font-family: var(--serif);
+  font-size: 1.15rem;
+  font-weight: 600;
+}
+
+.calendar-card table {
+  border-collapse: collapse;
+  table-layout: fixed;
   text-align: center;
+  width: 100%;
+}
+
+.calendar-card th {
+  color: var(--red);
+  font-size: 0.62rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  padding-bottom: 10px;
+  text-transform: uppercase;
+}
+
+.calendar-card td {
+  color: var(--muted);
+  font-size: 0.82rem;
+  height: 42px;
+}
+
+.calendar-card .is-wedding-day time {
+  align-items: center;
+  background: var(--red);
+  border-radius: 50%;
+  color: white;
+  display: inline-flex;
+  height: 34px;
+  justify-content: center;
+  width: 34px;
+}
+
+.wedding-info__facts {
+  border-top: 1px solid var(--line);
+  display: grid;
+  gap: 14px;
+  margin-top: 22px;
+  padding-top: 20px;
+}
+
+.wedding-info__facts > div {
+  display: grid;
+  gap: 2px;
+}
+
+.wedding-info__facts small {
+  color: var(--red);
+  font-size: 0.62rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.wedding-info__facts strong {
+  font-family: var(--serif);
+  font-size: 1.05rem;
+  font-weight: 600;
+}
+
+.wedding-map {
+  background: white;
+  border: 1px solid var(--line);
+  border-radius: 28px;
+  box-shadow: var(--shadow);
+  margin-top: 30px;
+  overflow: hidden;
+}
+
+.wedding-map iframe {
+  border: 0;
+  display: block;
+  height: 360px;
+  width: 100%;
+}
+
+.wedding-map__caption {
+  align-items: flex-start;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding: 24px;
+}
+
+.wedding-map__caption h3 {
+  font-family: var(--serif);
+  font-size: 1.45rem;
+  margin: 4px 0;
+}
+
+.wedding-map__caption span {
+  color: var(--muted);
+  font-size: 0.84rem;
 }
 
 /* ===== Gallery ===== */
@@ -1125,7 +1476,17 @@ h2 {
   display: grid;
   gap: 18px;
   margin-inline: auto;
+  max-width: 560px;
+}
+
+.gift-recipient {
+  margin-inline: auto;
   max-width: 430px;
+  width: 100%;
+}
+
+.gift-recipient .recipient-picker {
+  margin-bottom: 0;
 }
 
 .gift-form,
@@ -1292,9 +1653,30 @@ h2 {
     linear-gradient(180deg, #fbfaf7, #f2eee8);
 }
 
-.wishes-board {
+.wishes__layout {
+  display: grid;
+  gap: 24px;
   margin-inline: auto;
-  max-width: 430px;
+  max-width: 1000px;
+}
+
+.wishes-form {
+  align-self: start;
+}
+
+.wishes-board {
+  background:
+    radial-gradient(circle at 8% 4%, rgba(185, 147, 83, 0.22), transparent 13rem),
+    linear-gradient(145deg, rgba(255, 253, 249, 0.94), rgba(232, 220, 208, 0.88));
+  border: 1px solid rgba(117, 88, 62, 0.2);
+  border-radius: 30px;
+  box-shadow:
+    0 28px 70px rgba(49, 35, 28, 0.2),
+    0 5px 16px rgba(49, 35, 28, 0.08),
+    inset 0 1px 0 rgba(255, 255, 255, 0.9);
+  margin-inline: auto;
+  padding: 18px 12px 18px 18px;
+  width: 100%;
 }
 
 .wishes-list {
@@ -1302,7 +1684,7 @@ h2 {
   gap: 14px;
   max-height: min(640px, 72vh);
   overflow-y: auto;
-  padding-right: 6px;
+  padding: 2px 8px 2px 2px;
   scrollbar-color: rgba(182, 38, 34, 0.38) rgba(255, 255, 255, 0.46);
   scrollbar-width: thin;
 }
@@ -1322,10 +1704,9 @@ h2 {
 }
 
 .wish-card {
-  background: rgba(255, 255, 255, 0.74);
-  border: 1px solid rgba(185, 147, 83, 0.22);
+  background: rgba(255, 254, 251, 0.94);
+  border: 1px solid rgba(117, 88, 62, 0.16);
   border-radius: 22px;
-  box-shadow: 0 14px 38px rgba(31, 24, 20, 0.08);
   padding: 20px;
   position: relative;
 }
@@ -1561,14 +1942,29 @@ h2 {
 }
 
 /* ===== Desktop framing ===== */
+@media (max-width: 859px) {
+  .fixed-photo-section {
+    background-attachment: scroll;
+  }
+}
+
 @media (min-width: 860px) {
   body {
-    padding-block: 28px;
+    padding: 20px;
   }
 
   body.intro-locked,
   body.envelope-opening {
-    padding-block: 0;
+    padding: 0;
+  }
+
+  .site-shell,
+  .story-panel,
+  .paper-section,
+  .story-section,
+  .footer {
+    max-width: none;
+    width: 100%;
   }
 
   .story-panel,
@@ -1578,15 +1974,80 @@ h2 {
     box-shadow: none;
   }
 
+  .paper-section,
+  .story-section {
+    padding: 110px clamp(44px, 7vw, 110px);
+  }
+
   .hero {
     border-radius: 34px 34px 0 0;
+    justify-content: center;
+  }
+
+  .childhood {
+    padding: 110px 0 72px;
+  }
+
+  .fixed-photo-section {
+    border-radius: 0 0 34px 34px;
+  }
+
+  .childhood__copy {
+    margin-top: 0;
+  }
+
+  .childhood__people {
+    gap: 84px;
+  }
+
+  .love-story__inner {
+    align-items: center;
+    gap: clamp(56px, 8vw, 110px);
+    grid-template-columns: minmax(420px, 1.08fr) minmax(320px, 0.92fr);
+  }
+
+  .love-collage {
+    height: 650px;
+    max-width: 590px;
+  }
+
+  .countdown__grid > div {
+    padding-block: 24px;
+  }
+
+  .wedding-info__layout {
+    align-items: center;
+    gap: clamp(34px, 5vw, 72px);
+    grid-template-columns: minmax(360px, 0.92fr) minmax(420px, 1.08fr);
+  }
+
+  .calendar-card {
+    padding: 38px 34px;
+  }
+
+  .wedding-info__facts {
+    grid-template-columns: 0.72fr 1.2fr 1.5fr;
+  }
+
+  .wedding-map iframe {
+    height: 430px;
+  }
+
+  .wedding-map__caption {
+    align-items: center;
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 28px 34px;
+  }
+
+  .wishes__layout {
+    align-items: start;
+    grid-template-columns: minmax(320px, 0.88fr) minmax(420px, 1.12fr);
   }
 
   .footer {
     border-radius: 0 0 34px 34px;
     margin-inline: auto;
-    max-width: 520px;
-    width: 100%;
   }
 }
 
@@ -1607,6 +2068,36 @@ h2 {
   .slide {
     min-height: 410px;
   }
+
+  .fixed-photo-section {
+    aspect-ratio: 4 / 3;
+    height: auto;
+  }
+
+  .love-collage {
+    height: 500px;
+  }
+
+  .love-story__copy {
+    text-align: center;
+  }
+
+  .love-story__copy blockquote {
+    text-align: left;
+  }
+
+  .countdown__grid {
+    gap: 4px;
+  }
+
+  .countdown__grid strong {
+    font-size: 2rem;
+  }
+
+  .wedding-info__photo {
+    height: 570px;
+    min-height: 0;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -1625,5 +2116,9 @@ h2 {
   .reveal {
     opacity: 1;
     transform: none;
+  }
+
+  .fixed-photo-section {
+    background-attachment: scroll;
   }
 }
