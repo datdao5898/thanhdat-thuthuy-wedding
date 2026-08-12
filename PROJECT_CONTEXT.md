@@ -65,6 +65,7 @@ Nếu các CDN không tải được, slider vẫn có carousel tối giản b�
 | Tên cặp đôi, ngày cưới, văn bản, giờ/địa điểm, link Maps | `index.html` | Hôn lễ: `08:45, 20/09/2026` tại `Hội Thánh Tin Lành Thạnh Mỹ`; bản đồ dùng tọa độ `11.754594317329847, 108.52743919838332`. |
 | Tên chủ tài khoản, số tài khoản, tên ngân hàng, đường dẫn QR | đầu `script.js` trong `bankAccounts` | Hiện số tài khoản và tên ngân hàng là placeholder. |
 | Ảnh cưới | `images/TINK*.jpg`, `images/web-*.jpg` | `TINK*.jpg` là ảnh gốc độ phân giải cao. `web-*.jpg` là bộ đã chọn và tối ưu cho hero, thiệp, parallax, collage, wedding information, gallery và closing; các ảnh tự dự phòng chéo nếu một tệp bị thiếu. |
+| Ảnh mobile | `images/web-*-mobile.jpg` | Bộ crop dọc riêng cho hero, closing, fixed photo, collage nhỏ và wedding information; tránh ép ảnh ngang desktop vào màn hình điện thoại. |
 | Ảnh tuổi thơ | Chưa có ảnh thật | Hai khung đang dùng `web-gallery-7.jpg` và `web-gallery-2.jpg` làm ảnh demo tạm thời để giao diện không hiển thị ảnh lỗi. |
 | Màu sắc, bố cục, responsive, animation | `style.css` | Biến thiết kế nằm đầu file: giấy sáng, mực tối, đỏ, vàng. |
 | Lời chúc và endpoint lưu dữ liệu | `config.js`, `script.js`, `apps-script/wishes.gs` | Apps Script là cách đang được cấu hình. |

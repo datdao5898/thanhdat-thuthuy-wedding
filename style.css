@@ -2114,15 +2114,16 @@ h2 {
       linear-gradient(
         180deg,
         rgba(13, 10, 8, 0.05) 0,
-        rgba(13, 10, 8, 0.22) 40vw,
-        #1f1713 66vw,
+        rgba(13, 10, 8, 0.14) 88vw,
+        rgba(13, 10, 8, 0.82) 124vw,
+        #1f1713 133vw,
         #1f1713 100%
       ),
-      url("images/web-hero.jpg") center top / 100% auto no-repeat,
+      url("images/web-hero-mobile.jpg") center top / 100% auto no-repeat,
       #1f1713;
-    min-height: max(100svh, 860px);
+    min-height: max(100svh, 1080px);
     padding-inline: 20px;
-    padding-top: calc(66.67vw + 28px);
+    padding-top: calc(133.33vw + 28px);
   }
 
   .hero__verse {
@@ -2140,23 +2141,43 @@ h2 {
   }
 
   .fixed-photo-section {
-    aspect-ratio: 3 / 2;
+    aspect-ratio: auto;
     background-color: #24331f;
-    background-position: center;
-    background-size: contain;
-    height: auto;
+    background-image: url("images/web-fixed-mobile.jpg");
+    background-position: center 30%;
+    background-size: cover;
+    height: max(58svh, 480px);
   }
 
   .love-collage {
-    height: 500px;
+    height: 460px;
   }
 
   .love-collage__photo {
     background: #eee7df;
   }
 
+  .love-collage__photo--tall {
+    aspect-ratio: 2 / 3;
+    height: auto;
+    width: 60%;
+  }
+
+  .love-collage__photo--small {
+    aspect-ratio: 2 / 3;
+    height: auto;
+    width: 58%;
+  }
+
+  .love-collage__photo picture,
+  .wedding-info__photo picture {
+    display: block;
+    height: 100%;
+    width: 100%;
+  }
+
   .love-collage__photo img {
-    object-fit: contain;
+    object-fit: cover;
   }
 
   .love-story__copy {
@@ -2182,7 +2203,8 @@ h2 {
   }
 
   .wedding-info__photo img {
-    object-fit: contain;
+    object-fit: cover;
+    object-position: 45% center;
   }
 
   .closing {
@@ -2190,13 +2212,14 @@ h2 {
       linear-gradient(
         180deg,
         rgba(12, 9, 8, 0.08) 0,
-        rgba(12, 9, 8, 0.5) 40vw,
-        #201915 66vw,
+        rgba(12, 9, 8, 0.18) 88vw,
+        rgba(12, 9, 8, 0.82) 124vw,
+        #201915 133vw,
         #201915 100%
       ),
-      url("images/web-closing.jpg") center top / 100% auto no-repeat,
+      url("images/web-closing-mobile.jpg") center top / 100% auto no-repeat,
       #201915;
-    padding-top: calc(66.67vw + 54px);
+    padding-top: calc(133.33vw + 54px);
   }
 }
 

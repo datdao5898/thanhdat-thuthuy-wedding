@@ -11,7 +11,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@300;400;500;600&family=Cormorant+Garamond:wght@500;600;700&family=Dancing+Script:wght@600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@splidejs/splide@4.1.4/dist/css/splide.min.css">
-  <link rel="stylesheet" href="style.css?v=20260812-8">
+  <link rel="stylesheet" href="style.css?v=20260812-9">
 </head>
 <body class="envelope-opened">
   <script>
@@ -152,11 +152,14 @@
             >
           </figure>
           <figure class="love-collage__photo love-collage__photo--small">
-            <img
-              src="images/web-story-small.jpg"
-              data-wedding-fallback="2"
-              alt="Khoảnh khắc vui của cô dâu và chú rể"
-            >
+            <picture>
+              <source media="(max-width: 520px)" srcset="images/web-story-small-mobile.jpg">
+              <img
+                src="images/web-story-small.jpg"
+                data-wedding-fallback="2"
+                alt="Khoảnh khắc vui của cô dâu và chú rể"
+              >
+            </picture>
           </figure>
           <span class="love-collage__mark" aria-hidden="true">T &amp; Đ</span>
           <time class="love-collage__date" datetime="2026-09-20">20 / 09</time>
@@ -217,11 +220,14 @@
 
         <div class="wedding-info__layout">
           <figure class="wedding-info__photo reveal">
-            <img
-              src="images/web-information.jpg"
-              data-wedding-fallback="3"
-              alt="Thu Thủy và Thành Đạt trong ngày cưới"
-            >
+            <picture>
+              <source media="(max-width: 520px)" srcset="images/web-information-mobile.jpg">
+              <img
+                src="images/web-information.jpg?v=20260812-1"
+                data-wedding-fallback="3"
+                alt="Thu Thủy và Thành Đạt trong ngày cưới"
+              >
+            </picture>
             <figcaption>
               <strong>20</strong>
               <span>09 · 2026</span>
