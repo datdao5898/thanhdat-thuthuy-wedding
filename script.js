@@ -17,12 +17,16 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   };
 
-  // Ảnh demo cục bộ dự phòng, giúp giao diện không phụ thuộc kết nối mạng.
+  // Bộ ảnh cưới đã tối ưu cho web, dùng làm dự phòng chéo nếu một tệp bị lỗi.
   const fallbackWeddingImages = [
-    "images/wedding-2.jpg",
-    "images/wedding-3.jpg",
-    "images/wedding-4.jpg",
-    "images/wedding-1.jpg"
+    "images/web-invitation.jpg",
+    "images/web-story-tall.jpg",
+    "images/web-story-small.jpg",
+    "images/web-information.jpg",
+    "images/web-hero.jpg",
+    "images/web-parallax.jpg",
+    "images/web-closing.jpg",
+    "images/web-gallery-5.jpg"
   ];
 
   // Uu tien Google Apps Script neu da dan URL trong config.js.
@@ -166,14 +170,14 @@ document.addEventListener("DOMContentLoaded", () => {
     document.querySelector(".hero").style.backgroundImage =
       `linear-gradient(rgba(57, 42, 42, 0.32), rgba(57, 42, 42, 0.45)), url("${fallbackWeddingImages[0]}")`;
   };
-  preloadHero.src = "images/wedding-1.jpg";
+  preloadHero.src = "images/web-hero.jpg";
 
   const preloadClosing = new Image();
   preloadClosing.onerror = () => {
     document.querySelector(".closing").style.backgroundImage =
       `linear-gradient(rgba(83, 57, 58, 0.83), rgba(83, 57, 58, 0.88)), url("${fallbackWeddingImages[3]}")`;
   };
-  preloadClosing.src = "images/wedding-4.jpg";
+  preloadClosing.src = "images/web-closing.jpg";
 
   // ===== Countdown den ngay cuoi =====
   const countdownTarget = new Date("2026-09-20T08:45:00+07:00").getTime();

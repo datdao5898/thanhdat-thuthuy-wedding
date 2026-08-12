@@ -1,0 +1,2 @@
+# Keep the high-resolution source photos local; the site deploys optimized web-*.jpg copies.
+images/TINK*.jpg

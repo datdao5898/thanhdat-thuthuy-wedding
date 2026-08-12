@@ -28,7 +28,7 @@ Các tính năng chính:
 ├── style.css               # Thiết kế responsive, animation, modal, carousel
 ├── script.js               # Tất cả hành vi phía trình duyệt
 ├── config.js               # Cấu hình URL lưu lời chúc ở môi trường thật
-├── images/                 # Bộ ảnh cưới, tuổi thơ và QR demo cục bộ
+├── images/                 # Ảnh cưới gốc và bộ ảnh web đã tối ưu
 │   ├── wedding-1.jpg … wedding-4.jpg
 │   ├── childhood-groom.jpg, childhood-bride.jpg
 │   └── qr-bride.png, qr-groom.png
@@ -64,8 +64,8 @@ Nếu các CDN không tải được, slider vẫn có carousel tối giản b�
 | --- | --- | --- |
 | Tên cặp đôi, ngày cưới, văn bản, giờ/địa điểm, link Maps | `index.html` | Hôn lễ: `08:45, 20/09/2026` tại `Hội Thánh Tin Lành Thạnh Mỹ`; bản đồ dùng tọa độ `11.754594317329847, 108.52743919838332`. |
 | Tên chủ tài khoản, số tài khoản, tên ngân hàng, đường dẫn QR | đầu `script.js` trong `bankAccounts` | Hiện số tài khoản và tên ngân hàng là placeholder. |
-| Ảnh cưới | `images/wedding-1.jpg` đến `images/wedding-4.jpg` | Đang có ảnh demo cục bộ, dùng cho hero, collage, wedding information và gallery. Các ảnh tự dự phòng chéo nếu một tệp bị thiếu. |
-| Ảnh tuổi thơ | `images/childhood-groom.jpg`, `images/childhood-bride.jpg` | Đang có ảnh demo cục bộ; nếu tệp bị thiếu sẽ dùng một ảnh cưới demo thay thế. |
+| Ảnh cưới | `images/TINK*.jpg`, `images/web-*.jpg` | `TINK*.jpg` là ảnh gốc độ phân giải cao. `web-*.jpg` là bộ đã chọn và tối ưu cho hero, thiệp, parallax, collage, wedding information, gallery và closing; các ảnh tự dự phòng chéo nếu một tệp bị thiếu. |
+| Ảnh tuổi thơ | Chưa có ảnh thật | Hai khung đang dùng `web-gallery-7.jpg` và `web-gallery-2.jpg` làm ảnh demo tạm thời để giao diện không hiển thị ảnh lỗi. |
 | Màu sắc, bố cục, responsive, animation | `style.css` | Biến thiết kế nằm đầu file: giấy sáng, mực tối, đỏ, vàng. |
 | Lời chúc và endpoint lưu dữ liệu | `config.js`, `script.js`, `apps-script/wishes.gs` | Apps Script là cách đang được cấu hình. |
 
@@ -74,7 +74,7 @@ Nếu các CDN không tải được, slider vẫn có carousel tối giản b�
 ### Cá nhân hóa khách mời và phong bì
 
 - Không có `name` trong query string: thiệp hiển thị ngay.
-- Có `name`: `script.js` đổi lời chào và tiêu đề tab, hiển thị phong bì theo đúng cấu trúc/hoạt ảnh cũ nhưng dùng chất liệu nhung đỏ đô, chữ và con dấu ánh kim, rồi mở sau hoạt ảnh khoảng 3,25 giây khi khách bấm. Trên desktop, trang chính được hé lộ ở kích thước gần full màn hình với viền 20px, không thu hẹp thành khung mobile.
+- Có `name`: `script.js` đổi lời chào và tiêu đề tab, hiển thị phong bì theo đúng cấu trúc/hoạt ảnh cũ nhưng dùng chất liệu nhung lụa đỏ đô có dải bắt sáng mềm, chữ và con dấu ánh kim, rồi mở sau hoạt ảnh khoảng 3,25 giây khi khách bấm. Trên desktop, trang chính được hé lộ ở kích thước gần full màn hình với viền 20px, không thu hẹp thành khung mobile.
 - Với người bật giảm chuyển động, thời gian mở giảm còn khoảng 80 ms.
 
 Ví dụ URL: `https://ten-mien-cua-ban/?name=Nguyen%20Van%20A`.
@@ -83,7 +83,7 @@ Ví dụ URL: `https://ten-mien-cua-ban/?name=Nguyen%20Van%20A`.
 
 - Splide chạy vòng lặp, hỗ trợ phím mũi tên, kéo và pagination.
 - Bấm ảnh mở lightbox; Escape hoặc nút đóng sẽ đóng modal.
-- `script.js` thay ảnh gallery, hero, closing, tuổi thơ và các section ảnh mới bị lỗi bằng ảnh demo cục bộ; trang không phụ thuộc Unsplash khi hiển thị.
+- `script.js` thay ảnh gallery, hero, closing, tuổi thơ và các section ảnh mới bị lỗi bằng bộ `web-*.jpg` cục bộ; trang không phụ thuộc Unsplash khi hiển thị.
 - Countdown dùng mốc `2026-09-20T08:45:00+07:00`; cần đổi trong `script.js` nếu giờ tổ chức thay đổi.
 
 ### Mừng cưới và lời cảm ơn
@@ -153,7 +153,7 @@ Chỉ dùng phương án này khi host thực sự chạy được route `api/wi
 
 ## 8. Tình trạng cần hoàn thiện trước khi gửi khách
 
-1. Thay bộ ảnh demo trong `images/` bằng ảnh thật của cặp đôi khi đã có ảnh chính thức; giữ nguyên tên tệp để không cần sửa code.
+1. Bổ sung ảnh tuổi thơ thật của cô dâu/chú rể và QR ngân hàng chính thức; ảnh cưới hiện đã dùng bộ ảnh thật trong `images/`.
 2. Thay số tài khoản, tên ngân hàng và hai QR demo trong `bankAccounts` ở `script.js`.
 3. Bổ sung địa chỉ dạng văn bản chi tiết của Hội Thánh nếu cần; giờ, tên địa điểm và tọa độ Google Maps đã được cập nhật.
 4. Mở Google Sheet và kiểm tra Web App URL trong `config.js` còn deploy, có quyền `Anyone`, đọc/ghi được.
