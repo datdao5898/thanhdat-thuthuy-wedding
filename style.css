@@ -2110,7 +2110,19 @@ h2 {
   }
 
   .hero {
+    background:
+      linear-gradient(
+        180deg,
+        rgba(13, 10, 8, 0.05) 0,
+        rgba(13, 10, 8, 0.22) 40vw,
+        #1f1713 66vw,
+        #1f1713 100%
+      ),
+      url("images/web-hero.jpg") center top / 100% auto no-repeat,
+      #1f1713;
+    min-height: max(100svh, 860px);
     padding-inline: 20px;
+    padding-top: calc(66.67vw + 28px);
   }
 
   .hero__verse {
@@ -2118,16 +2130,33 @@ h2 {
   }
 
   .slide {
-    min-height: 410px;
+    aspect-ratio: 2 / 3;
+    height: auto;
+    min-height: 0;
+  }
+
+  .slide img {
+    object-fit: contain;
   }
 
   .fixed-photo-section {
-    aspect-ratio: 4 / 3;
+    aspect-ratio: 3 / 2;
+    background-color: #24331f;
+    background-position: center;
+    background-size: contain;
     height: auto;
   }
 
   .love-collage {
     height: 500px;
+  }
+
+  .love-collage__photo {
+    background: #eee7df;
+  }
+
+  .love-collage__photo img {
+    object-fit: contain;
   }
 
   .love-story__copy {
@@ -2147,8 +2176,27 @@ h2 {
   }
 
   .wedding-info__photo {
-    height: 570px;
+    aspect-ratio: 2 / 3;
+    height: auto;
     min-height: 0;
+  }
+
+  .wedding-info__photo img {
+    object-fit: contain;
+  }
+
+  .closing {
+    background:
+      linear-gradient(
+        180deg,
+        rgba(12, 9, 8, 0.08) 0,
+        rgba(12, 9, 8, 0.5) 40vw,
+        #201915 66vw,
+        #201915 100%
+      ),
+      url("images/web-closing.jpg") center top / 100% auto no-repeat,
+      #201915;
+    padding-top: calc(66.67vw + 54px);
   }
 }
 
