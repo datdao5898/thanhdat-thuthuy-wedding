@@ -19,7 +19,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Bộ ảnh cưới đã tối ưu cho web, dùng làm dự phòng chéo nếu một tệp bị lỗi.
   const fallbackWeddingImages = [
-    "images/web-invitation.jpg",
+    "images/web-story-small-mobile.jpg?v=20260812-1",
     "images/web-story-tall.jpg",
     "images/web-story-small.jpg",
     "images/web-information.jpg",
@@ -158,7 +158,7 @@ document.addEventListener("DOMContentLoaded", () => {
   document.querySelectorAll(".childhood-person__portrait img").forEach((image, index) => {
     const useChildhoodDemo = () => {
       image.parentElement?.classList.remove("is-missing");
-      image.src = fallbackWeddingImages[index] || fallbackWeddingImages[0];
+      image.src = fallbackWeddingImages[index + 4] || fallbackWeddingImages[0];
     };
 
     image.addEventListener("error", useChildhoodDemo, { once: true });
