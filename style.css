@@ -595,10 +595,12 @@ body.envelope-opened .envelope-intro {
 }
 
 .paper-section {
+  --reveal-cover: var(--paper);
   background: var(--paper);
 }
 
 .story-section {
+  --reveal-cover: var(--paper-soft);
   background: var(--paper-soft);
 }
 
@@ -1427,6 +1429,7 @@ h2 {
 }
 
 .wedding-map {
+  --reveal-cover: white;
   background: white;
   border: 1px solid var(--line);
   border-radius: 28px;
@@ -2050,28 +2053,39 @@ h2 {
 }
 
 .reveal-sequence__item {
-  clip-path: inset(0 100% 0 0 round 28px);
+  --reveal-delay: 0s;
   opacity: 0;
-  transition:
-    clip-path 3s cubic-bezier(0.22, 1, 0.36, 1),
-    opacity 3s ease;
+  position: relative;
+  transition: opacity 3s ease var(--reveal-delay);
+}
+
+.reveal-sequence__item::before {
+  background: var(--reveal-cover, var(--paper));
+  border-radius: inherit;
+  content: "";
+  inset: -1px;
+  pointer-events: none;
+  position: absolute;
+  transform: scaleX(1);
+  transform-origin: right center;
+  transition: transform 3s cubic-bezier(0.22, 1, 0.36, 1) var(--reveal-delay);
+  z-index: 20;
 }
 
 .reveal-sequence__item.is-sequence-item-visible {
-  clip-path: inset(0 0 0 0 round 28px);
   opacity: 1;
 }
 
-.reveal-sequence__item.is-sequence-complete {
-  clip-path: none;
+.reveal-sequence__item.is-sequence-item-visible::before {
+  transform: scaleX(0);
 }
 
 .reveal-sequence__media {
-  transition-delay: 0s;
+  --reveal-delay: 0s;
 }
 
 .reveal-sequence__copy {
-  transition-delay: 0.5s;
+  --reveal-delay: 0.5s;
 }
 
 @media (min-width: 860px) {
@@ -2343,8 +2357,11 @@ h2 {
   }
 
   .reveal-sequence__item {
-    clip-path: none;
     opacity: 1;
+  }
+
+  .reveal-sequence__item::before {
+    display: none;
   }
 
   .fixed-photo-section {

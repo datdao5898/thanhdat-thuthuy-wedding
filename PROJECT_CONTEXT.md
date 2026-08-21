@@ -15,7 +15,7 @@ Các tính năng chính:
 - Section hành trình từ bé đến lớn với hai ảnh tuổi thơ; ngay sau đó là section ảnh cưới demo độc lập, tràn toàn bộ chiều rộng và dùng nền `fixed` tạo hiệu ứng parallax trên desktop.
 - Collage ảnh cưới bất đối xứng, countdown thời gian thực đến ngày 20/09/2026.
 - Wedding information gồm ảnh, lịch tháng 9/2026 và hai bản đồ Google Maps riêng cho nhà thờ, nhà hàng.
-- Các section có cả hình và chữ dùng hiệu ứng reveal tuần tự khi cuộn: hình xuất hiện trước, chữ trễ `0.5s`; hiệu ứng mở dần từ trái sang phải trong `3s` bằng `opacity` và `clip-path`, không làm thay đổi margin hoặc kích thước bố cục. Vùng cắt được bo tròn `28px` để không tạo shadow vuông trên Chrome, sau đó JavaScript tự gỡ `clip-path` khi hiệu ứng kết thúc để trả lại shadow nguyên bản.
+- Các section có cả hình và chữ dùng hiệu ứng reveal tuần tự khi cuộn: hình xuất hiện trước, chữ trễ `0.5s`; hiệu ứng mở dần từ trái sang phải trong `3s` bằng một lớp phủ co lại với `transform: scaleX()`. Nội dung, shadow và margin luôn đứng yên; không dùng `clip-path` trên ảnh lớn hoặc iframe để tránh shadow vuông và hiện tượng khựng trên Chrome.
 - Section lời chúc đặt trước quà mừng: form gửi lời chúc đặt cạnh sổ lưu bút; dữ liệu chung được lưu trong Google Sheets.
 - Section quà mừng riêng phía sau: chọn tài khoản cô dâu/chú rể, QR và nút sao chép số tài khoản.
 - Tôn trọng `prefers-reduced-motion`, hỗ trợ đóng modal bằng Escape và có ảnh/slider dự phòng khi CDN hoặc ảnh cục bộ lỗi.

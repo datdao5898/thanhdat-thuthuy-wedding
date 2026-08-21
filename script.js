@@ -608,12 +608,6 @@ document.addEventListener("DOMContentLoaded", () => {
     sequence.classList.add("is-sequence-visible");
     sequence.querySelectorAll(".reveal-sequence__item").forEach((item) => {
       if (item.closest("[data-reveal-sequence]") === sequence) {
-        const finishSequenceItem = (event) => {
-          if (event.propertyName !== "clip-path") return;
-          item.classList.add("is-sequence-complete");
-          item.removeEventListener("transitionend", finishSequenceItem);
-        };
-        item.addEventListener("transitionend", finishSequenceItem);
         item.classList.add("is-sequence-item-visible");
       }
     });
