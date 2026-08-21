@@ -180,7 +180,7 @@ document.addEventListener("DOMContentLoaded", () => {
   preloadClosing.src = "images/web-closing.jpg";
 
   // ===== Countdown den ngay cuoi =====
-  const countdownTarget = new Date("2026-09-20T08:45:00+07:00").getTime();
+  const countdownTarget = new Date("2026-09-20T08:30:00+07:00").getTime();
   const countdownFields = {
     days: document.getElementById("countdownDays"),
     hours: document.getElementById("countdownHours"),
@@ -601,5 +601,36 @@ document.addEventListener("DOMContentLoaded", () => {
     revealItems.forEach((item) => observer.observe(item));
   } else {
     revealItems.forEach((item) => item.classList.add("is-visible"));
+  }
+
+  const revealSequences = document.querySelectorAll("[data-reveal-sequence]");
+  const showRevealSequence = (sequence) => {
+    sequence.classList.add("is-sequence-visible");
+    sequence.querySelectorAll(".reveal-sequence__item").forEach((item) => {
+      if (item.closest("[data-reveal-sequence]") === sequence) {
+        const finishSequenceItem = (event) => {
+          if (event.propertyName !== "clip-path") return;
+          item.classList.add("is-sequence-complete");
+          item.removeEventListener("transitionend", finishSequenceItem);
+        };
+        item.addEventListener("transitionend", finishSequenceItem);
+        item.classList.add("is-sequence-item-visible");
+      }
+    });
+  };
+
+  if ("IntersectionObserver" in window) {
+    const sequenceObserver = new IntersectionObserver((entries, currentObserver) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          showRevealSequence(entry.target);
+          currentObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.1, rootMargin: "0px 0px -8% 0px" });
+
+    revealSequences.forEach((sequence) => sequenceObserver.observe(sequence));
+  } else {
+    revealSequences.forEach(showRevealSequence);
   }
 });

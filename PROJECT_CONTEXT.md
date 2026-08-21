@@ -4,7 +4,7 @@
 
 ## 1. Tổng quan
 
-Đây là website thiệp mời cưới một trang (single-page landing page) cho **Thu Thủy và Thành Đạt**. Hôn lễ được cử hành lúc **08:45, Chủ nhật ngày 20/09/2026** tại **Hội Thánh Tin Lành Thạnh Mỹ**.
+Đây là website thiệp mời cưới một trang (single-page landing page) cho **Thu Thủy và Thành Đạt**. Hôn lễ được cử hành lúc **08:30, Chúa Nhật ngày 20/09/2026** tại **Nhà Thờ Tin Lành Chi Hội Thạnh Mỹ** (số 10/1 Đường Nguyễn Du, TT. Thạnh Mỹ, Đơn Dương, Lâm Đồng). Tiệc cưới tổ chức tại **Nhà Hàng Kim Bút 2** (Dốc cầu Sạp, Quảng Thuận, Quảng Lập, Lâm Đồng), đón khách lúc **11:30** và khai tiệc lúc **12:00**.
 
 Dự án dùng HTML, CSS và JavaScript thuần; không có `package.json`, framework, trình biên dịch hoặc bước build. Có thể mở `index.html` để xem giao diện, nhưng phần sổ lời chúc cần chạy qua HTTP(S) để `fetch` hoạt động ổn định.
 
@@ -14,7 +14,8 @@ Các tính năng chính:
 - Nội dung thiệp, thông tin ngày cưới, bộ ảnh dạng carousel/lightbox.
 - Section hành trình từ bé đến lớn với hai ảnh tuổi thơ; ngay sau đó là section ảnh cưới demo độc lập, tràn toàn bộ chiều rộng và dùng nền `fixed` tạo hiệu ứng parallax trên desktop.
 - Collage ảnh cưới bất đối xứng, countdown thời gian thực đến ngày 20/09/2026.
-- Wedding information gồm ảnh, lịch tháng 9/2026 và bản đồ Google Maps.
+- Wedding information gồm ảnh, lịch tháng 9/2026 và hai bản đồ Google Maps riêng cho nhà thờ, nhà hàng.
+- Các section có cả hình và chữ dùng hiệu ứng reveal tuần tự khi cuộn: hình xuất hiện trước, chữ trễ `0.5s`; hiệu ứng mở dần từ trái sang phải trong `3s` bằng `opacity` và `clip-path`, không làm thay đổi margin hoặc kích thước bố cục. Vùng cắt được bo tròn `28px` để không tạo shadow vuông trên Chrome, sau đó JavaScript tự gỡ `clip-path` khi hiệu ứng kết thúc để trả lại shadow nguyên bản.
 - Section lời chúc đặt trước quà mừng: form gửi lời chúc đặt cạnh sổ lưu bút; dữ liệu chung được lưu trong Google Sheets.
 - Section quà mừng riêng phía sau: chọn tài khoản cô dâu/chú rể, QR và nút sao chép số tài khoản.
 - Tôn trọng `prefers-reduced-motion`, hỗ trợ đóng modal bằng Escape và có ảnh/slider dự phòng khi CDN hoặc ảnh cục bộ lỗi.
@@ -62,7 +63,7 @@ Nếu các CDN không tải được, slider vẫn có carousel tối giản b�
 
 | Nhu cầu | Nơi sửa chính | Ghi chú |
 | --- | --- | --- |
-| Tên cặp đôi, ngày cưới, văn bản, giờ/địa điểm, link Maps | `index.html` | Hôn lễ: `08:45, 20/09/2026` tại `Hội Thánh Tin Lành Thạnh Mỹ`; bản đồ dùng tọa độ `11.754594317329847, 108.52743919838332`. |
+| Tên cặp đôi, ngày cưới, văn bản, giờ/địa điểm, link Maps | `index.html` | Hôn lễ: `08:30, 20/09/2026` tại `Nhà Thờ Tin Lành Chi Hội Thạnh Mỹ`; tiệc cưới: `11:30–12:00` tại `Nhà Hàng Kim Bút 2`; bản đồ nhà thờ dùng tọa độ `11.7589028, 108.4964138`. |
 | Tên chủ tài khoản, số tài khoản, tên ngân hàng, đường dẫn QR | đầu `script.js` trong `bankAccounts` | Hiện số tài khoản và tên ngân hàng là placeholder. |
 | Ảnh cưới | `images/TINK*.jpg`, `images/web-*.jpg` | `TINK*.jpg` là ảnh gốc độ phân giải cao. `web-*.jpg` là bộ đã chọn và tối ưu cho hero, thiệp, parallax, collage, wedding information, gallery và closing; các ảnh tự dự phòng chéo nếu một tệp bị thiếu. |
 | Ảnh mobile | `images/web-*-mobile.jpg` | Bộ crop dọc riêng cho hero, closing, fixed photo, collage nhỏ và wedding information; tránh ép ảnh ngang desktop vào màn hình điện thoại. |
@@ -85,7 +86,7 @@ Ví dụ URL: `https://ten-mien-cua-ban/?name=Nguyen%20Van%20A`.
 - Splide chạy vòng lặp, hỗ trợ phím mũi tên, kéo và pagination.
 - Bấm ảnh mở lightbox; Escape hoặc nút đóng sẽ đóng modal.
 - `script.js` thay ảnh gallery, hero, closing, tuổi thơ và các section ảnh mới bị lỗi bằng bộ `web-*.jpg` cục bộ; trang không phụ thuộc Unsplash khi hiển thị.
-- Countdown dùng mốc `2026-09-20T08:45:00+07:00`; cần đổi trong `script.js` nếu giờ tổ chức thay đổi.
+- Countdown dùng mốc `2026-09-20T08:30:00+07:00`; cần đổi trong `script.js` nếu giờ tổ chức thay đổi.
 
 ### Mừng cưới và lời cảm ơn
 

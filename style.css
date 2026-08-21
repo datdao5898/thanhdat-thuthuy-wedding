@@ -13,8 +13,8 @@
   --display: "Cormorant Garamond", "Playfair Display", Georgia, serif;
   --serif: var(--display);
   --sans: "Be Vietnam Pro", "Inter", Arial, sans-serif;
-  --script: "Dancing Script", var(--display);
-  --romantic: "Dancing Script", var(--display);
+  --script: "Cormorant Garamond", Georgia, serif;
+  --romantic: "Cormorant Garamond", Georgia, serif;
 }
 
 * {
@@ -614,9 +614,10 @@ body.envelope-opened .envelope-intro {
   color: var(--dark);
   font-family: var(--script);
   font-size: clamp(2rem, 10vw, 3.2rem);
-  font-weight: 600;
+  font-style: italic;
+  font-weight: 500;
+  letter-spacing: 0.01em;
   line-height: 1;
-  transform: rotate(-2deg);
 }
 
 h2 {
@@ -783,9 +784,10 @@ h2 {
   display: grid;
   font-family: var(--script);
   font-size: clamp(3.8rem, 19vw, 7.4rem);
-  font-weight: 700;
-  letter-spacing: -0.06em;
-  line-height: 0.68;
+  font-style: italic;
+  font-weight: 500;
+  letter-spacing: -0.025em;
+  line-height: 0.78;
   margin-inline: auto;
   text-shadow: 0 10px 36px rgba(0, 0, 0, 0.42);
 }
@@ -1344,17 +1346,22 @@ h2 {
 .wedding-info__facts {
   border-top: 1px solid var(--line);
   display: grid;
-  gap: 14px;
+  gap: 18px;
   margin-top: 22px;
   padding-top: 20px;
 }
 
-.wedding-info__facts > div {
+.wedding-info__event {
+  background: rgba(252, 249, 244, 0.78);
+  border: 1px solid var(--line);
+  border-radius: 18px;
   display: grid;
-  gap: 2px;
+  gap: 7px;
+  padding: 18px;
 }
 
-.wedding-info__facts small {
+.wedding-info__event > small,
+.wedding-info__times small {
   color: var(--red);
   font-size: 0.62rem;
   font-weight: 700;
@@ -1362,10 +1369,61 @@ h2 {
   text-transform: uppercase;
 }
 
-.wedding-info__facts strong {
+.wedding-info__event h3 {
   font-family: var(--serif);
-  font-size: 1.05rem;
+  font-size: 1.18rem;
   font-weight: 600;
+  line-height: 1.25;
+  margin: 0;
+}
+
+.wedding-info__event > p,
+.wedding-info__address {
+  color: var(--muted);
+  font-size: 0.78rem;
+  line-height: 1.6;
+  margin: 0;
+}
+
+.wedding-info__address {
+  text-decoration: underline;
+  text-decoration-color: rgba(145, 33, 29, 0.28);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 4px;
+  transition: color 0.2s ease, text-decoration-color 0.2s ease;
+}
+
+.wedding-info__address:hover {
+  color: var(--red);
+  text-decoration-color: currentColor;
+}
+
+.wedding-info__times {
+  display: grid;
+  gap: 10px;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  margin-top: 5px;
+}
+
+.wedding-info__times span {
+  display: grid;
+  gap: 2px;
+}
+
+.wedding-info__times strong {
+  font-family: var(--serif);
+  font-size: 0.98rem;
+  font-weight: 600;
+  line-height: 1.3;
+}
+
+.wedding-maps {
+  margin-top: 30px;
+}
+
+.wedding-maps__grid {
+  display: grid;
+  gap: 22px;
 }
 
 .wedding-map {
@@ -1373,14 +1431,13 @@ h2 {
   border: 1px solid var(--line);
   border-radius: 28px;
   box-shadow: var(--shadow);
-  margin-top: 30px;
   overflow: hidden;
 }
 
 .wedding-map iframe {
   border: 0;
   display: block;
-  height: 360px;
+  height: 300px;
   width: 100%;
 }
 
@@ -1392,7 +1449,7 @@ h2 {
   padding: 24px;
 }
 
-.wedding-map__caption h3 {
+.wedding-map__caption h4 {
   font-family: var(--serif);
   font-size: 1.45rem;
   margin: 4px 0;
@@ -1695,6 +1752,15 @@ h2 {
     linear-gradient(180deg, #fbfaf7, #f2eee8);
 }
 
+.wishes .section-heading h2 {
+  line-height: 1.18;
+  padding-block: 0.08em 0.12em;
+}
+
+.wishes .section-heading {
+  max-width: 680px;
+}
+
 .wishes__layout {
   display: grid;
   gap: 24px;
@@ -1983,6 +2049,37 @@ h2 {
   transform: translateY(0);
 }
 
+.reveal-sequence__item {
+  clip-path: inset(0 100% 0 0 round 28px);
+  opacity: 0;
+  transition:
+    clip-path 3s cubic-bezier(0.22, 1, 0.36, 1),
+    opacity 3s ease;
+}
+
+.reveal-sequence__item.is-sequence-item-visible {
+  clip-path: inset(0 0 0 0 round 28px);
+  opacity: 1;
+}
+
+.reveal-sequence__item.is-sequence-complete {
+  clip-path: none;
+}
+
+.reveal-sequence__media {
+  transition-delay: 0s;
+}
+
+.reveal-sequence__copy {
+  transition-delay: 0.5s;
+}
+
+@media (min-width: 860px) {
+  .wishes .section-heading > p:last-child {
+    white-space: nowrap;
+  }
+}
+
 /* ===== Desktop framing ===== */
 @media (max-width: 859px) {
   .fixed-photo-section {
@@ -2079,17 +2176,20 @@ h2 {
   }
 
   .wedding-info__facts {
-    grid-template-columns: 0.72fr 1.2fr 1.5fr;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .wedding-maps__grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
   .wedding-map iframe {
-    height: 430px;
+    height: 340px;
   }
 
   .wedding-map__caption {
-    align-items: center;
-    flex-direction: row;
-    justify-content: space-between;
+    align-items: flex-start;
+    justify-content: flex-start;
     padding: 28px 34px;
   }
 
@@ -2240,6 +2340,11 @@ h2 {
   .reveal {
     opacity: 1;
     transform: none;
+  }
+
+  .reveal-sequence__item {
+    clip-path: none;
+    opacity: 1;
   }
 
   .fixed-photo-section {
