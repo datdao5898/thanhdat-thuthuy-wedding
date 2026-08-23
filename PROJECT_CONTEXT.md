@@ -84,7 +84,7 @@ Ví dụ URL: `https://ten-mien-cua-ban/?name=Nguyen%20Van%20A`.
 ### Ảnh
 
 - Splide chạy vòng lặp, hỗ trợ phím mũi tên, kéo và pagination; ảnh album dùng `object-fit: contain` trên cả desktop lẫn mobile để luôn hiển thị toàn bộ khung hình, không crop.
-- Đĩa than ở section thiệp mời là nút bật/tắt nhạc nền. Nút không có biểu tượng phủ lên ảnh; khi bấm, iframe nền phát video YouTube `QtrVuwVuy3o` do chủ dự án cung cấp, bấm lần nữa sẽ dừng. Iframe dùng kích thước trình phát hợp lệ và được đặt ngoài khung nhìn để không che giao diện. Dự án không lưu bản MP3 cục bộ.
+- Đĩa than ở section thiệp mời là nút bật/tắt nhạc nền. Nút không có biểu tượng phủ lên ảnh; khi bấm, iframe nền phát video YouTube `QtrVuwVuy3o` từ giây thứ 1 theo link do chủ dự án cung cấp, bấm lần nữa sẽ dừng. Iframe dùng kích thước trình phát hợp lệ và được đặt ngoài khung nhìn để không che giao diện. Dự án không lưu bản MP3 cục bộ.
 - Bấm ảnh mở lightbox; Escape hoặc nút đóng sẽ đóng modal.
 - `script.js` thay ảnh gallery, hero, closing, tuổi thơ và các section ảnh mới bị lỗi bằng bộ `web-*.jpg` cục bộ; trang không phụ thuộc Unsplash khi hiển thị.
 - Countdown dùng mốc `2026-09-20T08:30:00+07:00`; cần đổi trong `script.js` nếu giờ tổ chức thay đổi.
