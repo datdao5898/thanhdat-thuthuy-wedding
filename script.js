@@ -292,6 +292,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // ===== Modal dung chung =====
   let lastFocusedElement = null;
+  const musicTrigger = document.getElementById("musicTrigger");
+  const musicPlayer = document.getElementById("musicPlayer");
+  const musicSource = musicPlayer?.dataset.src || "";
 
   const openModal = (modal) => {
     lastFocusedElement = document.activeElement;
@@ -302,11 +305,28 @@ document.addEventListener("DOMContentLoaded", () => {
   };
 
   const closeModal = (modal) => {
+    if (!modal) return;
+
     modal.classList.remove("is-open");
     modal.setAttribute("aria-hidden", "true");
     document.body.classList.remove("modal-open");
+
     lastFocusedElement?.focus();
   };
+
+  musicTrigger?.addEventListener("click", () => {
+    if (!musicPlayer || !musicSource) return;
+
+    const isPlaying = musicTrigger.classList.toggle("is-playing");
+    musicPlayer.src = isPlaying ? musicSource : "";
+    musicTrigger.setAttribute("aria-pressed", String(isPlaying));
+    musicTrigger.setAttribute(
+      "aria-label",
+      isPlaying
+        ? "Dừng bài (Everything I Do) I Do It for You"
+        : "Phát bài (Everything I Do) I Do It for You"
+    );
+  });
 
   document.querySelectorAll("[data-close-modal]").forEach((button) => {
     button.addEventListener("click", () => closeModal(button.closest(".modal")));

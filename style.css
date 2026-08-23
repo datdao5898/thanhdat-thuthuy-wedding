@@ -894,9 +894,16 @@ h2 {
 }
 
 .record-card {
+  appearance: none;
+  background: transparent;
+  border: 0;
+  color: inherit;
+  cursor: pointer;
   display: grid;
   margin: 0 auto 42px;
+  padding: 0;
   place-items: center;
+  position: relative;
 }
 
 .record-card__disc {
@@ -914,6 +921,22 @@ h2 {
   padding: 23px;
   position: relative;
   width: 154px;
+}
+
+.record-card:hover .record-card__disc,
+.record-card:focus-visible .record-card__disc {
+  box-shadow: 0 20px 54px rgba(22, 18, 14, 0.3);
+}
+
+.record-card.is-playing .record-card__disc {
+  box-shadow:
+    0 20px 54px rgba(22, 18, 14, 0.3),
+    0 0 0 6px rgba(182, 38, 34, 0.1);
+}
+
+.record-card:focus-visible {
+  outline: 2px solid var(--red);
+  outline-offset: 8px;
 }
 
 .record-card__disc::before {
@@ -936,6 +959,16 @@ h2 {
   object-position: center 42%;
   position: relative;
   width: 100%;
+}
+
+.background-music-player {
+  border: 0;
+  height: 200px;
+  left: -10000px;
+  pointer-events: none;
+  position: fixed;
+  top: 0;
+  width: 200px;
 }
 
 @keyframes recordSpin {
@@ -1490,13 +1523,13 @@ h2 {
 }
 
 .splide__slide {
-  background: #d7c8bc;
+  background: #eee8e1;
   flex: 0 0 100%;
 }
 
 .slide {
   appearance: none;
-  background: #d7c8bc;
+  background: #eee8e1;
   border: 0;
   cursor: zoom-in;
   display: block;
@@ -1509,13 +1542,9 @@ h2 {
 
 .slide img {
   height: 100%;
-  object-fit: cover;
-  transition: transform 0.8s ease;
+  object-fit: contain;
+  object-position: center;
   width: 100%;
-}
-
-.slide:hover img {
-  transform: scale(1.035);
 }
 
 .slider .splide__arrow {
