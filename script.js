@@ -70,8 +70,33 @@ document.addEventListener("DOMContentLoaded", () => {
   };
 
   // ===== Ca nhan hoa theo ?name=... =====
-  const params = new URLSearchParams(window.location.search);
-  const guestName = (params.get("name") || "").trim();
+  const readGuestName = () => {
+    const rawNameEntry = window.location.search
+      .slice(1)
+      .split("&")
+      .find((entry) => entry.split("=", 1)[0] === "name");
+
+    if (!rawNameEntry) return "";
+
+    const rawValue = rawNameEntry.slice(rawNameEntry.indexOf("=") + 1);
+    const plusAwareValue = rawValue.replace(/\+/g, (character, offset, value) => {
+      const beforePlus = value.slice(Math.max(0, offset - 3), offset).toLowerCase();
+      const afterPlus = value.slice(offset + 1, offset + 4).toLowerCase();
+      const isLiteralPlus = offset === value.length - 1
+        || beforePlus.endsWith("%20")
+        || afterPlus.startsWith("%20");
+
+      return isLiteralPlus ? "%2B" : "%20";
+    });
+
+    try {
+      return decodeURIComponent(plusAwareValue).trim();
+    } catch {
+      return (new URLSearchParams(window.location.search).get("name") || "").trim();
+    }
+  };
+
+  const guestName = readGuestName();
   const hasGuestName = Boolean(guestName);
   const guestGreeting = document.getElementById("guestGreeting");
 
@@ -95,9 +120,46 @@ document.addEventListener("DOMContentLoaded", () => {
     document.body.classList.remove("envelope-opened");
     envelopeIntro?.removeAttribute("aria-hidden");
     if (envelopeRecipient) {
-      envelopeRecipient.textContent = `Kính mời: ${guestName}`;
+      envelopeRecipient.textContent = guestName;
     }
+    openEnvelopeButton?.setAttribute("aria-label", `Mở thiệp mời dành cho ${guestName}`);
   }
+
+  let envelopeFitFrame = 0;
+  const fitEnvelopeRecipient = () => {
+    if (!hasGuestName || !envelopeRecipient) return;
+
+    envelopeRecipient.style.fontSize = "";
+    const maxSize = Number.parseFloat(window.getComputedStyle(envelopeRecipient).fontSize);
+    const minSize = 18;
+
+    if (!Number.isFinite(maxSize) || envelopeRecipient.scrollWidth <= envelopeRecipient.clientWidth) return;
+
+    let lowerSize = minSize;
+    let upperSize = maxSize;
+
+    for (let iteration = 0; iteration < 12; iteration += 1) {
+      const candidateSize = (lowerSize + upperSize) / 2;
+      envelopeRecipient.style.fontSize = `${candidateSize}px`;
+
+      if (envelopeRecipient.scrollWidth <= envelopeRecipient.clientWidth) {
+        lowerSize = candidateSize;
+      } else {
+        upperSize = candidateSize;
+      }
+    }
+
+    envelopeRecipient.style.fontSize = `${lowerSize}px`;
+  };
+
+  const scheduleEnvelopeRecipientFit = () => {
+    window.cancelAnimationFrame(envelopeFitFrame);
+    envelopeFitFrame = window.requestAnimationFrame(fitEnvelopeRecipient);
+  };
+
+  scheduleEnvelopeRecipientFit();
+  document.fonts?.ready.then(scheduleEnvelopeRecipientFit);
+  window.addEventListener("resize", scheduleEnvelopeRecipientFit, { passive: true });
 
   const openInvitation = () => {
     if (!hasGuestName || !envelopeIntro || envelopeIntro.classList.contains("is-opening")) return;
@@ -105,7 +167,7 @@ document.addEventListener("DOMContentLoaded", () => {
     envelopeIntro.classList.add("is-opening");
     document.body.classList.add("envelope-opening");
 
-    const openDelay = window.matchMedia("(prefers-reduced-motion: reduce)").matches ? 80 : 3250;
+    const openDelay = window.matchMedia("(prefers-reduced-motion: reduce)").matches ? 80 : 1020;
     window.setTimeout(() => {
       document.body.classList.add("envelope-opened");
       document.body.classList.remove("intro-locked", "envelope-opening");
