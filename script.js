@@ -40,7 +40,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const sampleWishes = [
     {
       name: "Một người bạn",
-      message: "Chúc Thu Thủy và Thành Đạt luôn nắm tay nhau đi qua mọi mùa yêu thương.",
+      message: "Chúc Thành Đạt và Thu Thủy luôn nắm tay nhau đi qua mọi mùa yêu thương.",
       createdAt: "2026-09-20"
     },
     {
@@ -101,7 +101,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const guestGreeting = document.getElementById("guestGreeting");
 
   if (hasGuestName && guestGreeting) {
-    guestGreeting.textContent = `Thân mời anh/chị ${guestName} đến dự hôn lễ của chúng tôi`;
+    guestGreeting.textContent = `Thân mời ${guestName} đến dự hôn lễ của chúng tôi`;
     document.title = `Thiệp mời ${guestName} | Lễ thành hôn`;
   }
 

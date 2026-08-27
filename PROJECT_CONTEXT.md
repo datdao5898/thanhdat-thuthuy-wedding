@@ -1,10 +1,10 @@
-# Bản đồ dự án — thiệp cưới Thu Thủy & Thành Đạt
+# Bản đồ dự án — thiệp cưới Thành Đạt & Thu Thủy
 
 > Mục đích của tài liệu này: giúp một người hoặc AI mới có thể hiểu, sửa và triển khai dự án sau khi thư mục bị di chuyển hoặc mất ngữ cảnh trò chuyện.
 
 ## 1. Tổng quan
 
-Đây là website thiệp mời cưới một trang (single-page landing page) cho **Thu Thủy và Thành Đạt**. Hôn lễ được cử hành lúc **08:30, Chúa Nhật ngày 20/09/2026** tại **Nhà Thờ Tin Lành Chi Hội Thạnh Mỹ** (số 10/1 Đường Nguyễn Du, TT. Thạnh Mỹ, Đơn Dương, Lâm Đồng). Tiệc cưới tổ chức tại **Nhà Hàng Kim Bút 2** (Dốc cầu Sạp, Quảng Thuận, Quảng Lập, Lâm Đồng), đón khách lúc **11:30** và khai tiệc lúc **12:00**.
+Đây là website thiệp mời cưới một trang (single-page landing page) cho **Thành Đạt và Thu Thủy**. Hôn lễ được cử hành lúc **08:30, Chúa Nhật ngày 20/09/2026** tại **Nhà Thờ Tin Lành Chi Hội Thạnh Mỹ** (số 10/1 Đường Nguyễn Du, TT. Thạnh Mỹ, Đơn Dương, Lâm Đồng). Tiệc cưới tổ chức tại **Nhà Hàng Kim Bút 2** (Dốc cầu Sạp, Quảng Thuận, Quảng Lập, Lâm Đồng), đón khách lúc **11:30** và khai tiệc lúc **12:00**.
 
 Dự án dùng HTML, CSS và JavaScript thuần; không có `package.json`, framework, trình biên dịch hoặc bước build. Có thể mở `index.html` để xem giao diện, nhưng phần sổ lời chúc cần chạy qua HTTP(S) để `fetch` hoạt động ổn định.
 
@@ -12,11 +12,12 @@ Các tính năng chính:
 
 - Màn phong bì mở thiệp khi URL có tên khách mời, ví dụ `/?name=Nguyen%20Van%20A`.
 - Nội dung thiệp, thông tin ngày cưới, bộ ảnh dạng carousel/lightbox.
+- Toàn bộ giao diện theo hướng mobile-first: style nền ưu tiên màn hình điện thoại từ 320px, mọi nội dung xếp một cột và desktop chỉ mở rộng bố cục từ breakpoint `860px`. Khoảng cách, cỡ chữ, ảnh, lịch, bản đồ, form, QR, sổ lưu bút và modal đều có điều chỉnh riêng cho màn hình nhỏ; vùng bấm chính tối thiểu 44–48px và input giữ cỡ chữ 16px để tránh trình duyệt điện thoại tự zoom.
 - Section hành trình từ bé đến lớn với hai ảnh tuổi thơ; ngay sau đó là section ảnh cưới demo độc lập, tràn toàn bộ chiều rộng và dùng nền `fixed` tạo hiệu ứng parallax trên desktop.
 - Collage ảnh cưới bất đối xứng, countdown thời gian thực đến ngày 20/09/2026.
-- Wedding information gồm ảnh, lịch tháng 9/2026 và hai bản đồ Google Maps riêng cho nhà thờ, nhà hàng.
+- Wedding information gồm ảnh, lịch tháng 9/2026, hai thẻ địa điểm và nút `Xem map` mở Google Maps cho nhà thờ hoặc nhà hàng; không nhúng iframe bản đồ trực tiếp trên trang.
 - Các section có cả hình và chữ dùng hiệu ứng reveal tuần tự khi cuộn: hình xuất hiện trước, chữ trễ `0.5s`; hiệu ứng mở dần từ trái sang phải trong `3s` bằng một lớp phủ co lại với `transform: scaleX()`. Nội dung, shadow và margin luôn đứng yên; không dùng `clip-path` trên ảnh lớn hoặc iframe để tránh shadow vuông và hiện tượng khựng trên Chrome.
-- Section lời chúc đặt trước quà mừng: form gửi lời chúc đặt cạnh sổ lưu bút; dữ liệu chung được lưu trong Google Sheets.
+- Section lời chúc đặt trước quà mừng: form gửi lời chúc đặt cạnh sổ lưu bút; dữ liệu chung được lưu trong Google Sheets. Khung sổ lưu bút dùng nền kem pha xanh nhạt, viền và scrollbar olive, nội dung xanh rêu; mỗi `.wish-card` không có box-shadow riêng.
 - Section quà mừng riêng phía sau: chọn tài khoản cô dâu/chú rể, QR và nút sao chép số tài khoản.
 - Tôn trọng `prefers-reduced-motion`, hỗ trợ đóng modal bằng Escape và có ảnh/slider dự phòng khi CDN hoặc ảnh cục bộ lỗi.
 - Sau khi phong bì mở, `.site-shell` phải trả `will-change` về `auto`; nếu giữ `will-change: transform`, Chrome sẽ làm nền `fixed` của section ảnh cưới cuộn theo trang.
@@ -63,7 +64,7 @@ Nếu các CDN không tải được, slider vẫn có carousel tối giản b�
 
 | Nhu cầu | Nơi sửa chính | Ghi chú |
 | --- | --- | --- |
-| Tên cặp đôi, ngày cưới, văn bản, giờ/địa điểm, link Maps | `index.html` | Hôn lễ: `08:30, 20/09/2026` tại `Nhà Thờ Tin Lành Chi Hội Thạnh Mỹ`; tiệc cưới: `11:30–12:00` tại `Nhà Hàng Kim Bút 2`; bản đồ nhà thờ dùng tọa độ `11.7589028, 108.4964138`. |
+| Tên cặp đôi, ngày cưới, văn bản, giờ/địa điểm, link Maps | `index.html` | Luôn hiển thị Thành Đạt trước Thu Thủy. Hôn lễ: `08:30, 20/09/2026` tại `Nhà Thờ Tin Lành Chi Hội Thạnh Mỹ`; tiệc cưới: `11:30–12:00` tại `Nhà Hàng Kim Bút 2`. Mỗi thẻ địa điểm có nút `Xem map` mở link Google Maps tương ứng. |
 | Tên chủ tài khoản, số tài khoản, tên ngân hàng, đường dẫn QR | đầu `script.js` trong `bankAccounts` | Hiện số tài khoản và tên ngân hàng là placeholder. |
 | Ảnh cưới | `images/TINK*.jpg`, `images/web-*.jpg` | `TINK*.jpg` là ảnh gốc độ phân giải cao. `web-*.jpg` là bộ đã chọn và tối ưu cho hero, thiệp, parallax, collage, wedding information, gallery và closing; các ảnh tự dự phòng chéo nếu một tệp bị thiếu. |
 | Ảnh mobile | `images/web-*-mobile.jpg` | Bộ crop dọc riêng cho hero, closing, fixed photo, collage nhỏ và wedding information; tránh ép ảnh ngang desktop vào màn hình điện thoại. |
@@ -76,7 +77,7 @@ Nếu các CDN không tải được, slider vẫn có carousel tối giản b�
 ### Cá nhân hóa khách mời và phong bì
 
 - Không có `name` trong query string: thiệp hiển thị ngay.
-- Có `name`: `script.js` đổi lời chào và tiêu đề tab, sau đó hiển thị ảnh thiệp dọc `images/web-envelope-personalized.jpg` thay cho phong bì CSS cũ. Dòng cố định `TRÂN TRỌNG KÍNH MỜI` nằm phía trên; tên khách đứng giữa bằng font `Italianno` và dùng đúng xanh rêu đậm `#263e1e` của tên cô dâu–chú rể trên hero. Dòng kính mời và hướng dẫn dùng các sắc olive phụ để tạo phân cấp nhưng vẫn giữ xanh rêu làm trọng tâm. JavaScript đo chiều rộng thực tế sau khi font tải và tự thu nhỏ tên để luôn nằm trên một dòng. Bộ đọc query giữ lại dấu `+` khi nó được dùng như ký tự ở cuối/sát khoảng trắng (ví dụ `?name=bạn%20Thân%20+`) nhưng vẫn hiểu dấu `+` nằm giữa các từ trong link kiểu cũ là khoảng trắng. Khi bấm, ảnh thiệp phóng rất nhẹ bằng `transform` và mờ dần trong khoảng 1 giây; site nằm sẵn phía dưới, không scale toàn bộ trang và không dùng `filter`. Trên desktop, trang chính được hé lộ ở kích thước gần full màn hình với viền 20px, không thu hẹp thành khung mobile.
+- Có `name`: `script.js` đổi lời chào thành `Thân mời [Tên khách] đến dự hôn lễ của chúng tôi` (không thêm xưng hô `anh/chị`) và đổi tiêu đề tab, sau đó hiển thị ảnh thiệp dọc `images/web-envelope-personalized.jpg` thay cho phong bì CSS cũ. Dòng cố định `TRÂN TRỌNG KÍNH MỜI` nằm phía trên; tên khách đứng giữa bằng font `Italianno` và dùng đúng xanh rêu đậm `#263e1e` của tên cô dâu–chú rể trên hero. Dòng kính mời và hướng dẫn dùng các sắc olive phụ để tạo phân cấp nhưng vẫn giữ xanh rêu làm trọng tâm. JavaScript đo chiều rộng thực tế sau khi font tải và tự thu nhỏ tên để luôn nằm trên một dòng. Bộ đọc query giữ lại dấu `+` khi nó được dùng như ký tự ở cuối/sát khoảng trắng (ví dụ `?name=bạn%20Thân%20+`) nhưng vẫn hiểu dấu `+` nằm giữa các từ trong link kiểu cũ là khoảng trắng. Khi bấm, ảnh thiệp phóng rất nhẹ bằng `transform` và mờ dần trong khoảng 1 giây; site nằm sẵn phía dưới, không scale toàn bộ trang và không dùng `filter`. Trên desktop, trang chính được hé lộ ở kích thước gần full màn hình với viền 20px, không thu hẹp thành khung mobile.
 - Với người bật giảm chuyển động, thời gian mở giảm còn khoảng 80 ms.
 
 Ví dụ URL: `https://ten-mien-cua-ban/?name=Nguyen%20Van%20A`.
@@ -160,7 +161,7 @@ Chỉ dùng phương án này khi host thực sự chạy được route `api/wi
 
 1. Bổ sung ảnh tuổi thơ thật của cô dâu/chú rể và QR ngân hàng chính thức; ảnh cưới hiện đã dùng bộ ảnh thật trong `images/`.
 2. Thay số tài khoản, tên ngân hàng và hai QR demo trong `bankAccounts` ở `script.js`.
-3. Bổ sung địa chỉ dạng văn bản chi tiết của Hội Thánh nếu cần; giờ, tên địa điểm và tọa độ Google Maps đã được cập nhật.
+3. Kiểm tra lại hai link Google Maps trên nút `Xem map` nếu địa điểm thay đổi; trang không nhúng iframe bản đồ để giao diện gọn và tải nhẹ hơn.
 4. Mở Google Sheet và kiểm tra Web App URL trong `config.js` còn deploy, có quyền `Anyone`, đọc/ghi được.
 5. Kiểm tra UTF-8 trong trình soạn thảo trước khi chỉnh sửa tiếng Việt. Các lần đọc bằng terminal hiện hiển thị nhiều chuỗi tiếng Việt bị mojibake (ví dụ `Thiá»‡p`); cần xác nhận encoding file đang là UTF-8 và sửa nếu nội dung thực sự hiển thị lỗi trên trình duyệt.
 6. Test trên điện thoại, đặc biệt: mở phong bì từ URL có `name`, bấm QR, copy số tài khoản, gửi lời chúc, đóng modal và slider.
