@@ -15,7 +15,7 @@ Các tính năng chính:
 - Toàn bộ giao diện theo hướng mobile-first: style nền ưu tiên màn hình điện thoại từ 320px, mọi nội dung xếp một cột và desktop chỉ mở rộng bố cục từ breakpoint `860px`. Khoảng cách, cỡ chữ, ảnh, lịch, bản đồ, form, QR, sổ lưu bút và modal đều có điều chỉnh riêng cho màn hình nhỏ; vùng bấm chính tối thiểu 44–48px và input giữ cỡ chữ 16px để tránh trình duyệt điện thoại tự zoom.
 - Section hành trình từ bé đến lớn với hai ảnh tuổi thơ; ngay sau đó là section ảnh cưới demo độc lập, tràn toàn bộ chiều rộng và dùng nền `fixed` tạo hiệu ứng parallax trên desktop.
 - Collage ảnh cưới bất đối xứng, countdown thời gian thực đến ngày 20/09/2026.
-- Wedding information gồm ảnh, lịch tháng 9/2026, hai thẻ địa điểm và nút `Xem map` mở Google Maps cho nhà thờ hoặc nhà hàng; không nhúng iframe bản đồ trực tiếp trên trang.
+- Wedding information gồm ảnh, lịch tháng 9/2026, hai thẻ địa điểm và nút `Xem bản đồ` mở Google Maps cho nhà thờ hoặc nhà hàng; không nhúng iframe bản đồ trực tiếp trên trang.
 - Các section có cả hình và chữ dùng hiệu ứng reveal tuần tự khi cuộn: hình xuất hiện trước, chữ trễ `0.5s`; hiệu ứng mở dần từ trái sang phải trong `3s` bằng một lớp phủ co lại với `transform: scaleX()`. Nội dung, shadow và margin luôn đứng yên; không dùng `clip-path` trên ảnh lớn hoặc iframe để tránh shadow vuông và hiện tượng khựng trên Chrome.
 - Section lời chúc đặt trước quà mừng: form gửi lời chúc đặt cạnh sổ lưu bút; dữ liệu chung được lưu trong Google Sheets. Khung sổ lưu bút dùng nền kem pha xanh nhạt, viền và scrollbar olive, nội dung xanh rêu; mỗi `.wish-card` không có box-shadow riêng.
 - Section quà mừng riêng phía sau: chọn tài khoản cô dâu/chú rể, QR và nút sao chép số tài khoản.
@@ -64,12 +64,13 @@ Nếu các CDN không tải được, slider vẫn có carousel tối giản b�
 
 | Nhu cầu | Nơi sửa chính | Ghi chú |
 | --- | --- | --- |
-| Tên cặp đôi, ngày cưới, văn bản, giờ/địa điểm, link Maps | `index.html` | Luôn hiển thị Thành Đạt trước Thu Thủy. Hôn lễ: `08:30, 20/09/2026` tại `Nhà Thờ Tin Lành Chi Hội Thạnh Mỹ`; tiệc cưới: `11:30–12:00` tại `Nhà Hàng Kim Bút 2`. Mỗi thẻ địa điểm có nút `Xem map` mở link Google Maps tương ứng. |
+| Tên cặp đôi, ngày cưới, văn bản, giờ/địa điểm, link Maps | `index.html` | Luôn hiển thị Thành Đạt trước Thu Thủy. Hôn lễ: `08:30, 20/09/2026` tại `Nhà Thờ Tin Lành Chi Hội Thạnh Mỹ`; tiệc cưới: `11:30–12:00` tại `Nhà Hàng Kim Bút 2`. Mỗi thẻ địa điểm có nút `Xem bản đồ` mở link Google Maps tương ứng. |
 | Tên chủ tài khoản, số tài khoản, tên ngân hàng, đường dẫn QR | đầu `script.js` trong `bankAccounts` | Hiện số tài khoản và tên ngân hàng là placeholder. |
 | Ảnh cưới | `images/TINK*.jpg`, `images/web-*.jpg` | `TINK*.jpg` là ảnh gốc độ phân giải cao. `web-*.jpg` là bộ đã chọn và tối ưu cho hero, thiệp, parallax, collage, wedding information, gallery và closing; các ảnh tự dự phòng chéo nếu một tệp bị thiếu. |
-| Ảnh mobile | `images/web-*-mobile.jpg` | Bộ crop dọc riêng cho hero, closing, fixed photo, collage nhỏ và wedding information; tránh ép ảnh ngang desktop vào màn hình điện thoại. |
+| Ảnh mobile | `images/web-*-mobile.jpg` | Bộ crop dọc riêng cho hero, fixed photo, collage nhỏ và wedding information. Riêng phần kết dùng chung `images/web-closing.jpg` trên desktop và mobile để giữ đúng ảnh cô dâu–chú rể giơ tay chào. Trên mobile, ảnh nằm trong `.closing::before` cao hơn khung ảnh tự nhiên và dùng `mask-image`/`-webkit-mask-image` mờ dần hoàn toàn vào nền xanh rêu `var(--dark)`, tránh mọi cạnh cắt ngang trước phần chữ/footer. |
 | Ảnh tuổi thơ | Chưa có ảnh thật | Hai khung đang dùng `web-gallery-7.jpg` và `web-gallery-2.jpg` làm ảnh demo tạm thời để giao diện không hiển thị ảnh lỗi. |
 | Màu sắc, bố cục, responsive, animation | `style.css` | Biến thiết kế nằm đầu file: giấy kem, xanh rêu đậm, olive, xanh trầm và vàng champagne. Toàn bộ chữ landing page dùng xanh rêu làm màu chủ đạo; chữ phụ dùng xám xanh/olive. |
+| Tiêu đề album trên mobile | `style.css` | `.gallery .section-heading h2` dùng cỡ chữ co giãn theo viewport, giảm nhẹ khoảng cách ký tự và `white-space: nowrap` dưới `520px` để dòng “Album của Đạt & Thủy” luôn nằm trên một dòng, kể cả màn 320px. |
 | Lời chúc và endpoint lưu dữ liệu | `config.js`, `script.js`, `apps-script/wishes.gs` | Apps Script là cách đang được cấu hình. |
 
 ## 5. Luồng trải nghiệm ở trình duyệt
@@ -77,7 +78,7 @@ Nếu các CDN không tải được, slider vẫn có carousel tối giản b�
 ### Cá nhân hóa khách mời và phong bì
 
 - Không có `name` trong query string: thiệp hiển thị ngay.
-- Có `name`: `script.js` đổi lời chào thành `Thân mời [Tên khách] đến dự hôn lễ của chúng tôi` (không thêm xưng hô `anh/chị`) và đổi tiêu đề tab, sau đó hiển thị ảnh thiệp dọc `images/web-envelope-personalized.jpg` thay cho phong bì CSS cũ. Dòng cố định `TRÂN TRỌNG KÍNH MỜI` nằm phía trên; tên khách đứng giữa bằng font `Italianno` và dùng đúng xanh rêu đậm `#263e1e` của tên cô dâu–chú rể trên hero. Dòng kính mời và hướng dẫn dùng các sắc olive phụ để tạo phân cấp nhưng vẫn giữ xanh rêu làm trọng tâm. JavaScript đo chiều rộng thực tế sau khi font tải và tự thu nhỏ tên để luôn nằm trên một dòng. Bộ đọc query giữ lại dấu `+` khi nó được dùng như ký tự ở cuối/sát khoảng trắng (ví dụ `?name=bạn%20Thân%20+`) nhưng vẫn hiểu dấu `+` nằm giữa các từ trong link kiểu cũ là khoảng trắng. Khi bấm, ảnh thiệp phóng rất nhẹ bằng `transform` và mờ dần trong khoảng 1 giây; site nằm sẵn phía dưới, không scale toàn bộ trang và không dùng `filter`. Trên desktop, trang chính được hé lộ ở kích thước gần full màn hình với viền 20px, không thu hẹp thành khung mobile.
+- Có `name`: `script.js` đổi lời chào thành `Trân trọng kính mời [Tên khách] đến chung vui cùng gia đình chúng tôi` (không thêm xưng hô `anh/chị`) và đổi tiêu đề tab, sau đó hiển thị ảnh thiệp dọc `images/web-envelope-personalized.jpg` thay cho phong bì CSS cũ. Dòng cố định `TRÂN TRỌNG KÍNH MỜI` nằm phía trên; tên khách đứng giữa bằng font `Italianno` và dùng đúng xanh rêu đậm `#263e1e` của tên cô dâu–chú rể trên hero. Dòng kính mời và hướng dẫn dùng các sắc olive phụ để tạo phân cấp nhưng vẫn giữ xanh rêu làm trọng tâm. JavaScript đo chiều rộng thực tế sau khi font tải và tự thu nhỏ tên để luôn nằm trên một dòng. Bộ đọc query giữ lại dấu `+` khi nó được dùng như ký tự ở cuối/sát khoảng trắng (ví dụ `?name=bạn%20Thân%20+`) nhưng vẫn hiểu dấu `+` nằm giữa các từ trong link kiểu cũ là khoảng trắng. Khi bấm, ảnh thiệp phóng rất nhẹ bằng `transform` và mờ dần trong khoảng 1 giây; site nằm sẵn phía dưới, không scale toàn bộ trang và không dùng `filter`. Trên desktop, trang chính được hé lộ ở kích thước gần full màn hình với viền 20px, không thu hẹp thành khung mobile.
 - Với người bật giảm chuyển động, thời gian mở giảm còn khoảng 80 ms.
 
 Ví dụ URL: `https://ten-mien-cua-ban/?name=Nguyen%20Van%20A`.
@@ -161,7 +162,7 @@ Chỉ dùng phương án này khi host thực sự chạy được route `api/wi
 
 1. Bổ sung ảnh tuổi thơ thật của cô dâu/chú rể và QR ngân hàng chính thức; ảnh cưới hiện đã dùng bộ ảnh thật trong `images/`.
 2. Thay số tài khoản, tên ngân hàng và hai QR demo trong `bankAccounts` ở `script.js`.
-3. Kiểm tra lại hai link Google Maps trên nút `Xem map` nếu địa điểm thay đổi; trang không nhúng iframe bản đồ để giao diện gọn và tải nhẹ hơn.
+3. Kiểm tra lại hai link Google Maps trên nút `Xem bản đồ` nếu địa điểm thay đổi; trang không nhúng iframe bản đồ để giao diện gọn và tải nhẹ hơn.
 4. Mở Google Sheet và kiểm tra Web App URL trong `config.js` còn deploy, có quyền `Anyone`, đọc/ghi được.
 5. Kiểm tra UTF-8 trong trình soạn thảo trước khi chỉnh sửa tiếng Việt. Các lần đọc bằng terminal hiện hiển thị nhiều chuỗi tiếng Việt bị mojibake (ví dụ `Thiá»‡p`); cần xác nhận encoding file đang là UTF-8 và sửa nếu nội dung thực sự hiển thị lỗi trên trình duyệt.
 6. Test trên điện thoại, đặc biệt: mở phong bì từ URL có `name`, bấm QR, copy số tài khoản, gửi lời chúc, đóng modal và slider.

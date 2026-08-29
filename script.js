@@ -3,6 +3,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const bankAccounts = {
     bride: {
       label: "Cô dâu",
+      giftMessage: "Gửi quà mừng đến cô dâu",
       accountName: "THU THỦY",
       accountNumber: "0000 0000 0000",
       bankName: "[TÊN NGÂN HÀNG]",
@@ -10,6 +11,7 @@ document.addEventListener("DOMContentLoaded", () => {
     },
     groom: {
       label: "Chú rể",
+      giftMessage: "Gửi quà mừng đến chú rể",
       accountName: "THÀNH ĐẠT",
       accountNumber: "1111 1111 1111",
       bankName: "[TÊN NGÂN HÀNG]",
@@ -101,7 +103,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const guestGreeting = document.getElementById("guestGreeting");
 
   if (hasGuestName && guestGreeting) {
-    guestGreeting.textContent = `Thân mời ${guestName} đến dự hôn lễ của chúng tôi`;
+    guestGreeting.textContent = `Trân trọng kính mời ${guestName} đến chung vui cùng gia đình chúng tôi`;
     document.title = `Thiệp mời ${guestName} | Lễ thành hôn`;
   }
 
@@ -433,6 +435,7 @@ document.addEventListener("DOMContentLoaded", () => {
   // ===== Chon tai khoan nhan qua =====
   const bankQr = document.getElementById("bankQr");
   const recipientBadge = document.getElementById("recipientBadge");
+  const giftRecipientMessage = document.getElementById("giftRecipientMessage");
   const accountName = document.getElementById("accountName");
   const accountNumber = document.getElementById("accountNumber");
   const bankName = document.getElementById("bankName");
@@ -443,6 +446,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const account = bankAccounts[recipient];
     activeRecipient = recipient;
     recipientBadge.textContent = account.label;
+    giftRecipientMessage.textContent = account.giftMessage;
     accountName.textContent = account.accountName;
     accountNumber.textContent = account.accountNumber;
     bankName.textContent = account.bankName;

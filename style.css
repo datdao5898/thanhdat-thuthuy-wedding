@@ -2622,6 +2622,12 @@ h2 {
     padding-inline: 18px;
   }
 
+  .gallery .section-heading h2 {
+    font-size: clamp(1.55rem, 8.4vw, 2.6rem);
+    letter-spacing: -0.035em;
+    white-space: nowrap;
+  }
+
   .slider {
     padding-inline: 12px;
   }
@@ -2663,18 +2669,36 @@ h2 {
   }
 
   .closing {
+    background: var(--dark);
+    padding-top: calc(66.67vw + 54px);
+  }
+
+  .closing::before {
     background:
-      linear-gradient(
-        180deg,
-        rgba(12, 9, 8, 0.08) 0,
-        rgba(12, 9, 8, 0.18) 88vw,
-        rgba(12, 9, 8, 0.82) 124vw,
-        #201915 133vw,
-        #201915 100%
-      ),
-      url("images/web-closing-mobile.jpg") center top / 100% auto no-repeat,
-      #201915;
-    padding-top: calc(133.33vw + 54px);
+      linear-gradient(rgba(19, 32, 21, 0.04), rgba(19, 32, 21, 0.28)),
+      url("images/web-closing.jpg") center top / cover no-repeat;
+    content: "";
+    height: 82vw;
+    inset: 0 0 auto;
+    mask-image: linear-gradient(
+      to bottom,
+      #000 0%,
+      #000 44%,
+      rgba(0, 0, 0, 0.88) 56%,
+      rgba(0, 0, 0, 0.52) 72%,
+      transparent 100%
+    );
+    pointer-events: none;
+    position: absolute;
+    -webkit-mask-image: linear-gradient(
+      to bottom,
+      #000 0%,
+      #000 44%,
+      rgba(0, 0, 0, 0.88) 56%,
+      rgba(0, 0, 0, 0.52) 72%,
+      transparent 100%
+    );
+    z-index: 0;
   }
 
   .modal {
