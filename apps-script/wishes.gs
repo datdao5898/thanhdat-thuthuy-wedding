@@ -4,8 +4,22 @@ const HEADERS = ["Created At", "Name", "Message", "Recipient", "Attendance", "So
 const LEGACY_HEADERS = ["Created At", "Name", "Message", "Recipient", "Source"];
 const WISHES_CACHE_KEY = "tdtt_wedding_wishes";
 const WISHES_CACHE_SECONDS = 60;
+const GUEST_SHEET_NAME = "KhachMoi";
+const GUEST_HEADERS = ["Code", "Name", "Audience", "Updated At"];
+const GUEST_ADMIN_KEY_PROPERTY = "GUEST_ADMIN_KEY";
 
-function doGet() {
+function doGet(event) {
+  const action = event && event.parameter ? String(event.parameter.action || "") : "";
+
+  if (action === "guest") {
+    const guest = readGuest_(event.parameter.code);
+    return json_({
+      ok: Boolean(guest),
+      guest: guest || null,
+      error: guest ? "" : "Guest code not found"
+    });
+  }
+
   return json_({
     ok: true,
     wishes: readCachedWishes_()
@@ -18,6 +32,16 @@ function doPost(event) {
 
   try {
     const body = parseBody_(event);
+
+    if (body.action === "guest-upsert") {
+      assertGuestAdminKey_(body.adminKey);
+      const guest = upsertGuest_(body);
+      return json_({
+        ok: true,
+        guest
+      });
+    }
+
     const message = normalizeMessage_(body.message);
 
     if (!message) {
@@ -52,6 +76,110 @@ function doPost(event) {
   } finally {
     lock.releaseLock();
   }
+}
+
+function getGuestSheet_() {
+  const spreadsheet = SpreadsheetApp.openById(SHEET_ID);
+  let sheet = spreadsheet.getSheetByName(GUEST_SHEET_NAME);
+
+  if (!sheet) {
+    sheet = spreadsheet.insertSheet(GUEST_SHEET_NAME);
+  }
+
+  const currentHeader = sheet.getRange(1, 1, 1, GUEST_HEADERS.length).getValues()[0];
+  if (currentHeader.join("|") !== GUEST_HEADERS.join("|")) {
+    sheet.getRange(1, 1, 1, GUEST_HEADERS.length).setValues([GUEST_HEADERS]);
+    sheet.setFrozenRows(1);
+  }
+
+  return sheet;
+}
+
+function normalizeGuestCode_(value) {
+  return String(value || "")
+    .trim()
+    .toUpperCase()
+    .replace(/[^A-Z0-9_-]/g, "")
+    .slice(0, 24);
+}
+
+function normalizeGuestAudience_(value) {
+  return value === "senior" ? "senior" : "friend";
+}
+
+function rowToGuest_(row) {
+  return {
+    code: String(row[0] || ""),
+    name: String(row[1] || ""),
+    audience: normalizeGuestAudience_(row[2]),
+    updatedAt: row[3] instanceof Date ? row[3].toISOString() : String(row[3] || "")
+  };
+}
+
+function readGuest_(rawCode) {
+  const code = normalizeGuestCode_(rawCode);
+  if (!code) return null;
+
+  const sheet = getGuestSheet_();
+  const lastRow = sheet.getLastRow();
+  if (lastRow < 2) return null;
+
+  const match = sheet
+    .getRange(2, 1, lastRow - 1, 1)
+    .createTextFinder(code)
+    .matchEntireCell(true)
+    .findNext();
+
+  if (!match) return null;
+  return rowToGuest_(sheet.getRange(match.getRow(), 1, 1, GUEST_HEADERS.length).getValues()[0]);
+}
+
+function assertGuestAdminKey_(providedKey) {
+  const expectedKey = PropertiesService
+    .getScriptProperties()
+    .getProperty(GUEST_ADMIN_KEY_PROPERTY);
+
+  if (!expectedKey) {
+    throw new Error("Guest admin key is not configured");
+  }
+  if (String(providedKey || "") !== expectedKey) {
+    throw new Error("Guest admin key is invalid");
+  }
+}
+
+function upsertGuest_(body) {
+  const code = normalizeGuestCode_(body.code);
+  const name = normalizeText_(body.name, "", 100);
+  const audience = normalizeGuestAudience_(body.audience);
+
+  if (code.length < 2) throw new Error("Guest code must contain at least 2 characters");
+  if (!name) throw new Error("Guest name is required");
+
+  const sheet = getGuestSheet_();
+  const guest = {
+    code,
+    name,
+    audience,
+    updatedAt: new Date().toISOString()
+  };
+  const lastRow = sheet.getLastRow();
+  const match = lastRow < 2
+    ? null
+    : sheet
+      .getRange(2, 1, lastRow - 1, 1)
+      .createTextFinder(code)
+      .matchEntireCell(true)
+      .findNext();
+  const targetRow = match ? match.getRow() : lastRow + 1;
+
+  sheet.getRange(targetRow, 1, 1, GUEST_HEADERS.length).setValues([[
+    guest.code,
+    guest.name,
+    guest.audience,
+    guest.updatedAt
+  ]]);
+
+  return guest;
 }
 
 function parseBody_(event) {

@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Tạo link khách mời | Thành Đạt & Thu Thủy</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600&family=Cormorant+Garamond:wght@600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="tao-thiep.css?v=20260830-1">
+</head>
+<body>
+  <main class="builder-shell">
+    <section class="builder-card" aria-labelledby="builderTitle">
+      <header class="builder-header">
+        <p class="builder-eyebrow">Thành Đạt &amp; Thu Thủy</p>
+        <h1 id="builderTitle">Tạo link khách mời</h1>
+        <p>Nhập thông tin khách mời để tạo đường dẫn ngắn dạng <strong>?i=TD001</strong>.</p>
+      </header>
+
+      <form id="guestLinkForm" class="builder-form">
+        <label class="field">
+          <span>Mã khách mời</span>
+          <input
+            id="guestCode"
+            name="code"
+            type="text"
+            minlength="2"
+            maxlength="24"
+            pattern="[A-Za-z0-9_-]+"
+            placeholder="Ví dụ: TD001"
+            autocomplete="off"
+            required
+          >
+          <small>Chỉ dùng chữ không dấu, số, dấu gạch ngang hoặc gạch dưới.</small>
+        </label>
+
+        <label class="field">
+          <span>Họ tên hiển thị</span>
+          <input
+            id="guestName"
+            name="name"
+            type="text"
+            maxlength="100"
+            placeholder="Ví dụ: Anh chị Nguyễn Văn A"
+            autocomplete="name"
+            required
+          >
+        </label>
+
+        <fieldset class="audience-field">
+          <legend>Đại từ của cô dâu chú rể</legend>
+          <label class="audience-option">
+            <input type="radio" name="audience" value="friend" checked>
+            <span>
+              <strong>Chúng mình</strong>
+              <small>Bạn bè, em và người nhỏ tuổi hơn</small>
+            </span>
+          </label>
+          <label class="audience-option">
+            <input type="radio" name="audience" value="senior">
+            <span>
+              <strong>Chúng em</strong>
+              <small>Anh, chị và người lớn tuổi hơn</small>
+            </span>
+          </label>
+        </fieldset>
+
+        <label class="field">
+          <span>Khóa quản trị</span>
+          <input
+            id="adminKey"
+            name="adminKey"
+            type="password"
+            placeholder="Nhập khóa quản trị"
+            autocomplete="current-password"
+            required
+          >
+          <small>Khóa chỉ được gửi khi lưu và không được ghi vào trình duyệt.</small>
+        </label>
+
+        <button class="primary-button" id="saveGuestButton" type="submit">Lưu và tạo link</button>
+        <p class="form-status" id="formStatus" role="status" aria-live="polite"></p>
+      </form>
+
+      <section class="link-result" id="linkResult" hidden aria-labelledby="resultTitle">
+        <p class="builder-eyebrow">Link đã sẵn sàng</p>
+        <h2 id="resultTitle">Gửi link này cho khách mời</h2>
+        <div class="link-output">
+          <input id="generatedLink" type="text" readonly aria-label="Link thiệp khách mời">
+          <button id="copyGuestLink" type="button">Sao chép</button>
+        </div>
+        <a id="previewGuestLink" class="preview-link" href="#" target="_blank" rel="noopener noreferrer">Mở thử thiệp</a>
+      </section>
+    </section>
+  </main>
+
+  <script src="config.js"></script>
+  <script src="tao-thiep.js?v=20260830-1"></script>
+</body>
+</html>

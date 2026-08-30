@@ -1,0 +1,246 @@
+:root {
+  --paper: #f8f6ef;
+  --paper-soft: #eef1e9;
+  --ink: #263e1e;
+  --muted: #6f7d69;
+  --line: rgba(38, 62, 30, 0.18);
+  --gold: #b99353;
+  --sans: "Be Vietnam Pro", Arial, sans-serif;
+  --display: "Cormorant Garamond", Georgia, serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  background:
+    radial-gradient(circle at 15% 0%, rgba(185, 147, 83, 0.18), transparent 28rem),
+    radial-gradient(circle at 100% 100%, rgba(101, 122, 66, 0.2), transparent 32rem),
+    #1f3420;
+  color: var(--ink);
+  font-family: var(--sans);
+  margin: 0;
+  min-height: 100vh;
+}
+
+button,
+input {
+  font: inherit;
+}
+
+.builder-shell {
+  display: grid;
+  min-height: 100vh;
+  padding: 16px;
+  place-items: center;
+}
+
+.builder-card {
+  background: var(--paper);
+  border: 1px solid rgba(255, 255, 255, 0.45);
+  border-radius: 24px;
+  box-shadow: 0 30px 90px rgba(10, 24, 12, 0.3);
+  max-width: 720px;
+  overflow: hidden;
+  width: 100%;
+}
+
+.builder-header,
+.builder-form,
+.link-result {
+  padding: 28px 22px;
+}
+
+.builder-header {
+  background: linear-gradient(145deg, #fdfcf8, #eef1e9);
+  border-bottom: 1px solid var(--line);
+}
+
+.builder-eyebrow {
+  color: #657a42;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.22em;
+  margin: 0 0 8px;
+  text-transform: uppercase;
+}
+
+h1,
+h2,
+p {
+  margin-top: 0;
+}
+
+h1,
+h2 {
+  font-family: var(--display);
+  line-height: 1;
+}
+
+h1 {
+  font-size: clamp(2.35rem, 12vw, 4rem);
+  margin-bottom: 16px;
+}
+
+h2 {
+  font-size: clamp(1.8rem, 8vw, 2.6rem);
+  margin-bottom: 18px;
+}
+
+.builder-header > p:last-child {
+  color: var(--muted);
+  line-height: 1.7;
+  margin-bottom: 0;
+}
+
+.builder-form {
+  display: grid;
+  gap: 22px;
+}
+
+.field {
+  display: grid;
+  gap: 8px;
+}
+
+.field > span,
+.audience-field legend {
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+.field small,
+.audience-option small {
+  color: var(--muted);
+  line-height: 1.5;
+}
+
+.field input,
+.link-output input {
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  color: var(--ink);
+  font-size: 16px;
+  min-height: 50px;
+  outline: none;
+  padding: 12px 14px;
+  width: 100%;
+}
+
+.field input:focus,
+.link-output input:focus {
+  border-color: #657a42;
+  box-shadow: 0 0 0 3px rgba(101, 122, 66, 0.14);
+}
+
+.audience-field {
+  border: 0;
+  display: grid;
+  gap: 10px;
+  margin: 0;
+  padding: 0;
+}
+
+.audience-field legend {
+  margin-bottom: 10px;
+}
+
+.audience-option {
+  align-items: center;
+  background: var(--paper-soft);
+  border: 1px solid transparent;
+  border-radius: 14px;
+  cursor: pointer;
+  display: flex;
+  gap: 12px;
+  min-height: 66px;
+  padding: 12px 14px;
+}
+
+.audience-option:has(input:checked) {
+  border-color: #657a42;
+  box-shadow: inset 0 0 0 1px rgba(101, 122, 66, 0.14);
+}
+
+.audience-option input {
+  accent-color: #657a42;
+  height: 20px;
+  width: 20px;
+}
+
+.audience-option span {
+  display: grid;
+  gap: 2px;
+}
+
+.primary-button,
+.link-output button,
+.preview-link {
+  align-items: center;
+  border-radius: 999px;
+  cursor: pointer;
+  display: inline-flex;
+  font-weight: 600;
+  justify-content: center;
+  min-height: 48px;
+  padding: 11px 22px;
+}
+
+.primary-button,
+.link-output button {
+  background: var(--ink);
+  border: 1px solid var(--ink);
+  color: #fff;
+}
+
+.primary-button:disabled {
+  cursor: wait;
+  opacity: 0.65;
+}
+
+.form-status {
+  color: var(--muted);
+  font-size: 0.9rem;
+  line-height: 1.55;
+  margin: -10px 0 0;
+  min-height: 1.5em;
+}
+
+.form-status.is-error {
+  color: #9a3d3d;
+}
+
+.link-result {
+  background: #edf1e7;
+  border-top: 1px solid var(--line);
+}
+
+.link-output {
+  display: grid;
+  gap: 10px;
+}
+
+.preview-link {
+  border: 1px solid #657a42;
+  color: var(--ink);
+  margin-top: 14px;
+  text-decoration: none;
+}
+
+@media (min-width: 640px) {
+  .builder-shell {
+    padding: 32px;
+  }
+
+  .builder-header,
+  .builder-form,
+  .link-result {
+    padding: 38px 42px;
+  }
+
+  .link-output {
+    grid-template-columns: minmax(0, 1fr) auto;
+  }
+}

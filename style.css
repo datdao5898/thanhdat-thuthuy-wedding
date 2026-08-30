@@ -1114,6 +1114,15 @@ h2 {
   text-align: center;
 }
 
+.invitation .paper-wrap {
+  max-width: 620px;
+}
+
+.invitation .paper-wrap__content {
+  margin-inline: auto;
+  max-width: 460px;
+}
+
 .record-card {
   appearance: none;
   background: transparent;
@@ -1210,13 +1219,6 @@ h2 {
   max-width: 350px;
 }
 
-.invitation__copy {
-  color: var(--muted);
-  font-size: 0.94rem;
-  margin-inline: auto;
-  max-width: 360px;
-}
-
 .couple-mark {
   align-items: center;
   display: flex;
@@ -1226,17 +1228,28 @@ h2 {
   margin-top: 32px;
 }
 
+.invitation__couple-intro {
+  border-top: 1px solid var(--line);
+  margin: 34px auto 0;
+  padding-top: 34px;
+}
+
+.invitation__couple-intro h2 {
+  font-size: clamp(2.15rem, 8vw, 3.2rem);
+  margin: 0 0 14px;
+}
+
+.invitation__couple-intro p {
+  color: var(--muted);
+  font-family: var(--serif);
+  font-size: 1.08rem;
+  line-height: 1.6;
+  margin: 0 auto;
+  max-width: 440px;
+}
+
 .couple-mark--light {
   color: rgba(255, 255, 255, 0.86);
-}
-
-/* ===== Childhood ===== */
-.childhood {
-  padding: 72px 0 54px;
-}
-
-.childhood__inner {
-  width: 100%;
 }
 
 .fixed-photo-section {
@@ -1246,28 +1259,12 @@ h2 {
   width: 100%;
 }
 
-.childhood__copy {
-  margin: 0 auto 38px;
-  max-width: 620px;
-  padding-inline: 24px;
-  text-align: center;
-}
-
-.childhood__copy h2 {
-  margin: 8px 0 12px;
-}
-
-.childhood__copy > p:last-child {
-  color: var(--muted);
-  font-family: var(--serif);
-  font-size: 1.1rem;
-}
-
 .childhood__people {
   align-items: center;
   display: flex;
   gap: clamp(18px, 6vw, 54px);
   justify-content: center;
+  margin-top: 42px;
   padding: 0 24px 8px;
 }
 
@@ -1684,7 +1681,14 @@ h2 {
 }
 
 .gallery .section-heading {
+  max-width: min(100%, 760px);
   padding-inline: 24px;
+}
+
+.gallery .section-heading h2 {
+  font-size: clamp(2.2rem, 5.6vw, 4.8rem);
+  letter-spacing: -0.035em;
+  white-space: nowrap;
 }
 
 .slider {
@@ -2369,16 +2373,8 @@ h2 {
     padding-bottom: clamp(48px, 6vh, 76px);
   }
 
-  .childhood {
-    padding: 110px 0 72px;
-  }
-
   .fixed-photo-section {
     border-radius: 0 0 34px 34px;
-  }
-
-  .childhood__copy {
-    margin-top: 0;
   }
 
   .childhood__people {
@@ -2480,11 +2476,6 @@ h2 {
 
   .hero__actions .button {
     min-width: min(210px, 100%);
-  }
-
-  .childhood__copy {
-    margin-bottom: 30px;
-    padding-inline: 18px;
   }
 
   .childhood__people {

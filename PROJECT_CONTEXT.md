@@ -13,7 +13,7 @@ Các tính năng chính:
 - Màn phong bì mở thiệp khi URL có tên khách mời, ví dụ `/?name=Nguyen%20Van%20A`.
 - Nội dung thiệp, thông tin ngày cưới, bộ ảnh dạng carousel/lightbox.
 - Toàn bộ giao diện theo hướng mobile-first: style nền ưu tiên màn hình điện thoại từ 320px, mọi nội dung xếp một cột và desktop chỉ mở rộng bố cục từ breakpoint `860px`. Khoảng cách, cỡ chữ, ảnh, lịch, bản đồ, form, QR, sổ lưu bút và modal đều có điều chỉnh riêng cho màn hình nhỏ; vùng bấm chính tối thiểu 44–48px và input giữ cỡ chữ 16px để tránh trình duyệt điện thoại tự zoom.
-- Section hành trình từ bé đến lớn với hai ảnh tuổi thơ; ngay sau đó là section ảnh cưới demo độc lập, tràn toàn bộ chiều rộng và dùng nền `fixed` tạo hiệu ứng parallax trên desktop.
+- Phần thiệp mời và phần giới thiệu cặp đôi được gộp trong cùng một section liền mạch: lời mời, `Thành Đạt ♥ Thu Thủy`, tiêu đề `Sắp nên vợ nên chồng`, câu mô tả một thập kỷ và hai ảnh solo. Ngay sau đó là section ảnh cưới độc lập, tràn toàn bộ chiều rộng và dùng nền `fixed` tạo hiệu ứng parallax trên desktop.
 - Collage ảnh cưới bất đối xứng, countdown thời gian thực đến ngày 20/09/2026.
 - Wedding information gồm ảnh, lịch tháng 9/2026, hai thẻ địa điểm và nút `Xem bản đồ` mở Google Maps cho nhà thờ hoặc nhà hàng; không nhúng iframe bản đồ trực tiếp trên trang.
 - Các section có cả hình và chữ dùng hiệu ứng reveal tuần tự khi cuộn: hình xuất hiện trước, chữ trễ `0.5s`; hiệu ứng mở dần từ trái sang phải trong `3s` bằng một lớp phủ co lại với `transform: scaleX()`. Nội dung, shadow và margin luôn đứng yên; không dùng `clip-path` trên ảnh lớn hoặc iframe để tránh shadow vuông và hiện tượng khựng trên Chrome.
@@ -30,6 +30,9 @@ Các tính năng chính:
 ├── style.css               # Thiết kế responsive, animation, modal, carousel
 ├── script.js               # Tất cả hành vi phía trình duyệt
 ├── config.js               # Cấu hình URL lưu lời chúc ở môi trường thật
+├── tao-thiep.html          # Trang quản trị nhỏ để lưu khách và tạo link ?i=...
+├── tao-thiep.css           # Giao diện responsive của trang tạo link
+├── tao-thiep.js            # Lưu khách qua Apps Script và sinh link ngắn
 ├── images/                 # Ảnh cưới gốc và bộ ảnh web đã tối ưu
 │   ├── wedding-1.jpg … wedding-4.jpg
 │   ├── childhood-groom.jpg, childhood-bride.jpg
@@ -70,15 +73,16 @@ Nếu các CDN không tải được, slider vẫn có carousel tối giản b�
 | Ảnh mobile | `images/web-*-mobile.jpg` | Bộ crop dọc riêng cho hero, fixed photo, collage nhỏ và wedding information. Riêng phần kết dùng chung `images/web-closing.jpg` trên desktop và mobile để giữ đúng ảnh cô dâu–chú rể giơ tay chào. Trên mobile, ảnh nằm trong `.closing::before` cao hơn khung ảnh tự nhiên và dùng `mask-image`/`-webkit-mask-image` mờ dần hoàn toàn vào nền xanh rêu `var(--dark)`, tránh mọi cạnh cắt ngang trước phần chữ/footer. |
 | Ảnh tuổi thơ | Chưa có ảnh thật | Hai khung đang dùng `web-gallery-7.jpg` và `web-gallery-2.jpg` làm ảnh demo tạm thời để giao diện không hiển thị ảnh lỗi. |
 | Màu sắc, bố cục, responsive, animation | `style.css` | Biến thiết kế nằm đầu file: giấy kem, xanh rêu đậm, olive, xanh trầm và vàng champagne. Toàn bộ chữ landing page dùng xanh rêu làm màu chủ đạo; chữ phụ dùng xám xanh/olive. |
-| Tiêu đề album trên mobile | `style.css` | `.gallery .section-heading h2` dùng cỡ chữ co giãn theo viewport, giảm nhẹ khoảng cách ký tự và `white-space: nowrap` dưới `520px` để dòng “Album của Đạt & Thủy” luôn nằm trên một dòng, kể cả màn 320px. |
+| Tiêu đề album responsive | `style.css` | `.gallery .section-heading` có chiều rộng riêng lớn hơn tiêu đề section thông thường; `h2` dùng cỡ chữ co giãn theo viewport, giảm nhẹ khoảng cách ký tự và `white-space: nowrap` để dòng “Album của Đạt & Thủy” luôn nằm trên một dòng ở cả desktop lẫn mobile 320px. |
 | Lời chúc và endpoint lưu dữ liệu | `config.js`, `script.js`, `apps-script/wishes.gs` | Apps Script là cách đang được cấu hình. |
 
 ## 5. Luồng trải nghiệm ở trình duyệt
 
 ### Cá nhân hóa khách mời và phong bì
 
-- Không có `name` trong query string: thiệp hiển thị ngay.
-- Có `name`: `script.js` đổi lời chào thành `Trân trọng kính mời [Tên khách] đến chung vui cùng gia đình chúng tôi` (không thêm xưng hô `anh/chị`) và đổi tiêu đề tab, sau đó hiển thị ảnh thiệp dọc `images/web-envelope-personalized.jpg` thay cho phong bì CSS cũ. Dòng cố định `TRÂN TRỌNG KÍNH MỜI` nằm phía trên; tên khách đứng giữa bằng font `Italianno` và dùng đúng xanh rêu đậm `#263e1e` của tên cô dâu–chú rể trên hero. Dòng kính mời và hướng dẫn dùng các sắc olive phụ để tạo phân cấp nhưng vẫn giữ xanh rêu làm trọng tâm. JavaScript đo chiều rộng thực tế sau khi font tải và tự thu nhỏ tên để luôn nằm trên một dòng. Bộ đọc query giữ lại dấu `+` khi nó được dùng như ký tự ở cuối/sát khoảng trắng (ví dụ `?name=bạn%20Thân%20+`) nhưng vẫn hiểu dấu `+` nằm giữa các từ trong link kiểu cũ là khoảng trắng. Khi bấm, ảnh thiệp phóng rất nhẹ bằng `transform` và mờ dần trong khoảng 1 giây; site nằm sẵn phía dưới, không scale toàn bộ trang và không dùng `filter`. Trên desktop, trang chính được hé lộ ở kích thước gần full màn hình với viền 20px, không thu hẹp thành khung mobile.
+- Không có `name` hoặc `i` trong query string: thiệp hiển thị ngay và toàn bộ đại từ của cô dâu chú rể mặc định là `chúng mình`.
+- Link khách mời mới dùng mã gọn `?i=TD001`. `script.js` đọc tên và nhóm xưng hô từ tab `KhachMoi` của Google Sheet qua Apps Script: nhóm `senior` dùng `chúng em`, nhóm `friend` dùng `chúng mình`. Trang riêng `tao-thiep.html` cho phép nhập mã, tên, nhóm và khóa quản trị để lưu khách rồi sinh link. Khóa được đối chiếu với Script Property `GUEST_ADMIN_KEY`, không ghi vào source hoặc local storage.
+- Link `?name=...` cũ vẫn được hỗ trợ để không làm hỏng các thiệp đã gửi; nhóm mặc định của dạng link cũ là `friend`, có thể thêm `&audience=senior` nếu cần. Khi có khách mời, `script.js` đổi lời chào, đại từ trong các phần nội dung liên quan và tiêu đề tab, sau đó hiển thị ảnh thiệp dọc `images/web-envelope-personalized.jpg`. Dòng cố định `TRÂN TRỌNG KÍNH MỜI` nằm phía trên; tên khách đứng giữa bằng font `Italianno` và dùng đúng xanh rêu đậm `#263e1e`. JavaScript đo chiều rộng thực tế sau khi font tải và tự thu nhỏ tên để luôn nằm trên một dòng. Khi bấm, ảnh thiệp phóng rất nhẹ bằng `transform` và mờ dần trong khoảng 1 giây; site nằm sẵn phía dưới, không scale toàn bộ trang và không dùng `filter`.
 - Với người bật giảm chuyển động, thời gian mở giảm còn khoảng 80 ms.
 
 Ví dụ URL: `https://ten-mien-cua-ban/?name=Nguyen%20Van%20A`.

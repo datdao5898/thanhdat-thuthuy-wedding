@@ -37,6 +37,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const WISHES_API_URL = window.WEDDING_WISHES_API_URL || "api/wishes";
   const WISHES_DB_URL = window.WEDDING_WISHES_DB_URL || WISHES_APP_SCRIPT_URL || WISHES_API_URL;
   const WISHES_WRITE_URL = window.WEDDING_WISHES_WRITE_URL || WISHES_APP_SCRIPT_URL || WISHES_API_URL;
+  const GUEST_DIRECTORY_URL = window.WEDDING_GUESTS_APP_SCRIPT_URL || WISHES_APP_SCRIPT_URL;
   const WISHES_FALLBACK_DB_URL = "data/wishes.json";
   const WISHES_CACHE_KEY = "tdtt-wedding-wishes";
   const sampleWishes = [
@@ -98,14 +99,24 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   };
 
-  const guestName = readGuestName();
-  const hasGuestName = Boolean(guestName);
+  const invitationParams = new URLSearchParams(window.location.search);
+  const guestCode = (invitationParams.get("i") || "")
+    .trim()
+    .toUpperCase()
+    .replace(/[^A-Z0-9_-]/g, "")
+    .slice(0, 24);
+  let guestName = readGuestName();
+  let guestAudience = ["senior", "ac", "anhchi"].includes(
+    (invitationParams.get("audience") || invitationParams.get("for") || "").toLowerCase()
+  ) ? "senior" : "friend";
+  const hasPersonalizedInvite = Boolean(guestName || guestCode);
   const guestGreeting = document.getElementById("guestGreeting");
-
-  if (hasGuestName && guestGreeting) {
-    guestGreeting.textContent = `Trân trọng kính mời ${guestName} đến chung vui cùng gia đình chúng tôi`;
-    document.title = `Thiệp mời ${guestName} | Lễ thành hôn`;
-  }
+  const coupleIntroCopy = document.getElementById("coupleIntroCopy");
+  const loveStoryEyebrow = document.getElementById("loveStoryEyebrow");
+  const loveStoryBody = document.getElementById("loveStoryBody");
+  const loveStoryQuote = document.getElementById("loveStoryQuote");
+  const countdownLead = document.getElementById("countdownLead");
+  const giftIntro = document.getElementById("giftIntro");
 
   // ===== Envelope opening intro =====
   const envelopeIntro = document.getElementById("envelopeIntro");
@@ -113,7 +124,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const envelopeRecipient = document.getElementById("envelopeRecipient");
   const siteShell = document.getElementById("siteShell");
 
-  if (!hasGuestName) {
+  if (!hasPersonalizedInvite) {
     document.body.classList.add("envelope-opened");
     document.body.classList.remove("intro-locked", "envelope-opening");
     envelopeIntro?.setAttribute("aria-hidden", "true");
@@ -122,14 +133,14 @@ document.addEventListener("DOMContentLoaded", () => {
     document.body.classList.remove("envelope-opened");
     envelopeIntro?.removeAttribute("aria-hidden");
     if (envelopeRecipient) {
-      envelopeRecipient.textContent = guestName;
+      envelopeRecipient.textContent = guestName || "Khách mời";
     }
-    openEnvelopeButton?.setAttribute("aria-label", `Mở thiệp mời dành cho ${guestName}`);
+    openEnvelopeButton?.setAttribute("aria-label", `Mở thiệp mời dành cho ${guestName || "khách mời"}`);
   }
 
   let envelopeFitFrame = 0;
   const fitEnvelopeRecipient = () => {
-    if (!hasGuestName || !envelopeRecipient) return;
+    if (!hasPersonalizedInvite || !envelopeRecipient) return;
 
     envelopeRecipient.style.fontSize = "";
     const maxSize = Number.parseFloat(window.getComputedStyle(envelopeRecipient).fontSize);
@@ -163,8 +174,75 @@ document.addEventListener("DOMContentLoaded", () => {
   document.fonts?.ready.then(scheduleEnvelopeRecipientFit);
   window.addEventListener("resize", scheduleEnvelopeRecipientFit, { passive: true });
 
+  const getCouplePronoun = () => guestAudience === "senior" ? "chúng em" : "chúng mình";
+
+  const applyGuestProfile = () => {
+    const couplePronoun = getCouplePronoun();
+    const openingPronoun = guestAudience === "senior" ? "Chúng em" : "Chúng mình";
+    const storyPronoun = guestAudience === "senior" ? "chúng em" : "tụi mình";
+
+    if (guestGreeting) {
+      guestGreeting.textContent = guestName
+        ? `Trân trọng kính mời ${guestName} đến chung vui cùng gia đình ${couplePronoun}`
+        : `Trân trọng kính mời bạn đến chung vui cùng gia đình ${couplePronoun}`;
+    }
+
+    if (coupleIntroCopy) {
+      coupleIntroCopy.textContent = `Sau một thập kỷ đồng hành, ${couplePronoun} về chung một nhà để viết tiếp những thập kỷ sau.`;
+    }
+    if (loveStoryEyebrow) loveStoryEyebrow.textContent = `Chuyện của ${couplePronoun}`;
+    if (loveStoryBody) {
+      loveStoryBody.textContent = `${openingPronoun} – Đạt & Thủy – muốn gửi lời mời trân trọng nhất đến những người thân thương trong ngày hai đứa chính thức bắt đầu một chặng đường mới. 10 năm kể từ ngày gặp và yêu nhau, ${storyPronoun} đã cùng lớn lên và đi qua mọi dấu mốc quan trọng của cuộc sống. Một thập kỷ đồng hành là minh chứng rõ ràng nhất cho sự thấu hiểu và tin tưởng mà cả hai dành cho nhau. Đạt & Thủy rất trân trọng cột mốc này và mong muốn được chia sẻ niềm vui ngày chung đôi cùng tất cả mọi người.`;
+    }
+    if (loveStoryQuote) loveStoryQuote.textContent = `“Mười năm đã qua. Và đây là lúc ${couplePronoun} bắt đầu một chặng đường mới.”`;
+    if (countdownLead) {
+      countdownLead.textContent = `${openingPronoun} đang chuẩn bị cho ngày trọng đại và rất mong được đón tiếp bạn.`;
+    }
+    if (giftIntro) {
+      giftIntro.textContent = `Sự hiện diện của bạn đã là niềm vui đối với ${couplePronoun}. Nếu muốn gửi quà mừng từ xa, bạn có thể sử dụng thông tin bên dưới.`;
+    }
+
+    if (guestName) {
+      document.title = `Thiệp mời ${guestName} | Lễ thành hôn`;
+      if (envelopeRecipient) envelopeRecipient.textContent = guestName;
+      openEnvelopeButton?.setAttribute("aria-label", `Mở thiệp mời dành cho ${guestName}`);
+    }
+
+    scheduleEnvelopeRecipientFit();
+  };
+
+  const loadGuestProfile = async () => {
+    if (!guestCode || !GUEST_DIRECTORY_URL) return;
+
+    openEnvelopeButton?.setAttribute("aria-busy", "true");
+    if (openEnvelopeButton) openEnvelopeButton.disabled = true;
+
+    try {
+      const url = new URL(GUEST_DIRECTORY_URL);
+      url.searchParams.set("action", "guest");
+      url.searchParams.set("code", guestCode);
+      const response = await fetch(url, { cache: "no-store" });
+      if (!response.ok) throw new Error("Cannot load guest profile");
+      const data = await response.json();
+      if (!data.ok || !data.guest?.name) throw new Error("Guest profile not found");
+
+      guestName = String(data.guest.name).trim();
+      guestAudience = data.guest.audience === "senior" ? "senior" : "friend";
+      applyGuestProfile();
+    } catch {
+      if (envelopeRecipient) envelopeRecipient.textContent = "Khách mời";
+    } finally {
+      openEnvelopeButton?.removeAttribute("aria-busy");
+      if (openEnvelopeButton) openEnvelopeButton.disabled = false;
+      scheduleEnvelopeRecipientFit();
+    }
+  };
+
+  applyGuestProfile();
+  loadGuestProfile();
+
   const openInvitation = () => {
-    if (!hasGuestName || !envelopeIntro || envelopeIntro.classList.contains("is-opening")) return;
+    if (!hasPersonalizedInvite || !envelopeIntro || envelopeIntro.classList.contains("is-opening")) return;
 
     envelopeIntro.classList.add("is-opening");
     document.body.classList.add("envelope-opening");
@@ -660,13 +738,13 @@ document.addEventListener("DOMContentLoaded", () => {
     if (senderName) {
       thankTitle.textContent = `Cảm ơn ${senderName}!`;
       thankMessage.textContent =
-        `Cảm ơn anh/chị ${senderName} rất nhiều vì lời chúc tốt đẹp. ` +
-        "Sự hiện diện và tình cảm của anh/chị là niềm vui lớn với chúng tôi.";
+        `Cảm ơn ${senderName} rất nhiều vì lời chúc tốt đẹp. ` +
+        `Sự hiện diện và tình cảm của bạn là niềm vui lớn với ${getCouplePronoun()}.`;
     } else {
       thankTitle.textContent = "Cảm ơn bạn!";
       thankMessage.textContent =
-        "Cảm ơn anh/chị rất nhiều vì lời chúc tốt đẹp. " +
-        "Sự hiện diện và tình cảm của anh/chị là niềm vui lớn với chúng tôi.";
+        "Cảm ơn bạn rất nhiều vì lời chúc tốt đẹp. " +
+        `Sự hiện diện và tình cảm của bạn là niềm vui lớn với ${getCouplePronoun()}.`;
     }
 
     openModal(thankModal);

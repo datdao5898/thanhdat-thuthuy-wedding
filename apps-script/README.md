@@ -14,13 +14,31 @@ This is the recommended setup for the public guest wishes book because it writes
    - `Execute as`: `Me`
    - `Who has access`: `Anyone`
 7. Deploy, authorize, and copy the Web App URL.
-8. Paste that URL into `config.js`:
+8. In Apps Script, open `Project Settings` -> `Script Properties` and add:
+
+```txt
+GUEST_ADMIN_KEY=your-private-admin-key
+```
+
+9. Paste the Web App URL into `config.js`:
 
 ```js
 window.WEDDING_WISHES_APP_SCRIPT_URL = "https://script.google.com/macros/s/xxxxx/exec";
 ```
 
 After this, the landing page will read and write wishes through Google Apps Script.
+
+The same Web App also stores guest profiles. Open this private helper page to add or update a guest and generate a clean invitation URL:
+
+```txt
+https://your-wedding-domain/tao-thiep.html
+```
+
+Generated invitation links use only the guest code:
+
+```txt
+https://your-wedding-domain/?i=TD001
+```
 
 When `wishes.gs` changes, update `Code.gs` in Apps Script and deploy a new version so the Web App URL uses the latest code.
 
@@ -33,3 +51,11 @@ Created At | Name | Message | Recipient | Attendance | Source
 ```
 
 The newest wishes are shown first on the landing page.
+
+The script also creates a tab named `KhachMoi`:
+
+```txt
+Code | Name | Audience | Updated At
+```
+
+`Audience` accepts `friend` for “chúng mình” and `senior` for “chúng em”.
