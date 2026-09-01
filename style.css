@@ -1577,6 +1577,15 @@ h2 {
   line-height: 0.8;
 }
 
+.event-invite-heading__lunar {
+  color: var(--muted);
+  font-family: var(--serif);
+  font-size: clamp(0.78rem, 1.8vw, 0.9rem);
+  font-style: italic;
+  letter-spacing: 0.04em;
+  margin: 12px 0 0;
+}
+
 .wedding-info__layout {
   display: grid;
   gap: 28px;
