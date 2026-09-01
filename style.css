@@ -1780,14 +1780,14 @@ h2 {
 }
 
 .gallery .section-heading {
-  max-width: min(100%, 760px);
+  max-width: min(100%, 920px);
   padding-inline: 24px;
 }
 
 .gallery .section-heading h2 {
-  font-size: clamp(2.2rem, 5.6vw, 4.8rem);
+  font-size: clamp(2.2rem, 4.8vw, 4.2rem);
   letter-spacing: -0.035em;
-  white-space: nowrap;
+  text-wrap: balance;
 }
 
 .gallery .section-heading .eyebrow {
@@ -2782,9 +2782,10 @@ h2 {
   }
 
   .gallery .section-heading h2 {
-    font-size: clamp(1.55rem, 8.4vw, 2.6rem);
+    font-size: clamp(1.9rem, 9vw, 2.75rem);
     letter-spacing: -0.035em;
-    white-space: nowrap;
+    line-height: 1.02;
+    text-wrap: balance;
   }
 
   .slider {

@@ -73,7 +73,7 @@ Nếu các CDN không tải được, slider vẫn có carousel tối giản b�
 | Ảnh mobile | `images/web-*-mobile.jpg` | Bộ crop dọc riêng cho hero, fixed photo, collage nhỏ và wedding information. Riêng phần kết dùng chung `images/web-closing.jpg` trên desktop và mobile để giữ đúng ảnh cô dâu–chú rể giơ tay chào. Trên mobile, ảnh nằm trong `.closing::before` cao hơn khung ảnh tự nhiên và dùng `mask-image`/`-webkit-mask-image` mờ dần hoàn toàn vào nền xanh rêu `var(--dark)`, tránh mọi cạnh cắt ngang trước phần chữ/footer. |
 | Ảnh tuổi thơ | Chưa có ảnh thật | Hai khung đang dùng `web-gallery-7.jpg` và `web-gallery-2.jpg` làm ảnh demo tạm thời để giao diện không hiển thị ảnh lỗi. |
 | Màu sắc, bố cục, responsive, animation | `style.css` | Biến thiết kế nằm đầu file: giấy kem, xanh rêu đậm, olive, xanh trầm và vàng champagne. Toàn bộ chữ landing page dùng xanh rêu làm màu chủ đạo; chữ phụ dùng xám xanh/olive. |
-| Tiêu đề album responsive | `style.css` | `.gallery .section-heading` có chiều rộng riêng lớn hơn tiêu đề section thông thường; `h2` dùng cỡ chữ co giãn theo viewport, giảm nhẹ khoảng cách ký tự và `white-space: nowrap` để dòng “Album của Đạt & Thủy” luôn nằm trên một dòng ở cả desktop lẫn mobile 320px. |
+| Tiêu đề album responsive | `style.css` | `.gallery .section-heading` có chiều rộng riêng lớn hơn tiêu đề section thông thường; tiêu đề “Khoảnh khắc trước ngày thành đôi” dùng cỡ chữ co giãn và `text-wrap: balance` để xuống dòng cân đối trên màn hình hẹp. |
 | Lời chúc và endpoint lưu dữ liệu | `config.js`, `script.js`, `apps-script/wishes.gs` | Apps Script là cách đang được cấu hình. |
 
 ## 5. Luồng trải nghiệm ở trình duyệt
