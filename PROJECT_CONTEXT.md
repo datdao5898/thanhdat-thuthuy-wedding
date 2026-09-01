@@ -13,9 +13,9 @@ Các tính năng chính:
 - Màn phong bì mở thiệp khi URL có tên khách mời, ví dụ `/?name=Nguyen%20Van%20A`.
 - Nội dung thiệp, thông tin ngày cưới, bộ ảnh dạng carousel/lightbox.
 - Toàn bộ giao diện theo hướng mobile-first: style nền ưu tiên màn hình điện thoại từ 320px, mọi nội dung xếp một cột và desktop chỉ mở rộng bố cục từ breakpoint `860px`. Khoảng cách, cỡ chữ, ảnh, lịch, bản đồ, form, QR, sổ lưu bút và modal đều có điều chỉnh riêng cho màn hình nhỏ; vùng bấm chính tối thiểu 44–48px và input giữ cỡ chữ 16px để tránh trình duyệt điện thoại tự zoom.
-- Phần thiệp mời và phần giới thiệu cặp đôi được gộp trong cùng một section liền mạch: lời mời, `Thành Đạt ♥ Thu Thủy`, tiêu đề `Sắp nên vợ nên chồng`, câu mô tả một thập kỷ và hai ảnh solo. Ngay sau đó là section ảnh cưới độc lập, tràn toàn bộ chiều rộng và dùng nền `fixed` tạo hiệu ứng parallax trên desktop.
+- Section mở đầu sau hero được rút gọn theo thứ tự: đĩa nhạc, `Save the Date`, `For the Wedding of`, rồi hai ảnh solo cùng nhãn Groom/Bride và tên Thành Đạt/Thu Thủy. Ngay sau đó là section ảnh cưới độc lập, tràn toàn bộ chiều rộng và dùng nền `fixed` tạo hiệu ứng parallax trên desktop.
 - Collage ảnh cưới bất đối xứng, countdown thời gian thực đến ngày 20/09/2026.
-- Wedding information gồm ảnh, lịch tháng 9/2026, hai thẻ địa điểm và nút `Xem bản đồ` mở Google Maps cho nhà thờ hoặc nhà hàng; không nhúng iframe bản đồ trực tiếp trên trang.
+- Wedding information mở đầu bằng bố cục thiệp `Lễ thành hôn`: tên Thành Đạt/Thu Thủy, giờ `08:30 – Chúa Nhật` và ngày `THÁNG 09 | 20 | NĂM 2026`; bên dưới vẫn giữ ảnh, lịch tháng 9/2026, hai thẻ địa điểm và nút `Xem bản đồ` mở Google Maps. Trang không nhúng iframe bản đồ trực tiếp.
 - Các section có cả hình và chữ dùng hiệu ứng reveal tuần tự khi cuộn: hình xuất hiện trước, chữ trễ `0.5s`; hiệu ứng mở dần từ trái sang phải trong `3s` bằng một lớp phủ co lại với `transform: scaleX()`. Nội dung, shadow và margin luôn đứng yên; không dùng `clip-path` trên ảnh lớn hoặc iframe để tránh shadow vuông và hiện tượng khựng trên Chrome.
 - Section lời chúc đặt trước quà mừng: form gửi lời chúc đặt cạnh sổ lưu bút; dữ liệu chung được lưu trong Google Sheets. Khung sổ lưu bút dùng nền kem pha xanh nhạt, viền và scrollbar olive, nội dung xanh rêu; mỗi `.wish-card` không có box-shadow riêng.
 - Section quà mừng riêng phía sau: chọn tài khoản cô dâu/chú rể, QR và nút sao chép số tài khoản.
@@ -36,7 +36,7 @@ Các tính năng chính:
 ├── images/                 # Ảnh cưới gốc và bộ ảnh web đã tối ưu
 │   ├── wedding-1.jpg … wedding-4.jpg
 │   ├── childhood-groom.jpg, childhood-bride.jpg
-│   └── qr-bride.png, qr-groom.png
+│   └── qr-bride.jpg, qr-groom.jpg
 ├── data/
 │   └── wishes.json         # Dữ liệu lời chúc mẫu/dự phòng, chỉ đọc
 ├── apps-script/
@@ -68,7 +68,7 @@ Nếu các CDN không tải được, slider vẫn có carousel tối giản b�
 | Nhu cầu | Nơi sửa chính | Ghi chú |
 | --- | --- | --- |
 | Tên cặp đôi, ngày cưới, văn bản, giờ/địa điểm, link Maps | `index.html` | Luôn hiển thị Thành Đạt trước Thu Thủy. Hôn lễ: `08:30, 20/09/2026` tại `Nhà Thờ Tin Lành Chi Hội Thạnh Mỹ`; tiệc cưới: `11:30–12:00` tại `Nhà Hàng Kim Bút 2`. Mỗi thẻ địa điểm có nút `Xem bản đồ` mở link Google Maps tương ứng. |
-| Tên chủ tài khoản, số tài khoản, tên ngân hàng, đường dẫn QR | đầu `script.js` trong `bankAccounts` | Hiện số tài khoản và tên ngân hàng là placeholder. |
+| Tên chủ tài khoản, số tài khoản, tên ngân hàng, đường dẫn QR | đầu `script.js` trong `bankAccounts` | Cô dâu: `HOANG THI THU THUY` – `8007041129756`; chú rể: `DAO THANH DAT` – `8007041062602`; cả hai dùng `Timo Digital Bank by BVBank` và QR VietQR chính thức dạng JPG. |
 | Ảnh cưới | `images/TINK*.jpg`, `images/web-*.jpg` | `TINK*.jpg` là ảnh gốc độ phân giải cao. `web-*.jpg` là bộ đã chọn và tối ưu cho hero, thiệp, parallax, collage, wedding information, gallery và closing; các ảnh tự dự phòng chéo nếu một tệp bị thiếu. |
 | Ảnh mobile | `images/web-*-mobile.jpg` | Bộ crop dọc riêng cho hero, fixed photo, collage nhỏ và wedding information. Riêng phần kết dùng chung `images/web-closing.jpg` trên desktop và mobile để giữ đúng ảnh cô dâu–chú rể giơ tay chào. Trên mobile, ảnh nằm trong `.closing::before` cao hơn khung ảnh tự nhiên và dùng `mask-image`/`-webkit-mask-image` mờ dần hoàn toàn vào nền xanh rêu `var(--dark)`, tránh mọi cạnh cắt ngang trước phần chữ/footer. |
 | Ảnh tuổi thơ | Chưa có ảnh thật | Hai khung đang dùng `web-gallery-7.jpg` và `web-gallery-2.jpg` làm ảnh demo tạm thời để giao diện không hiển thị ảnh lỗi. |
@@ -164,12 +164,11 @@ Chỉ dùng phương án này khi host thực sự chạy được route `api/wi
 
 ## 8. Tình trạng cần hoàn thiện trước khi gửi khách
 
-1. Bổ sung ảnh tuổi thơ thật của cô dâu/chú rể và QR ngân hàng chính thức; ảnh cưới hiện đã dùng bộ ảnh thật trong `images/`.
-2. Thay số tài khoản, tên ngân hàng và hai QR demo trong `bankAccounts` ở `script.js`.
-3. Kiểm tra lại hai link Google Maps trên nút `Xem bản đồ` nếu địa điểm thay đổi; trang không nhúng iframe bản đồ để giao diện gọn và tải nhẹ hơn.
-4. Mở Google Sheet và kiểm tra Web App URL trong `config.js` còn deploy, có quyền `Anyone`, đọc/ghi được.
-5. Kiểm tra UTF-8 trong trình soạn thảo trước khi chỉnh sửa tiếng Việt. Các lần đọc bằng terminal hiện hiển thị nhiều chuỗi tiếng Việt bị mojibake (ví dụ `Thiá»‡p`); cần xác nhận encoding file đang là UTF-8 và sửa nếu nội dung thực sự hiển thị lỗi trên trình duyệt.
-6. Test trên điện thoại, đặc biệt: mở phong bì từ URL có `name`, bấm QR, copy số tài khoản, gửi lời chúc, đóng modal và slider.
+1. Bổ sung ảnh tuổi thơ thật của cô dâu/chú rể; ảnh cưới và QR ngân hàng hiện đã dùng dữ liệu thật trong `images/`.
+2. Kiểm tra lại hai link Google Maps trên nút `Xem bản đồ` nếu địa điểm thay đổi; trang không nhúng iframe bản đồ để giao diện gọn và tải nhẹ hơn.
+3. Mở Google Sheet và kiểm tra Web App URL trong `config.js` còn deploy, có quyền `Anyone`, đọc/ghi được.
+4. Kiểm tra UTF-8 trong trình soạn thảo trước khi chỉnh sửa tiếng Việt. Các lần đọc bằng terminal hiện hiển thị nhiều chuỗi tiếng Việt bị mojibake (ví dụ `Thiá»‡p`); cần xác nhận encoding file đang là UTF-8 và sửa nếu nội dung thực sự hiển thị lỗi trên trình duyệt.
+5. Test trên điện thoại, đặc biệt: mở phong bì từ URL có `name`, bấm QR, copy số tài khoản, gửi lời chúc, đóng modal và slider.
 
 ## 9. Cách chạy/kiểm tra sau khi chuyển thư mục
 

@@ -4,18 +4,18 @@ document.addEventListener("DOMContentLoaded", () => {
     bride: {
       label: "Cô dâu",
       giftMessage: "Gửi quà mừng đến cô dâu",
-      accountName: "THU THỦY",
-      accountNumber: "0000 0000 0000",
-      bankName: "[TÊN NGÂN HÀNG]",
-      qrImage: "images/qr-bride.png"
+      accountName: "HOANG THI THU THUY",
+      accountNumber: "8007041129756",
+      bankName: "Timo Digital Bank by BVBank",
+      qrImage: "images/qr-bride.jpg?v=20260901-1"
     },
     groom: {
       label: "Chú rể",
       giftMessage: "Gửi quà mừng đến chú rể",
-      accountName: "THÀNH ĐẠT",
-      accountNumber: "1111 1111 1111",
-      bankName: "[TÊN NGÂN HÀNG]",
-      qrImage: "images/qr-groom.png"
+      accountName: "DAO THANH DAT",
+      accountNumber: "8007041062602",
+      bankName: "Timo Digital Bank by BVBank",
+      qrImage: "images/qr-groom.jpg?v=20260901-1"
     }
   };
 
@@ -110,9 +110,6 @@ document.addEventListener("DOMContentLoaded", () => {
     (invitationParams.get("audience") || invitationParams.get("for") || "").toLowerCase()
   ) ? "senior" : "friend";
   const hasPersonalizedInvite = Boolean(guestName || guestCode);
-  const guestGreeting = document.getElementById("guestGreeting");
-  const coupleIntroCopy = document.getElementById("coupleIntroCopy");
-  const loveStoryEyebrow = document.getElementById("loveStoryEyebrow");
   const loveStoryBody = document.getElementById("loveStoryBody");
   const loveStoryQuote = document.getElementById("loveStoryQuote");
   const countdownLead = document.getElementById("countdownLead");
@@ -181,16 +178,6 @@ document.addEventListener("DOMContentLoaded", () => {
     const openingPronoun = guestAudience === "senior" ? "Chúng em" : "Chúng mình";
     const storyPronoun = guestAudience === "senior" ? "chúng em" : "tụi mình";
 
-    if (guestGreeting) {
-      guestGreeting.textContent = guestName
-        ? `Trân trọng kính mời ${guestName} đến chung vui cùng gia đình ${couplePronoun}`
-        : `Trân trọng kính mời bạn đến chung vui cùng gia đình ${couplePronoun}`;
-    }
-
-    if (coupleIntroCopy) {
-      coupleIntroCopy.textContent = `Sau một thập kỷ đồng hành, ${couplePronoun} về chung một nhà để viết tiếp những thập kỷ sau.`;
-    }
-    if (loveStoryEyebrow) loveStoryEyebrow.textContent = `Chuyện của ${couplePronoun}`;
     if (loveStoryBody) {
       loveStoryBody.textContent = `${openingPronoun} – Đạt & Thủy – muốn gửi lời mời trân trọng nhất đến những người thân thương trong ngày hai đứa chính thức bắt đầu một chặng đường mới. 10 năm kể từ ngày gặp và yêu nhau, ${storyPronoun} đã cùng lớn lên và đi qua mọi dấu mốc quan trọng của cuộc sống. Một thập kỷ đồng hành là minh chứng rõ ràng nhất cho sự thấu hiểu và tin tưởng mà cả hai dành cho nhau. Đạt & Thủy rất trân trọng cột mốc này và mong muốn được chia sẻ niềm vui ngày chung đôi cùng tất cả mọi người.`;
     }
@@ -529,8 +516,10 @@ document.addEventListener("DOMContentLoaded", () => {
     accountNumber.textContent = account.accountNumber;
     bankName.textContent = account.bankName;
     bankQr.alt = `Mã QR ngân hàng của ${account.label.toLowerCase()}`;
+    bankQr.dataset.recipient = recipient;
     bankQr.onerror = () => {
       bankQr.onerror = null;
+      delete bankQr.dataset.recipient;
       bankQr.src = createQrDemo(account.label);
     };
     bankQr.src = account.qrImage;
