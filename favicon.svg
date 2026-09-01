@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Biểu tượng lễ cưới Thành Đạt và Thu Thủy">
+  <rect width="64" height="64" rx="16" fill="#294724"/>
+  <circle cx="25" cy="38" r="12" fill="none" stroke="#f7f2e8" stroke-width="4"/>
+  <circle cx="39" cy="38" r="12" fill="none" stroke="#f7f2e8" stroke-width="4"/>
+  <path d="M32 27.8C28.7 23.9 22.5 25.7 22.5 30.6c0 4.1 4.2 7 9.5 11.1 5.3-4.1 9.5-7 9.5-11.1 0-4.9-6.2-6.7-9.5-2.8Z" fill="#b8c59b" stroke="#294724" stroke-width="2" stroke-linejoin="round"/>
+</svg>
