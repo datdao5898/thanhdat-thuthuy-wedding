@@ -14,7 +14,7 @@
   <link rel="preload" as="image" href="images/web-hero-garden.jpg" fetchpriority="high">
   <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@300;400;500;600&family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,400;1,500;1,600&family=Italianno&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@splidejs/splide@4.1.4/dist/css/splide.min.css">
-  <link rel="stylesheet" href="style.css?v=20260901-13">
+  <link rel="stylesheet" href="style.css?v=20260902-4">
 </head>
 <body class="envelope-opened">
   <script>
@@ -414,50 +414,75 @@
       <div class="section-heading reveal-sequence__item reveal-sequence__copy">
         <p class="eyebrow">Wedding gift</p>
         <h2>Hộp quà cưới</h2>
-        <p id="giftIntro">Sự hiện diện của bạn đã là niềm vui đối với chúng mình. Nếu muốn gửi quà mừng từ xa, bạn có thể sử dụng thông tin bên dưới.</p>
+        <p>Dành cho những vị khách muốn gửi lời chúc mừng từ xa.</p>
       </div>
 
       <div class="gift__layout">
-        <div class="gift-recipient reveal-sequence__item reveal-sequence__copy">
-          <fieldset class="recipient-picker">
-            <legend>Chọn người nhận quà</legend>
-            <div class="recipient-picker__options">
-              <label>
-                <input type="radio" name="recipient" value="bride" checked>
-                <span>Cô dâu</span>
-              </label>
-              <label>
-                <input type="radio" name="recipient" value="groom">
-                <span>Chú rể</span>
-              </label>
-            </div>
-          </fieldset>
-        </div>
+        <button
+          class="gift-disclosure reveal-sequence__item reveal-sequence__copy"
+          id="giftRevealButton"
+          type="button"
+          aria-expanded="false"
+          aria-controls="giftDetails"
+        >
+          <span class="gift-disclosure__meta">
+            <span class="gift-disclosure__monogram" aria-hidden="true">Đ&amp;T</span>
+            <span class="gift-disclosure__date">20.09.2026</span>
+          </span>
+          <span class="gift-disclosure__rule" aria-hidden="true"></span>
+          <span class="gift-disclosure__eyebrow">Quà mừng từ xa</span>
+          <strong>Thông tin quà mừng</strong>
+          <span class="gift-disclosure__description">Dành cho khách muốn gửi quà mừng đến Đạt &amp; Thủy.</span>
+          <span class="gift-disclosure__action">
+            <span>Chạm để mở</span>
+            <span aria-hidden="true">↗</span>
+          </span>
+        </button>
 
-        <aside class="bank-card reveal-sequence__item reveal-sequence__media" id="bankCard" aria-live="polite">
-          <span class="bank-card__badge" id="recipientBadge">Cô dâu</span>
-          <p id="giftRecipientMessage">Gửi quà mừng đến cô dâu</p>
-          <div class="bank-card__qr">
-            <img id="bankQr" src="images/qr-bride.jpg?v=20260901-1" data-recipient="bride" alt="Mã QR ngân hàng của cô dâu Hoàng Thị Thu Thủy" loading="lazy" decoding="async">
+        <div class="gift-details" id="giftDetails" role="region" aria-label="Thông tin quà mừng" aria-hidden="true" inert>
+          <div class="gift-details__inner">
+            <div class="gift-recipient">
+              <fieldset class="recipient-picker">
+                <legend>Chọn người nhận quà</legend>
+                <div class="recipient-picker__options">
+                  <label>
+                    <input type="radio" name="recipient" value="bride" checked>
+                    <span>Cô dâu</span>
+                  </label>
+                  <label>
+                    <input type="radio" name="recipient" value="groom">
+                    <span>Chú rể</span>
+                  </label>
+                </div>
+              </fieldset>
+            </div>
+
+            <aside class="bank-card" id="bankCard" aria-live="polite">
+              <span class="bank-card__badge" id="recipientBadge">Cô dâu</span>
+              <p id="giftRecipientMessage">Gửi quà mừng đến cô dâu</p>
+              <div class="bank-card__qr">
+                <img id="bankQr" src="images/qr-bride.jpg?v=20260901-1" data-recipient="bride" alt="Mã QR ngân hàng của cô dâu Hoàng Thị Thu Thủy" loading="lazy" decoding="async">
+              </div>
+              <dl class="bank-card__details">
+                <div>
+                  <dt>Chủ tài khoản</dt>
+                  <dd id="accountName">HOANG THI THU THUY</dd>
+                </div>
+                <div>
+                  <dt>Số tài khoản</dt>
+                  <dd>
+                    <span id="accountNumber">8007041129756</span>
+                    <button class="copy-button" id="copyAccount" type="button" aria-label="Sao chép số tài khoản">Sao chép</button>
+                  </dd>
+                </div>
+                <div>
+                  <dt>Ngân hàng</dt>
+                  <dd id="bankName">Timo Digital Bank by BVBank</dd>
+                </div>
+              </dl>
+            </aside>
           </div>
-          <dl class="bank-card__details">
-            <div>
-              <dt>Chủ tài khoản</dt>
-              <dd id="accountName">HOANG THI THU THUY</dd>
-            </div>
-            <div>
-              <dt>Số tài khoản</dt>
-              <dd>
-                <span id="accountNumber">8007041129756</span>
-                <button class="copy-button" id="copyAccount" type="button" aria-label="Sao chép số tài khoản">Sao chép</button>
-              </dd>
-            </div>
-            <div>
-              <dt>Ngân hàng</dt>
-              <dd id="bankName">Timo Digital Bank by BVBank</dd>
-            </div>
-          </dl>
-        </aside>
+        </div>
       </div>
     </section>
 
@@ -511,7 +536,7 @@
   <script src="https://cdn.jsdelivr.net/npm/@splidejs/splide@4.1.4/dist/js/splide.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/lenis@1.3.13/dist/lenis.min.js"></script>
   <script src="config.js"></script>
-  <script src="script.js?v=20260901-3"></script>
+  <script src="script.js?v=20260902-2"></script>
   </div>
 </body>
 </html>

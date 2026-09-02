@@ -18,7 +18,7 @@ Các tính năng chính:
 - Wedding information mở đầu bằng bố cục thiệp `Lễ thành hôn`: tên Thành Đạt/Thu Thủy, giờ `08:30 – Chúa Nhật` và ngày `THÁNG 09 | 20 | NĂM 2026`; bên dưới vẫn giữ ảnh, lịch tháng 9/2026, hai thẻ địa điểm và nút `Xem bản đồ` mở Google Maps. Trang không nhúng iframe bản đồ trực tiếp.
 - Các section có cả hình và chữ dùng hiệu ứng reveal tuần tự khi cuộn: hình xuất hiện trước, chữ trễ `0.5s`; hiệu ứng mở dần từ trái sang phải trong `3s` bằng một lớp phủ co lại với `transform: scaleX()`. Nội dung, shadow và margin luôn đứng yên; không dùng `clip-path` trên ảnh lớn hoặc iframe để tránh shadow vuông và hiện tượng khựng trên Chrome.
 - Section lời chúc đặt trước quà mừng: form gửi lời chúc đặt cạnh sổ lưu bút; dữ liệu chung được lưu trong Google Sheets. Khung sổ lưu bút dùng nền kem pha xanh nhạt, viền và scrollbar olive, nội dung xanh rêu; mỗi `.wish-card` không có box-shadow riêng.
-- Section quà mừng riêng phía sau: chọn tài khoản cô dâu/chú rể, QR và nút sao chép số tài khoản.
+- Section quà mừng riêng phía sau mặc định hiển thị một hộp quà có chỉ dẫn `Chạm để mở hộp quà`; toàn bộ thẻ là vùng bấm. Sau khi khách mở, hộp quà biến mất và phần chọn tài khoản cô dâu/chú rể, QR cùng nút sao chép số tài khoản hiện ra; đây là tương tác một chiều và không có nút đóng lại.
 - Tôn trọng `prefers-reduced-motion`, hỗ trợ đóng modal bằng Escape và có ảnh/slider dự phòng khi CDN hoặc ảnh cục bộ lỗi.
 - Sau khi phong bì mở, `.site-shell` phải trả `will-change` về `auto`; nếu giữ `will-change: transform`, Chrome sẽ làm nền `fixed` của section ảnh cưới cuộn theo trang.
 

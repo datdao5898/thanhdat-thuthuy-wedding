@@ -113,7 +113,6 @@ document.addEventListener("DOMContentLoaded", () => {
   const loveStoryBody = document.getElementById("loveStoryBody");
   const loveStoryQuote = document.getElementById("loveStoryQuote");
   const countdownLead = document.getElementById("countdownLead");
-  const giftIntro = document.getElementById("giftIntro");
 
   // ===== Envelope opening intro =====
   const envelopeIntro = document.getElementById("envelopeIntro");
@@ -185,10 +184,6 @@ document.addEventListener("DOMContentLoaded", () => {
     if (countdownLead) {
       countdownLead.textContent = `${openingPronoun} đang chuẩn bị cho ngày trọng đại và rất mong được đón tiếp bạn.`;
     }
-    if (giftIntro) {
-      giftIntro.textContent = `Sự hiện diện của bạn đã là niềm vui đối với ${couplePronoun}. Nếu muốn gửi quà mừng từ xa, bạn có thể sử dụng thông tin bên dưới.`;
-    }
-
     if (guestName) {
       document.title = `Thiệp mời ${guestName} | Lễ thành hôn`;
       if (envelopeRecipient) envelopeRecipient.textContent = guestName;
@@ -505,7 +500,19 @@ document.addEventListener("DOMContentLoaded", () => {
   const accountNumber = document.getElementById("accountNumber");
   const bankName = document.getElementById("bankName");
   const copyAccount = document.getElementById("copyAccount");
+  const giftDetails = document.getElementById("giftDetails");
+  const giftRevealButton = document.getElementById("giftRevealButton");
   let activeRecipient = "bride";
+
+  giftRevealButton.addEventListener("click", () => {
+    giftRevealButton.classList.add("is-opened");
+    giftRevealButton.setAttribute("aria-expanded", "true");
+    giftRevealButton.setAttribute("aria-hidden", "true");
+    giftRevealButton.disabled = true;
+    giftDetails.classList.add("is-open");
+    giftDetails.setAttribute("aria-hidden", "false");
+    giftDetails.removeAttribute("inert");
+  });
 
   const showBankAccount = (recipient) => {
     const account = bankAccounts[recipient];
