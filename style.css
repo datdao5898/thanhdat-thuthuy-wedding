@@ -1993,16 +1993,6 @@ h2 {
   width: 100%;
 }
 
-.gift-disclosure__eyebrow {
-  color: var(--muted);
-  display: block;
-  font-size: 0.66rem;
-  font-weight: 700;
-  letter-spacing: 0.2em;
-  margin: 0 0 8px;
-  text-transform: uppercase;
-}
-
 .gift-disclosure strong {
   color: var(--ink);
   display: block;
@@ -2011,15 +2001,6 @@ h2 {
   font-weight: 500;
   line-height: 1.04;
   margin: 0;
-}
-
-.gift-disclosure__description {
-  color: var(--muted);
-  display: block;
-  font-size: 0.86rem;
-  line-height: 1.65;
-  margin: 12px 0 28px;
-  max-width: 390px;
 }
 
 .gift-disclosure__action {
@@ -2035,6 +2016,7 @@ h2 {
   gap: 14px;
   justify-content: center;
   letter-spacing: 0.12em;
+  margin-top: 24px;
   min-height: 46px;
   padding: 0 20px;
   text-transform: uppercase;
@@ -2762,10 +2744,6 @@ h2 {
   .section-heading > p:last-child {
     font-size: 0.86rem;
     line-height: 1.65;
-  }
-
-  .gift-disclosure__description {
-    margin-bottom: 22px;
   }
 
   .gift-disclosure__action {
