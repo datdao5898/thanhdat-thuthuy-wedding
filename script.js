@@ -228,6 +228,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     envelopeIntro.classList.add("is-opening");
     document.body.classList.add("envelope-opening");
+    startBackgroundMusic();
 
     const openDelay = window.matchMedia("(prefers-reduced-motion: reduce)").matches ? 80 : 1020;
     window.setTimeout(() => {
@@ -420,6 +421,26 @@ document.addEventListener("DOMContentLoaded", () => {
   const musicPlayer = document.getElementById("musicPlayer");
   const musicSource = musicPlayer?.dataset.src || "";
 
+  const setBackgroundMusicPlaying = (isPlaying) => {
+    if (!musicTrigger || !musicPlayer || !musicSource) return;
+
+    musicTrigger.classList.toggle("is-playing", isPlaying);
+    musicPlayer.src = isPlaying ? musicSource : "";
+    musicTrigger.setAttribute("aria-pressed", String(isPlaying));
+    musicTrigger.setAttribute(
+      "aria-label",
+      isPlaying
+        ? "Dừng bài (Everything I Do) I Do It for You"
+        : "Phát bài (Everything I Do) I Do It for You"
+    );
+  };
+
+  const startBackgroundMusic = () => {
+    if (!musicTrigger?.classList.contains("is-playing")) {
+      setBackgroundMusicPlaying(true);
+    }
+  };
+
   const openModal = (modal) => {
     lastFocusedElement = document.activeElement;
     modal.classList.add("is-open");
@@ -439,17 +460,7 @@ document.addEventListener("DOMContentLoaded", () => {
   };
 
   musicTrigger?.addEventListener("click", () => {
-    if (!musicPlayer || !musicSource) return;
-
-    const isPlaying = musicTrigger.classList.toggle("is-playing");
-    musicPlayer.src = isPlaying ? musicSource : "";
-    musicTrigger.setAttribute("aria-pressed", String(isPlaying));
-    musicTrigger.setAttribute(
-      "aria-label",
-      isPlaying
-        ? "Dừng bài (Everything I Do) I Do It for You"
-        : "Phát bài (Everything I Do) I Do It for You"
-    );
+    setBackgroundMusicPlaying(!musicTrigger.classList.contains("is-playing"));
   });
 
   document.querySelectorAll("[data-close-modal]").forEach((button) => {
