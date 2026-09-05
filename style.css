@@ -671,9 +671,10 @@ body.envelope-opened .envelope-intro {
   font-weight: 400;
   left: 50%;
   letter-spacing: 0;
-  line-height: 0.92;
+  /* Italic Vietnamese glyphs extend past a tight line box (e.g. "Ân"). */
+  line-height: 1.2;
   max-width: none;
-  overflow: hidden;
+  overflow: visible;
   position: absolute;
   text-align: center;
   text-overflow: clip;
