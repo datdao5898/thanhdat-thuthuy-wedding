@@ -259,6 +259,19 @@ document.addEventListener("DOMContentLoaded", () => {
     requestAnimationFrame(raf);
   }
 
+  // Older shared links target the textarea itself, which sits too close to the
+  // bottom of the page for a reliable anchor position. Land at the section instead.
+  if (window.location.hash === "#wishMessage") {
+    const wishesSection = document.getElementById("wishes");
+    window.history.replaceState(null, "", "#wishes");
+    window.requestAnimationFrame(() => {
+      wishesSection?.scrollIntoView({
+        behavior: prefersReducedMotion ? "auto" : "smooth",
+        block: "start"
+      });
+    });
+  }
+
   // ===== Anh du phong =====
   const galleryImages = [...document.querySelectorAll(".slide img")];
   galleryImages.forEach((image, index) => {
